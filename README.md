@@ -1,96 +1,174 @@
-# Rapid-AI
-A full-stack AI-integrated platform built with React and Express. Features secure authentication via Clerk, PDF parsing capabilities, and AI-driven responses using OpenAI. Powered by a Neon PostgreSQL database and Cloudinary for media management.
-=======
-# 🚀 AI-Powered Minor Project
+# 🚀 Rapid-AI (Minor Project)
 
-A sophisticated full-stack web application that combines the power of **Generative AI** with a modern, secure web architecture.
+![Project Banner](https://via.placeholder.com/1000x300?text=Rapid-AI+Banner)
 
-### 🌟 Key Features
-- **🔐 Secure Auth:** Complete user management and protected routes using Clerk.
-- **🤖 AI Integration:** Leverages OpenAI for intelligent responses and document processing.
-- **📄 PDF Parsing:** Ability to upload and analyze PDF content.
-- **🎨 Modern UI:** Responsive design built with React 19, Tailwind CSS, and smooth animations via Framer Motion.
-- **☁️ Cloud Storage:** Image management and optimization through Cloudinary.
-- **🗄️ Database:** Robust data handling with Neon (Serverless PostgreSQL).
+A sophisticated full-stack AI-integrated web platform that combines the power of **Generative AI** with a modern, secure, and responsive web architecture.
 
+This project offers an ecosystem of various AI tools, ranging from text generation to document parsing and image manipulation, all wrapped inside a beautiful UI with seamless authentication.
 
-This repository contains the client and server code for the Minor Project.
+---
 
-## Prerequisites
+## 🌟 Key Features
 
-Before you begin, ensure you have met the following requirements:
-* You have installed a recent version of [Node.js](https://nodejs.org/) (which includes `npm`).
+- **🔐 Secure Authentication:** Complete user management, protected routes, and session handling powered by [Clerk](https://clerk.com/).
+- **🤖 Comprehensive AI Tools:** Leverages [OpenAI](https://openai.com/) to process intelligent queries, including generating blog titles, writing articles, and reviewing resumes.
+- **📄 PDF Parsing:** Upload constraint-heavy PDF documents (e.g., Resumes/CVs) to safely analyze and extract deep insights.
+- **🎨 Modern UI & UX:** Highly responsive design crafted with **React 19**, styled via **Tailwind CSS**, and utilizing sleek animations via **Framer Motion**.
+- **☁️ Cloud Storage & Media:** Robust and optimized image management directly integrated with **Cloudinary**.
+- **🗄️ Serverless Database:** Lightweight, lightning-fast edge database handling using **Neon (Serverless PostgreSQL)**.
 
-## Installation
+---
 
-To install the project dependencies, you need to run `npm install` in both the `client` and `server` directories.
+## 🛠️ Tech Stack
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository_url>
-    cd "Minor Project"
-    ```
+### Frontend (Client)
+- **Framework:** React.js (v19) via Vite
+- **Styling:** Tailwind CSS (v4)
+- **Routing:** React Router v7
+- **Animations:** Framer Motion
+- **Icons & Markdown:** Lucide React, React Markdown, React Simple Typewriter
+- **State/Notifications:** React Hot Toast
 
-2.  **Install Client Dependencies:**
-    ```bash
-    cd client
-    npm install
-    cd ..
-    ```
+### Backend (Server)
+- **Runtime & Framework:** Node.js, Express.js
+- **Database:** Serverless PostgreSQL via Neon (`@neondatabase/serverless`)
+- **Authentication:** `@clerk/express`
+- **File Handling:** Multer, Parse PDF (`pdf-parse`)
+- **Media API:** Cloudinary
+- **AI Integration:** OpenAI API SDK
 
-3.  **Install Server Dependencies:**
-    ```bash
-    cd server
-    npm install
-    cd ..
-    ```
+---
 
-## Environment Configuration
+## 📂 Project Structure
 
-This project requires environment variables which are not pushed to Git for security reasons. You will need to create a `.env` file in both the `client` and `server` directories.
-
-### Server Environment Variables
-
-Create a file named `.env` in the `server` directory and configure the following variables (ask the project owner for the exact values):
-
-```env
-# Example Server .env
-PORT=...
-MONGO_URI=...
-# Add other necessary backend secret keys here
+```text
+Minor Project
+├── client/                 # Frontend React Application
+│   ├── public/             # Static Assets
+│   ├── src/                
+│   │   ├── assets/         # Images, global styles
+│   │   ├── components/     # Reusable UI React components
+│   │   ├── pages/          # Full page layouts (Home, Dashboard, AI Tools, etc.)
+│   │   ├── App.jsx         # App Entry Component
+│   │   └── main.jsx        # Root Render Component
+│   ├── package.json        
+│   └── vite.config.js      
+├── server/                 # Backend Express API Server
+│   ├── configs/            # Configuration for Database and Media APIs
+│   ├── controllers/        # Logical controllers (userController, aiController)
+│   ├── middlewares/        # Custom Authentication & request validators
+│   ├── routes/             # Express API Endpoints (userRoutes, aiRoutes)
+│   ├── server.js           # Server Entry Point
+│   └── package.json        
+└── README.md
 ```
 
-### Client Environment Variables
+---
 
-Create a file named `.env` in the `client` directory and configure the following variables:
+## 🚀 Getting Started
+
+Follow the instructions below to install and run the application on your local machine.
+
+### Prerequisites
+
+Ensure you have the following installed to run this project smoothly:
+* Node.js (v18.x or later)
+* npm (Node Package Manager)
+* PostgreSQL Instance or Neon Account
+* Cloudinary API Credentials
+* Clerk Auth Credentials
+* OpenAI API Key
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository_url>
+   cd "Minor Project"
+   ```
+
+2. **Install Client Dependencies:**
+   ```bash
+   cd client
+   npm install
+   ```
+
+3. **Install Server Dependencies:**
+   ```bash
+   cd ../server
+   npm install
+   ```
+
+---
+
+## ⚙️ Environment Configuration
+
+This project requires environment variables which are not pushed to the repository for security reasons. You will need to create a `.env` file in both the `client` and `server` directories.
+
+### Server Environment Variables (`server/.env`)
 
 ```env
-# Example Client .env
-VITE_API_URL=http://localhost:<server_port>
-# Add other necessary frontend variables here
+PORT=5000
+
+# Database URL (Neon PostgreSQL connection string)
+DATABASE_URL=postgres://<user>:<password>@<host>/<database>?sslmode=require
+
+# Clerk Keys
+CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+
+# Cloudinary Integration
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# OpenAI Key
+OPENAI_API_KEY=sk-...
 ```
 
-## Running the Application
+### Client Environment Variables (`client/.env`)
+
+```env
+VITE_API_URL=http://localhost:5000
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
+```
+*(Make sure to match the client's Clerk publishable key with the server's)*
+
+---
+
+## 💻 Running the Application
 
 You need to run both the frontend (client) and the backend (server) concurrently.
 
-1.  **Start the Backend Server:**
-    Open a terminal, navigate to the `server` directory, and start the development server:
-    ```bash
-    cd server
-    npm run dev  # or npm run server (depending on your package.json scripts)
-    ```
+1. **Start the Backend Server:**
+   Open a terminal, navigate to the `server` directory, and run:
+   ```bash
+   cd server
+   npm run dev       # or npm start
+   ```
 
-2.  **Start the Frontend Client:**
-    Open a second terminal, navigate to the `client` directory, and start the React app:
-    ```bash
-    cd client
-    npm run dev
-    ```
+2. **Start the Frontend Client:**
+   Open a second terminal, navigate to the `client` directory, and start the app:
+   ```bash
+   cd client
+   npm run dev
+   ```
 
-The client application should now be accessible in your browser (typically at http://localhost:5173).
+The client application should now be accessible in your browser at `http://localhost:5173`.
 
-## Useful Commands
+---
+
+## 📜 Available Scripts
+
+### In the `client` directory:
+- `npm run dev` : Starts the Vite development server.
+- `npm run build` : Builds the React frontend for production.
+- `npm run lint` : Lints codebase using ESLint.
+
+### In the `server` directory:
+- `npm run server` : Starts the Server with nodemon (auto-reloads on edits).
+- `npm start` : Starts the Server directly with basic Node runtime.
+Commands
 
 *   `npm run build` (in the `client` folder) to build the client for production.
 
