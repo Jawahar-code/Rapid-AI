@@ -33,6 +33,7 @@ const BlogTitles = () => {
 
       if (data.success) {
         setContent(data.content)
+        toast.success('Titles generated successfully!')
       } else {
         toast.error(data.message)
       }

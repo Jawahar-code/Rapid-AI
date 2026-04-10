@@ -27,6 +27,7 @@ const RemoveBackground = () => {
 
       if (data.success) {
         setContent(data.content)
+        toast.success('Background removed successfully!')
       } else {
         toast.error(data.message)
       }

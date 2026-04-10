@@ -33,6 +33,7 @@ const RemoveObject = () => {
 
       if (data.success) {
         setContent(data.content)
+        toast.success('Object removed successfully!')
       } else {
         toast.error(data.message)
       }

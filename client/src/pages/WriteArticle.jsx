@@ -34,6 +34,7 @@ const WriteArticle = () => {
 
       if (data.success) {
         setContent(data.content)
+        toast.success('Article generated successfully!')
       } else {
         toast.error(data.message)
       }

@@ -34,6 +34,7 @@ const GenerateImages = () => {
 
       if (data.success) {
         setContent(data.content)
+        toast.success('Image generated successfully!')
       } else {
         toast.error(data.message)
       }
