@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # Rapid-AI
- A full-stack AI-integrated platform built with React and Express. Features secure authentication via Clerk, PDF parsing capabilities, and AI-driven responses using OpenAI. Powered by a Neon PostgreSQL database and Cloudinary for media management.
+A full-stack AI-integrated platform built with React and Express. Features secure authentication via Clerk, PDF parsing capabilities, and AI-driven responses using OpenAI. Powered by a Neon PostgreSQL database and Cloudinary for media management.
 =======
 # 🚀 AI-Powered Minor Project
 
@@ -94,4 +93,4 @@ The client application should now be accessible in your browser (typically at ht
 ## Useful Commands
 
 *   `npm run build` (in the `client` folder) to build the client for production.
->>>>>>> 41a5041 (Initial commit: Major MERN stack setup with AI integration)
+
