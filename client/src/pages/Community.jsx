@@ -54,7 +54,7 @@ const Community = () => {
 
     return !loading ? (
         <div className='flex-1 h-full flex flex-col gap-4 p-6'>
-            <h1 className='text-2xl font-light text-slate-70'>Creations</h1>
+            <h1 className='text-2xl font-semibold text-slate-70'>Creations</h1>
             <div className='bg-white h-full w-full rounded-xl overflow-y-scroll'>
                 {
                     (
