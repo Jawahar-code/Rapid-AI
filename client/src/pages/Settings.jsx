@@ -36,7 +36,7 @@ const Settings = () => {
     }, [user])
 
     const isPremium = user?.publicMetadata?.plan === 'premium';
-    const remainingCredits = 10 - creationsCount;
+    const remainingCredits = Math.max(0, 10 - creationsCount);
 
     const handleOpenProfile = () => {
         try {
@@ -188,7 +188,7 @@ const Settings = () => {
                             <div>
                                 <p className='text-sm font-medium text-slate-700 dark:text-slate-200'>Session Management</p>
                                 <p className='text-xs text-slate-500 dark:text-slate-400 mt-0.5'>View and revoke active sessions</p>
-                            </div>
+                            </div>  
                             <button
                                 onClick={handleOpenProfile}
                                 className='text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition cursor-pointer'
