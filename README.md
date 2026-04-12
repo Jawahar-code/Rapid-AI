@@ -1,4 +1,4 @@
-# 🚀 Rapid-AI — AI-Powered Content Creation Platform
+# 🚀 Rapid-AI Powered Content Creation Platform
 
 > A full-stack SaaS platform that combines **6 powerful AI tools** into a single, beautifully designed workspace — from article generation to image editing, all powered by Google Gemini & Cloudinary.
 
