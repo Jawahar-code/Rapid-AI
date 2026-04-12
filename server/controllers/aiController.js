@@ -6,7 +6,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const pdf = require('pdf-parse');
+
 
 const AI = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -185,7 +185,9 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: 'Resume file size exceeds allowed size (5MB).' })
         }
 
+        const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(resume.path);
+
         const pdfData = await pdf(dataBuffer);
         // pdfData.text contains the extracted text
 
