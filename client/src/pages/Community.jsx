@@ -8,10 +8,12 @@ import { toast } from 'react-hot-toast';
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const Community = () => {
-
-    const [creations, setCreations] = useState([])
+    const [creations, setCreations] = useState(() => {
+        const cached = localStorage.getItem('community_creations');
+        return cached ? JSON.parse(cached) : [];
+    })
     const { user } = useUser()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(!creations.length)
     const { getToken } = useAuth()
 
     const fetchCreations = async () => {
@@ -21,6 +23,7 @@ const Community = () => {
             })
             if (data.success) {
                 setCreations(data.creations)
+                localStorage.setItem('community_creations', JSON.stringify(data.creations));
             } else {
                 toast.error(data.message)
             }
@@ -53,20 +56,31 @@ const Community = () => {
     }, [user])
 
     return !loading ? (
-        <div className='flex-1 h-full flex flex-col gap-4 p-6'>
-            <h1 className='text-2xl font-semibold text-slate-70'>Creations</h1>
-            <div className='bg-white h-full w-full rounded-xl overflow-y-scroll'>
+        <div className='flex-1 h-full flex flex-col gap-4 p-6 overflow-y-scroll'>
+            <div className='flex items-center justify-between'>
+                <h1 className='text-2xl font-semibold text-slate-800 dark:text-white'>Community Showcase</h1>
+                <p className='text-sm text-slate-500 dark:text-slate-400'>{creations.length} creations shared</p>
+            </div>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-6'>
                 {
-                    (
+                    creations.length === 0 ? (
+                        <div className='col-span-3 flex flex-col items-center justify-center h-64 text-slate-400 dark:text-slate-500 gap-4'>
+                            <p className='text-lg'>No community creations yet!</p>
+                            <p className='text-sm'>Be the first to publish an AI-generated image</p>
+                        </div>
+                    ) : (
                         creations.map((creation, index) => (
-                            <div key={index} className='relative group inline-block pl-3 pt-3 w-full sm:max-w-1/2 lg:max-w-1/3'>
-                                <img src={creation.content} alt="" className='w-full h-full object-cover rounded-lg' />
+                            <div key={index} className='relative group rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all'>
+                                <img src={creation.content} alt={creation.prompt} className='w-full aspect-square object-cover' />
 
-                                <div className='absolute bottom-0 top-0 right-0 left-3 flex gap-2 items-end justify-end group-hover:justify-between p-3 group-hover:bg-linear-to-b from-transparent to-black/60 text-white rounded-lg'>
-                                    <p className='text-sm hidden group-hover:block'>{creation.prompt}</p>
-                                    <div className='flex gap-1 items-center'>
-                                        <p>{creation.likes.length}</p>
-                                        <Heart onClick={() => imageLikeToggle(creation.id)} className={`min-w-5 h-5 hover:scale-110 cursor-pointer ${creation.likes?.includes(user?.id) ? 'fill-red-500 text-red-600' : 'text-white'}`} />
+                                <div className='absolute bottom-0 left-0 right-0 flex gap-2 items-end justify-between p-3 bg-linear-to-t from-black/70 to-transparent text-white opacity-0 group-hover:opacity-100 transition-all duration-300'>
+                                    <p className='text-xs line-clamp-2 flex-1'>{creation.prompt}</p>
+                                    <div className='flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-2.5 py-1.5 rounded-full shrink-0'>
+                                        <p className='text-sm font-medium'>{creation.likes.length}</p>
+                                        <Heart
+                                            onClick={() => imageLikeToggle(creation.id)}
+                                            className={`min-w-4 h-4 hover:scale-125 cursor-pointer transition-transform ${creation.likes?.includes(user?.id) ? 'fill-red-500 text-red-500' : 'text-white'}`}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +91,13 @@ const Community = () => {
         </div>
     ) :
         (
-            <div className='flex justify-center items-center h-full '>
-                <span className='w-10 h-10 my-1 rounded-full border-3 border-primary border-t-transparent animate-spin'></span>
+            <div className='p-6 w-full'>
+                <h1 className='text-2xl font-semibold text-slate-800 dark:text-white mb-4'>Community Showcase</h1>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+                    {[1,2,3,4,5,6].map(i => (
+                        <div key={i} className='animate-pulse rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 aspect-square shadow-sm'></div>
+                    ))}
+                </div>
             </div>
         )
 }

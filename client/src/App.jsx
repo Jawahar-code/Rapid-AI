@@ -10,15 +10,25 @@ import RemoveBackground from './pages/RemoveBackground'
 import RemoveObject from './pages/RemoveObject'
 import ReviewResume from './pages/ReviewResume'
 import Community from './pages/Community'
+import Settings from './pages/Settings'
 import { useAuth } from '@clerk/react'
 import { useEffect } from 'react'
 import {Toaster} from 'react-hot-toast';
+import { useTheme } from './context/ThemeContext';
 
 const App = () => {
-   
+   const { theme } = useTheme();
+
   return (
-    <div>
-      <Toaster/>
+    <div className='bg-white dark:bg-slate-900 min-h-screen text-slate-800 dark:text-slate-200 transition-colors duration-300'>
+      <Toaster 
+        toastOptions={{
+          style: {
+            background: theme === 'dark' ? '#1e293b' : '#fff',
+            color: theme === 'dark' ? '#f8fafc' : '#0f172a',
+          }
+        }} 
+      />
       <Routes>
         <Route path='/' element={<Home />}/> 
         <Route path='/ai' element={<Layout />}>
@@ -30,6 +40,7 @@ const App = () => {
           <Route path='remove-object' element={<RemoveObject />} />
           <Route path='review-resume' element={<ReviewResume />} />
           <Route path='community' element={<Community />} />
+          <Route path='settings' element={<Settings />} />
         </Route>
       </Routes>
     </div>

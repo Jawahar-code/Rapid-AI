@@ -1,65 +1,132 @@
-# 🚀 Rapid-AI (Minor Project)
+# 🚀 Rapid-AI — AI-Powered Content Creation Platform
 
-![Project Banner](https://via.placeholder.com/1000x300?text=Rapid-AI+Banner)
+> A full-stack SaaS platform that combines **6 powerful AI tools** into a single, beautifully designed workspace — from article generation to image editing, all powered by Google Gemini & Cloudinary.
 
-A sophisticated full-stack AI-integrated web platform that combines the power of **Generative AI** with a modern, secure, and responsive web architecture.
-
-This project offers an ecosystem of various AI tools, ranging from text generation to document parsing and image manipulation, all wrapped inside a beautiful UI with seamless authentication.
+> 🔗 **Live Demo:** [https://your-project-url.vercel.app](https://your-project-url.vercel.app)
 
 ---
 
-## 🌟 Key Features
+## ✨ Platform Highlights
 
-- **🔐 Secure Authentication:** Complete user management, protected routes, and session handling powered by [Clerk](https://clerk.com/).
-- **🤖 Comprehensive AI Tools:** Leverages [OpenAI](https://openai.com/) to process intelligent queries, including generating blog titles, writing articles, and reviewing resumes.
-- **📄 PDF Parsing:** Upload constraint-heavy PDF documents (e.g., Resumes/CVs) to safely analyze and extract deep insights.
-- **🎨 Modern UI & UX:** Highly responsive design crafted with **React 19**, styled via **Tailwind CSS**, and utilizing sleek animations via **Framer Motion**.
-- **☁️ Cloud Storage & Media:** Robust and optimized image management directly integrated with **Cloudinary**.
-- **🗄️ Serverless Database:** Lightweight, lightning-fast edge database handling using **Neon (Serverless PostgreSQL)**.
+| Feature | Description |
+|---------|-------------|
+| 🤖 **6 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, Resume Reviewer |
+| 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts |
+| 🔐 **Clerk Authentication** | Secure sign-in/sign-up, session management, user metadata, and Stripe-integrated billing |
+| 💳 **Freemium Model** | 10 free credits for new users, unlimited for Premium subscribers |
+| 📊 **Analytics Dashboard** | Real-time creation tracking, 7-day activity chart (Premium), and localStorage caching for instant loads |
+| 🌐 **Community Gallery** | Share AI-generated images publicly, like/unlike system with real-time updates |
+| 🎬 **Watch Demo** | Embedded video modal with glassmorphic overlay directly on the landing page |
+| ⚡ **Studio Layout** | Fixed sidebar & header with independently scrollable content — feels like a native desktop app |
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend (Client)
-- **Framework:** React.js (v19) via Vite
-- **Styling:** Tailwind CSS (v4)
-- **Routing:** React Router v7
-- **Animations:** Framer Motion
-- **Icons & Markdown:** Lucide React, React Markdown, React Simple Typewriter
-- **State/Notifications:** React Hot Toast
+### Frontend
+| Technology | Purpose |
+|-----------|---------|
+| **React 19** + **Vite** | Lightning-fast SPA framework |
+| **Tailwind CSS v4** | Utility-first styling with dark mode support |
+| **React Router v7** | Client-side routing & nested layouts |
+| **Clerk React** | Authentication UI components & hooks |
+| **Framer Motion** | Accordion animations in Dashboard |
+| **Recharts** | Analytics area charts (Premium dashboard) |
+| **Lucide React** | Consistent icon system |
+| **React Markdown** | AI-generated article rendering |
+| **React Simple Typewriter** | Hero section typing animation |
+| **React Hot Toast** | Toast notifications |
+| **Axios** | HTTP client for API communication |
 
-### Backend (Server)
-- **Runtime & Framework:** Node.js, Express.js
-- **Database:** Serverless PostgreSQL via Neon (`@neondatabase/serverless`)
-- **Authentication:** `@clerk/express`
-- **File Handling:** Multer, Parse PDF (`pdf-parse`)
-- **Media API:** Cloudinary
-- **AI Integration:** OpenAI API SDK
+### Backend
+| Technology | Purpose |
+|-----------|---------|
+| **Node.js** + **Express** | REST API server |
+| **Neon PostgreSQL** | Serverless database for creations & user data |
+| **Clerk Express** | JWT-based route protection & user metadata |
+| **OpenAI SDK** | Interface to Google Gemini 3 Flash model |
+| **Cloudinary** | Cloud image storage & transformation |
+| **Multer** | Multipart file upload handling |
+| **pdf-parse** | Resume PDF text extraction |
 
 ---
 
-## 📂 Project Structure
+## 🧩 AI Tools Overview
 
-```text
-Minor Project
-├── client/                 # Frontend React Application
-│   ├── public/             # Static Assets
-│   ├── src/                
-│   │   ├── assets/         # Images, global styles
-│   │   ├── components/     # Reusable UI React components
-│   │   ├── pages/          # Full page layouts (Home, Dashboard, AI Tools, etc.)
-│   │   ├── App.jsx         # App Entry Component
-│   │   └── main.jsx        # Root Render Component
-│   ├── package.json        
-│   └── vite.config.js      
-├── server/                 # Backend Express API Server
-│   ├── configs/            # Configuration for Database and Media APIs
-│   ├── controllers/        # Logical controllers (userController, aiController)
-│   ├── middlewares/        # Custom Authentication & request validators
-│   ├── routes/             # Express API Endpoints (userRoutes, aiRoutes)
-│   ├── server.js           # Server Entry Point
-│   └── package.json        
+### ✍️ Article Writer
+Generate long-form, high-quality articles on any topic. Choose between **Short**, **Medium**, and **Long** lengths. Output is rendered as rich Markdown with proper headings, paragraphs, and lists.
+
+### #️⃣ Blog Title Generator
+Enter a topic and receive **8-10 creative, SEO-optimized blog title suggestions** — perfect for content strategists and bloggers.
+
+### 🖼️ Image Generation
+Describe your vision in a detailed prompt, select a style preset (Realistic, Anime, Ghibli, etc.), and generate AI-powered images. Toggle **Public** to share with the Community.
+
+### 🧹 Background Removal
+Upload any image and the AI isolates the subject by removing the background entirely — ideal for product photos and profile pictures.
+
+### ✂️ Object Removal
+Upload an image and describe the object to remove. The AI intelligently fills in the gap, producing a clean result.
+
+### 📄 Resume Reviewer
+Upload a PDF resume and receive a detailed AI-powered analysis covering structure, content quality, keyword optimization, and improvement suggestions.
+
+---
+
+## 🏗️ Project Structure
+
+```
+Minor Project/
+├── client/                          # React Frontend
+│   ├── public/                      # Static assets (gradient bg, favicon)
+│   ├── src/
+│   │   ├── assets/                  # Images, icons, tool data definitions
+│   │   ├── components/              # Reusable UI components
+│   │   │   ├── Navbar.jsx           # Landing page glassmorphic navbar
+│   │   │   ├── Hero.jsx             # Hero section with typewriter + video modal
+│   │   │   ├── Sidebar.jsx          # Dashboard sidebar navigation
+│   │   │   ├── Ai_Tools.jsx         # AI tools grid for landing page
+│   │   │   ├── CreationItem.jsx     # Expandable creation card (accordion)
+│   │   │   ├── Testimonial.jsx      # Infinite marquee testimonials
+│   │   │   ├── Plan.jsx             # Clerk PricingTable integration
+│   │   │   ├── FAQ.jsx              # Expandable FAQ section
+│   │   │   ├── Footer.jsx           # Multi-column footer
+│   │   │   └── ThemeToggle.jsx      # Light/Dark mode toggle
+│   │   ├── context/
+│   │   │   └── ThemeContext.jsx      # Theme provider (localStorage persisted)
+│   │   ├── pages/
+│   │   │   ├── Home.jsx             # Landing page (all sections composed)
+│   │   │   ├── Layout.jsx           # Authenticated app shell (header + sidebar + outlet)
+│   │   │   ├── Dashboard.jsx        # Analytics, stats, recent creations
+│   │   │   ├── WriteArticle.jsx     # Article generation tool
+│   │   │   ├── BlogTitles.jsx       # Blog title generation tool
+│   │   │   ├── GenerateImages.jsx   # AI image generation tool
+│   │   │   ├── RemoveBackground.jsx # Background removal tool
+│   │   │   ├── RemoveObject.jsx     # Object eraser tool
+│   │   │   ├── ReviewResume.jsx     # PDF resume analysis tool
+│   │   │   ├── Community.jsx        # Public gallery with like system
+│   │   │   └── Settings.jsx         # Account, billing, appearance, security
+│   │   ├── App.jsx                  # Route definitions
+│   │   └── main.jsx                 # Root render with Clerk & Theme providers
+│   ├── package.json
+│   └── vite.config.js
+│
+├── server/                          # Express Backend
+│   ├── configs/
+│   │   ├── db.js                    # Neon PostgreSQL connection
+│   │   └── cloudinary.js            # Cloudinary SDK configuration
+│   ├── controllers/
+│   │   ├── aiController.js          # AI generation logic (all 6 tools)
+│   │   └── userController.js        # User creations & community endpoints
+│   ├── middlewares/
+│   │   └── auth.js                  # JWT validation, plan checking, credit sync
+│   ├── routes/
+│   │   ├── aiRoutes.js              # POST routes for AI tools
+│   │   └── userRoutes.js            # GET/POST routes for user data
+│   ├── server.js                    # Express app entry point
+│   └── package.json
+│
+├── dev-log.txt                      # Detailed development journal (33 entries)
 └── README.md
 ```
 
@@ -67,108 +134,138 @@ Minor Project
 
 ## 🚀 Getting Started
 
-Follow the instructions below to install and run the application on your local machine.
-
 ### Prerequisites
 
-Ensure you have the following installed to run this project smoothly:
-* Node.js (v18.x or later)
-* npm (Node Package Manager)
-* PostgreSQL Instance or Neon Account
-* Cloudinary API Credentials
-* Clerk Auth Credentials
-* OpenAI API Key
+- **Node.js** v18.x or later
+- **npm** (comes with Node.js)
+- A [Neon](https://neon.tech/) PostgreSQL database
+- A [Clerk](https://clerk.com/) application (with Pricing Table configured)
+- A [Cloudinary](https://cloudinary.com/) account
+- A [Google AI Studio](https://aistudio.google.com/) API key (Gemini)
 
-### Installation
+### 1. Clone & Install
 
-1. **Clone the repository:**
-   ```bash
-   git clone <repository_url>
-   cd "Minor Project"
-   ```
+```bash
+git clone <repository_url>
+cd "Minor Project"
 
-2. **Install Client Dependencies:**
-   ```bash
-   cd client
-   npm install
-   ```
+# Install frontend dependencies
+cd client
+npm install
 
-3. **Install Server Dependencies:**
-   ```bash
-   cd ../server
-   npm install
-   ```
+# Install backend dependencies
+cd ../server
+npm install
+```
 
----
+### 2. Environment Variables
 
-## ⚙️ Environment Configuration
+Create `.env` files in both directories:
 
-This project requires environment variables which are not pushed to the repository for security reasons. You will need to create a `.env` file in both the `client` and `server` directories.
-
-### Server Environment Variables (`server/.env`)
-
+**`server/.env`**
 ```env
-PORT=5000
+PORT=3000
 
-# Database URL (Neon PostgreSQL connection string)
+# Neon PostgreSQL
 DATABASE_URL=postgres://<user>:<password>@<host>/<database>?sslmode=require
 
-# Clerk Keys
+# Clerk
 CLERK_PUBLISHABLE_KEY=pk_test_...
 CLERK_SECRET_KEY=sk_test_...
 
-# Cloudinary Integration
+# Cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-# OpenAI Key
-OPENAI_API_KEY=sk-...
+# Google Gemini (via OpenAI SDK)
+GEMINI_API_KEY=your_gemini_api_key
+
+# ClipDrop (Image Processing)
+CLIPDROP_API_KEY=your_clipdrop_api_key
 ```
 
-### Client Environment Variables (`client/.env`)
-
+**`client/.env`**
 ```env
-VITE_API_URL=http://localhost:5000
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
+VITE_BASE_URL=http://localhost:3000
 ```
-*(Make sure to match the client's Clerk publishable key with the server's)*
 
----
+### 3. Database Setup
 
-## 💻 Running the Application
+Run this SQL in your Neon console to create the `creations` table:
 
-You need to run both the frontend (client) and the backend (server) concurrently.
+```sql
+CREATE TABLE creations (
+    id SERIAL PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    prompt TEXT,
+    content TEXT,
+    type TEXT,
+    publish BOOLEAN DEFAULT FALSE,
+    likes TEXT[] DEFAULT '{}',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    update_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
 
-1. **Start the Backend Server:**
-   Open a terminal, navigate to the `server` directory, and run:
-   ```bash
-   cd server
-   npm run dev       # or npm start
-   ```
+### 4. Run the Application
 
-2. **Start the Frontend Client:**
-   Open a second terminal, navigate to the `client` directory, and start the app:
-   ```bash
-   cd client
-   npm run dev
-   ```
+```bash
+# Terminal 1 — Backend
+cd server
+npm run server
 
-The client application should now be accessible in your browser at `http://localhost:5173`.
+# Terminal 2 — Frontend
+cd client
+npm run dev
+```
+
+Open **http://localhost:5173** in your browser.
 
 ---
 
 ## 📜 Available Scripts
 
-### In the `client` directory:
-- `npm run dev` : Starts the Vite development server.
-- `npm run build` : Builds the React frontend for production.
-- `npm run lint` : Lints codebase using ESLint.
+| Directory | Command | Description |
+|-----------|---------|-------------|
+| `client/` | `npm run dev` | Start Vite dev server (HMR enabled) |
+| `client/` | `npm run build` | Build production bundle |
+| `client/` | `npm run lint` | Lint with ESLint |
+| `server/` | `npm run server` | Start with Nodemon (auto-restart) |
+| `server/` | `npm start` | Start with plain Node.js |
 
-### In the `server` directory:
-- `npm run server` : Starts the Server with nodemon (auto-reloads on edits).
-- `npm start` : Starts the Server directly with basic Node runtime.
-Commands
+---
 
-*   `npm run build` (in the `client` folder) to build the client for production.
+## 🎨 Design System
 
+- **Color Palette**: Slate (backgrounds), Primary purple (#5044E1), accent gradients per tool
+- **Typography**: System font stack with semibold headings
+- **Dark Mode**: Full support with `dark:` Tailwind utilities, 300ms synchronized transitions
+- **Glassmorphism**: Applied to Navbar, Sidebar, and modal overlays (`backdrop-blur-lg`, `bg-white/20`)
+- **Layout Pattern**: Fixed header + fixed sidebar + scrollable content area ("Studio Mode")
+- **Animations**: Framer Motion accordions, CSS keyframe modals, Typewriter hero text
+
+---
+
+## 🔒 Authentication & Credit System
+
+| Plan | Credits | Analytics | Features |
+|------|---------|-----------|----------|
+| **Free** | 10 generations | Recent Creations only | All 6 AI tools |
+| **Premium** | Unlimited | Full 7-day activity chart | All 6 AI tools + priority |
+
+- Credits are tracked via **database row count** (source of truth), synced to Clerk `publicMetadata` for instant UI display.
+- The auth middleware automatically reconciles metadata on every authenticated request.
+
+---
+
+## 📄 License
+
+This project is developed as a **Minor Project** for B.Tech CSE (6th Semester). 
+
+---
+
+<p align="center">
+  Built with ❤️ using React, Express, Gemini AI & Neon PostgreSQL
+</p>

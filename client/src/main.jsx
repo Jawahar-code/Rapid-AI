@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/react'
 import React from 'react'
 
+import { ThemeProvider } from './context/ThemeContext.jsx'
+
 if (import.meta.hot) {
   import.meta.hot.accept(() => {
     location.reload();
@@ -21,7 +23,9 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')).render(
   <ClerkProvider publishableKey={PUBLISHABLE_KEY} signInForceRedirectUrl='/' >
     <BrowserRouter>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </ClerkProvider>,
 )
