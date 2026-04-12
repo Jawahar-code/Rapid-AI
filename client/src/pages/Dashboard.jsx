@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { Sparkles, Gem, Activity } from 'lucide-react'
 import { useAuth, useUser } from '@clerk/react'
+import { useOutletContext } from 'react-router-dom'
 import CreationItem from '../components/CreationItem'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -18,13 +19,12 @@ const SkeletonLoader = () => (
 
 const Dashboard = () => {
   const { getToken } = useAuth()
-  const { user } = useUser()
+  const { plan } = useOutletContext();
 
   const [creations, setCreations] = useState(() => {
     const cached = localStorage.getItem('dashboard_creations');
     return cached ? JSON.parse(cached) : [];
   })
-  const [plan, setPlan] = useState(user?.publicMetadata?.plan || 'free')
   const [loading, setLoading] = useState(!creations.length)
 
   const getDashboardData = async () => {
@@ -37,9 +37,6 @@ const Dashboard = () => {
 
       if (data.success) {
         setCreations(data.creations)
-        if (data.plan) {
-          setPlan(data.plan)
-        }
         localStorage.setItem('dashboard_creations', JSON.stringify(data.creations));
       } else {
         toast.error(data.message)

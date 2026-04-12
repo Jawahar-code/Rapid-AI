@@ -6,21 +6,21 @@ const Testimonial = () => {
             image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200',
             name: 'Amy Smith',
             handle: '@amy_ai',
-            date: 'March 12, 2026',
+            date: 'March 20, 2026',
             content: "The AI Article Generator is a lifesaver. I drafted a 2000-word blog post in under 10 minutes. The flow is so natural!"
         },
         {
             image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200',
             name: 'Dan Cook',
             handle: '@dan_creates',
-            date: 'March 14, 2026',
+            date: 'March 24, 2026',
             content: "I've tried many AI image tools, but Rapid.ai's Image Creator understands complex prompts way better. My workflow is 2x faster."
         },
         {
             image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200',
             name: 'Lisa Ray',
             handle: '@lisa_jobs',
-            date: 'March 15, 2026',
+            date: 'March 28, 2026',
             content: "The Resume Analyzer gave me specific keywords I was missing. I got three interview calls the same week I updated my CV!"
         }
     ];
@@ -30,21 +30,21 @@ const Testimonial = () => {
             image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200',
             name: 'Mark Bell',
             handle: '@mark_pro',
-            date: 'March 18, 2026',
+            date: 'March 15, 2026',
             content: "The Background Remover is pixel-perfect. It handles hair and transparent objects effortlessly. Best tool in my stack."
         },
         {
             image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200',
             name: 'Emma Hall',
             handle: '@emma_writes',
-            date: 'March 19, 2026',
+            date: 'March 31, 2026',
             content: "Generating blog titles used to be so hard. Now I get 10 great ideas in seconds. Rapid.ai is truly impressive!"
         },
         {
             image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200',
             name: 'Sam West',
             handle: '@sam_tech',
-            date: 'March 20, 2026',
+            date: 'April 2, 2026',
             content: "As a developer, I love how clean the UI is. Everything just works exactly how you expect it to. Highly recommended."
         }
     ];

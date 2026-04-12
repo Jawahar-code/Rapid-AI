@@ -1,4 +1,5 @@
 import { useClerk, useUser } from '@clerk/react'
+import Protect from './Protect'
 import { Eraser, FileText, Hash, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings } from 'lucide-react'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -15,7 +16,7 @@ const navItems = [
     { to: '/ai/settings', label: 'Settings', Icon: Settings },
 ]
 
-const Sidebar = ({ sidebar, setSidebar }) => {
+const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
 
     const { user } = useUser()
     const { signOut, openUserProfile } = useClerk()
@@ -55,7 +56,12 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                         <div>
                             <h1 className='text-sm font-medium text-slate-800 dark:text-slate-200'>{user.fullName}</h1>
                             <p className='text-xs text-gray-500 dark:text-gray-400'>
-                                {user?.publicMetadata?.plan === 'premium' ? 'Premium' : 'Free'} Plan
+                                <Protect 
+                                    condition={plan === 'premium'}
+                                    fallback={<span>Free Plan</span>}
+                                >
+                                    <span>Premium Plan</span>
+                                </Protect>
                             </p>
                         </div>
                     </div>

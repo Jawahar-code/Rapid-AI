@@ -4,29 +4,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
     {
-        question: "How many free credits do I get?",
-        answer: "Every new user starts with 10 free credits. On the Free Plan, you can explore the Article Generator and Blog Title generator. For advanced tools like Image Generation, Background Removal, and Resume Review, an upgrade to Premium is required."
+        question: "What's included in the Free Plan?",
+        answer: "The Free Plan provides 10 starter credits and includes access to our Article Generator and Blog Title generator tools. Advanced features like Image Generation, Background Removal, and Resume Review are exclusive to Premium users."
     },
     {
         question: "What happens when I upgrade to Premium?",
-        answer: "Premium users unlock unlimited access to all AI tools, including Image Generation, Object Removal, and our AI Resume Reviewer. You also get priority processing and high-resolution exports."
+        answer: "Premium users unlock unlimited access to all AI tools, including Image Generation, Object Removal, and our AI Resume Reviewer. You also get priority processing and higher limits on content length."
     },
     {
         question: "Is my data and resume upload secure?",
-        answer: "Yes, your privacy is our priority. Rapid-AI uses secure processing for all file uploads and text generation. We do not use your private creations or resumes to train our models."
+        answer: "Absolutely. We prioritize your privacy. All file uploads and generated text are processed through secure encryption. Your personal creations and resumes are never used for model training without your permission."
     },
     {
-        question: "Can I use the generated images commercially?",
-        answer: "Yes, you have full commercial rights to any images or articles you generate using Rapid AI, including use for blogs, social media, and business projects."
+        question: "Can I use the generated content commercially?",
+        answer: "Yes! You have full commercial ownership of everything you create with Rapid-AI. This includes articles, blog titles, and images used for business, social media, or marketing."
     },
     {
-        question: "Can I cancel my subscription?",
-        answer: "Yes, you can manage and cancel your subscription anytime via your Settings page. You'll retain Premium access until the end of your current billing period."
+        question: "How do I manage my subscription?",
+        answer: "You can manage your plan, view billing history, or cancel your subscription at any time through the 'Settings' page or your Clerk account dashboard. Access continues until the end of your billing cycle."
     },
     {
-        question: "Which AI models power the platform?",
-        answer: "We use a combination of state-of-the-art models, including Google Gemini for high-quality text analysis and advanced diffusion models for professional image editing."
-    }
+        question: "Can I switch between plans?",
+        answer: "Of course! You can upgrade from Free to Premium instantly. If you choose to downgrade, your account will return to the Free tier at the end of your current paid period."
+    },
 ];
 
 const FAQ = () => {

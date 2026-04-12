@@ -13,7 +13,7 @@
 | 🤖 **6 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, Resume Reviewer |
 | 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts |
 | 🔐 **Clerk Authentication** | Secure sign-in/sign-up, session management, user metadata, and Stripe-integrated billing |
-| 💳 **Freemium Model** | 10 free credits for new users, unlimited for Premium subscribers |
+| 💳 **Subscription Model** | 10 free credits for new users, Premium plan for active subscribers |
 | 📊 **Analytics Dashboard** | Real-time creation tracking, 7-day activity chart (Premium), and localStorage caching for instant loads |
 | 🌐 **Community Gallery** | Share AI-generated images publicly, like/unlike system with real-time updates |
 | 🎬 **Watch Demo** | Embedded video modal with glassmorphic overlay directly on the landing page |

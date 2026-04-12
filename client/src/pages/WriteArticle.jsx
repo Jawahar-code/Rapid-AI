@@ -2,12 +2,15 @@ import { Edit, Sparkles } from 'lucide-react'
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useAuth } from '@clerk/react';
+import { useOutletContext } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import { toast } from 'react-hot-toast';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const WriteArticle = () => {
+
+  const { fetchUsageAndPlan } = useOutletContext();
 
   const articleLength = [
     { length: 800, text: 'Short(500-800 words)' },
@@ -35,6 +38,7 @@ const WriteArticle = () => {
       if (data.success) {
         setContent(data.content)
         toast.success('Article generated successfully!')
+        fetchUsageAndPlan();
       } else {
         toast.error(data.message)
       }
@@ -58,7 +62,7 @@ const WriteArticle = () => {
 
         <p className='mt-6 text-sm font-medium dark:text-slate-300'>Article Length</p>
 
-        <div className='mt-3 flex gap-3 flex-wrap sm:max-w-9/11'>
+        <div className='mt-3 flex gap-3 flex-wrap sm:max-w-[90%]'>
           {articleLength.map((item, index) => (
 
             <span onClick={() => setSelectedLength(item)}

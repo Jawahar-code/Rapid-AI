@@ -5,8 +5,7 @@ import { clerkClient } from "@clerk/express";
 export const getUserCreations = async (req, res) => {
     try {
         const { userId } = req.auth();
-        const plan = req.plan; // Get the plan verified by auth middleware
-
+        const plan = req.plan; // Get the plan verified by auth middleware.
         const creations = await sql`SELECT * FROM creations WHERE user_id = ${userId} ORDER BY created_at DESC`
 
         res.json({ success: true, creations, plan })
@@ -17,7 +16,7 @@ export const getUserCreations = async (req, res) => {
 
 export const getPublishedCreations = async (req, res) => {
     try {
- 
+
         const creations = await sql`SELECT * FROM creations WHERE publish = true ORDER BY created_at DESC`;
 
         res.json({ success: true, creations });
@@ -53,7 +52,7 @@ export const toggleLikeCreation = async (req, res) => {
 
         const formattedArray = `{${updatedLikes.join(',')}}`
 
-        await sql `UPDATE creations SET likes = ${formattedArray}::text[] WHERE id = ${id}`;
+        await sql`UPDATE creations SET likes = ${formattedArray}::text[] WHERE id = ${id}`;
 
         res.json({ success: true, message });
     } catch (error) {
@@ -64,9 +63,7 @@ export const toggleLikeCreation = async (req, res) => {
 export const syncPremiumStatus = async (req, res) => {
     try {
         const { userId } = req.auth();
-        
-        // This force-updates the metadata to premium
-        // We call this when the frontend detects an active subscription
+
         await clerkClient.users.updateUserMetadata(userId, {
             publicMetadata: { plan: "premium" }
         });
