@@ -2,7 +2,7 @@
 
 > A full-stack SaaS platform that combines **6 powerful AI tools** into a single, beautifully designed workspace — from article generation to image editing, all powered by Google Gemini & Cloudinary.
 
-> 🔗 **Live Demo:** [https://your-project-url.vercel.app](https://your-project-url.vercel.app)
+> 🔗 **Live Demo:** [https://rapid-ai-ten-rust.vercel.app/](https://rapid-ai-ten-rust.vercel.app/)
 
 ---
 
