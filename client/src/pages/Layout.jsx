@@ -42,6 +42,28 @@ const Layout = () => {
     }
   }, [user])
 
+  // --- AUTOMATIC SUBSCRIPTION SYNC ---
+  // If the frontend sees an active subscription but the plan state is still 'free',
+  // we force a sync with the backend to update metadata immediately.
+  useEffect(() => {
+    const checkAndSync = async () => {
+        const hasActiveSub = user?.subscriptionRecords?.some(sub => sub.status === 'active');
+        if (hasActiveSub && plan !== 'premium') {
+            try {
+                const { data } = await axios.post('/api/user/sync-premium', {}, {
+                    headers: { Authorization: `Bearer ${await getToken()}` }
+                });
+                if (data.success) {
+                    setPlan('premium');
+                }
+            } catch (error) {
+                console.error("Auto-sync failed:", error);
+            }
+        }
+    };
+    if (user) checkAndSync();
+  }, [user, plan]);
+
   const isPremium = plan === 'premium';
   const remainingCredits = 10 - creationsCount;
 

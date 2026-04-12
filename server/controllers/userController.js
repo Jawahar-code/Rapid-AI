@@ -1,4 +1,5 @@
 import sql from "../configs/db.js";
+import { clerkClient } from "@clerk/express";
 
 
 export const getUserCreations = async (req, res) => {
@@ -55,6 +56,22 @@ export const toggleLikeCreation = async (req, res) => {
         await sql `UPDATE creations SET likes = ${formattedArray}::text[] WHERE id = ${id}`;
 
         res.json({ success: true, message });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
+
+export const syncPremiumStatus = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        
+        // This force-updates the metadata to premium
+        // We call this when the frontend detects an active subscription
+        await clerkClient.users.updateUserMetadata(userId, {
+            publicMetadata: { plan: "premium" }
+        });
+
+        res.json({ success: true, plan: "premium" });
     } catch (error) {
         res.json({ success: false, message: error.message });
     }
