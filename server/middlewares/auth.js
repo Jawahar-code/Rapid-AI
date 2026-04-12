@@ -8,17 +8,30 @@ export const auth = async (req, res, next) => {
         const { userId } = req.auth();
         const user = await clerkClient.users.getUser(userId); 
         
-        // Use a more robust check for premium status
-        // First check metadata, then check native Clerk subscription records if available
+        // 1. Check standard metadata
         let hasPremiumplan = user.publicMetadata?.plan === 'premium';
         
-        // Self-Healing Logic: If Clerk shows active subscription but metadata is missing
-        // This handles cases where the user just bought a plan but the metadata hasn't synced
-        if (!hasPremiumplan && user.subscriptionRecords) {
-            const hasActiveSub = user.subscriptionRecords.some(sub => sub.status === 'active');
-            if (hasActiveSub) {
+        // 2. Super-Discovery: Check all possible Clerk subscription locations
+        if (!hasPremiumplan) {
+            const allSubs = [
+                ...(user.subscriptionRecords || []),
+                ...(user.subscriptions || []),
+                ...(user.billing_subscriptions || []),
+                ...(user.external_accounts || [])
+            ];
+
+            const hasActiveStatus = allSubs.some(sub => 
+                ['active', 'trialing', 'pro', 'premium'].includes(sub.status?.toLowerCase()) ||
+                ['premium', 'pro'].includes(sub.plan?.toLowerCase())
+            );
+
+            // Fallback: Check if 'premium' exists anywhere in the metadata object string
+            const metadataString = JSON.stringify(user.publicMetadata || {}).toLowerCase();
+            const hasPremiumInMeta = metadataString.includes('premium') || metadataString.includes('pro');
+
+            if (hasActiveStatus || hasPremiumInMeta) {
                 hasPremiumplan = true;
-                // Sync metadata for future requests and frontend useUser() hook
+                // Force sync metadata so frontend UI catches up
                 await clerkClient.users.updateUserMetadata(userId, {
                     publicMetadata: { plan: 'premium' }
                 });
