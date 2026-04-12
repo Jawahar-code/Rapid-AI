@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUser, useClerk, useAuth } from '@clerk/react';
 import { Settings as SettingsIcon, User, Shield, CreditCard, LogOut, Zap, Sparkles, Palette, Crown } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 
@@ -9,33 +9,14 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const Settings = () => {
     const { user } = useUser();
-    const { getToken } = useAuth();
     const clerk = useClerk();
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const [creationsCount, setCreationsCount] = useState(user?.publicMetadata?.free_usage || 0);
+    
+    // Use unified state from Layout context
+    const { plan, creationsCount } = useOutletContext();
 
-    const fetchUsage = async () => {
-        try {
-            const { data } = await axios.get('/api/user/get-user-creations', {
-                headers: { Authorization: `Bearer ${await getToken()}` }
-            })
-            if (data.success) {
-                setCreationsCount(data.creations.length)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        if (user) {
-            setCreationsCount(user?.publicMetadata?.free_usage || 0)
-            fetchUsage()
-        }
-    }, [user])
-
-    const isPremium = user?.publicMetadata?.plan === 'premium';
+    const isPremium = plan === 'premium';
     const remainingCredits = Math.max(0, 10 - creationsCount);
 
     const handleOpenProfile = () => {
