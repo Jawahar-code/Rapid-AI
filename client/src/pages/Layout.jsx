@@ -16,6 +16,7 @@ const Layout = () => {
   const { user } = useUser()
   const { getToken } = useAuth()
   const [creationsCount, setCreationsCount] = useState(user?.publicMetadata?.free_usage || 0)
+  const [plan, setPlan] = useState(user?.publicMetadata?.plan || 'free')
 
   const fetchUsageAndPlan = async () => {
     try {
@@ -24,6 +25,9 @@ const Layout = () => {
       })
       if (data.success) {
         setCreationsCount(data.creations.length)
+        if (data.plan) {
+            setPlan(data.plan)
+        }
       }
     } catch (error) {
       console.log(error)
@@ -33,11 +37,12 @@ const Layout = () => {
   useEffect(() => {
     if (user) {
       setCreationsCount(user?.publicMetadata?.free_usage || 0)
+      setPlan(user?.publicMetadata?.plan || 'free')
       fetchUsageAndPlan()
     }
   }, [user])
 
-  const isPremium = user?.publicMetadata?.plan === 'premium';
+  const isPremium = plan === 'premium';
   const remainingCredits = 10 - creationsCount;
 
   return user ? (

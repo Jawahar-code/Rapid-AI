@@ -7,11 +7,21 @@ export const auth = async (req, res, next) => {
     try {
         const { userId } = req.auth();
         const user = await clerkClient.users.getUser(userId); 
+        const userEmail = user.emailAddresses?.[0]?.emailAddress;
+
+        // 1. Check all metadata locations (Public, Private, Unsafe)
+        const allMetadata = {
+            ...(user.publicMetadata || {}),
+            ...(user.privateMetadata || {}),
+            ...(user.unsafeMetadata || {})
+        };
         
-        // 1. Check standard metadata
-        let hasPremiumplan = user.publicMetadata?.plan === 'premium';
+        // 2. Manual Override List (Add friend's email here for immediate bypass)
+        const premiumEmails = ['premium-user@example.com', 'siddhaarth.verma@example.com']; // Temporary whitelist
         
-        // 2. Super-Discovery: Check all possible Clerk subscription locations
+        let hasPremiumplan = allMetadata.plan === 'premium' || allMetadata.role === 'premium' || premiumEmails.includes(userEmail);
+
+        // 3. Super-Discovery: Check all possible Clerk subscription locations
         if (!hasPremiumplan) {
             const allSubs = [
                 ...(user.subscriptionRecords || []),
@@ -21,12 +31,13 @@ export const auth = async (req, res, next) => {
             ];
 
             const hasActiveStatus = allSubs.some(sub => 
-                ['active', 'trialing', 'pro', 'premium'].includes(sub.status?.toLowerCase()) ||
+                ['active', 'trialing', 'pro', 'premium', 'Success'].includes(sub.status) ||
+                sub.status?.toLowerCase() === 'active' ||
                 ['premium', 'pro'].includes(sub.plan?.toLowerCase())
             );
 
-            // Fallback: Check if 'premium' exists anywhere in the metadata object string
-            const metadataString = JSON.stringify(user.publicMetadata || {}).toLowerCase();
+            // Deep scan for 'premium' keyword in all metadata values
+            const metadataString = JSON.stringify(allMetadata).toLowerCase();
             const hasPremiumInMeta = metadataString.includes('premium') || metadataString.includes('pro');
 
             if (hasActiveStatus || hasPremiumInMeta) {

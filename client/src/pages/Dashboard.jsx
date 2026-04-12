@@ -21,6 +21,7 @@ const Dashboard = () => {
     const cached = localStorage.getItem('dashboard_creations');
     return cached ? JSON.parse(cached) : [];
   })
+  const [plan, setPlan] = useState(user?.publicMetadata?.plan || 'free')
   const [loading, setLoading] = useState(!creations.length)
   const { getToken } = useAuth()
   const { user } = useUser()
@@ -35,6 +36,9 @@ const Dashboard = () => {
 
       if (data.success) {
         setCreations(data.creations)
+        if (data.plan) {
+            setPlan(data.plan)
+        }
         localStorage.setItem('dashboard_creations', JSON.stringify(data.creations));
       } else {
         toast.error(data.message)
@@ -74,6 +78,8 @@ const Dashboard = () => {
     return data;
   }, [creations]);
 
+  const isPremium = plan === 'premium';
+
   return (
     <div className='h-full overflow-y-scroll p-6 tracking-wide'>
       <div className='flex justify-start gap-4 flex-wrap'>
@@ -93,7 +99,7 @@ const Dashboard = () => {
           <div className='text-slate-600 dark:text-slate-400'>
             <p className='text-sm'>Active Plan</p>
             <h2 className='text-2xl font-semibold text-slate-800 dark:text-white mt-1'>
-              {user?.publicMetadata?.plan === 'premium' ? 'Premium' : 'Free'}
+              {isPremium ? 'Premium' : 'Free'}
             </h2>
           </div>
           <div className='w-12 h-12 rounded-xl bg-linear-to-br from-[#FF61C5] to-[#9E53EE] text-white flex justify-center items-center shadow-lg shadow-purple-500/20'>
@@ -115,7 +121,7 @@ const Dashboard = () => {
             <div className='mt-8'>
               
               {/* Analytics Chart - Premium only */}
-              {user?.publicMetadata?.plan === 'premium' && (
+              {isPremium && (
               <div className='max-w-5xl bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 shadow-sm mb-8'>
                 <div className='flex items-center gap-2 mb-6'>
                     <Activity className='w-5 h-5 text-primary' />
