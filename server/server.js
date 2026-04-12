@@ -13,6 +13,12 @@ connectCloudinary();
 
 app.use(cors())
 app.use(express.json())
+
+// Ensure Clerk keys exist to avoid startup crash
+if (!process.env.CLERK_SECRET_KEY) {
+    console.warn("WARNING: CLERK_SECRET_KEY is missing. Auth will fail.");
+}
+
 app.use(clerkMiddleware()) //help to get the user data
 
 app.get('/', (req, res) => res.send('Server is Live!'))
