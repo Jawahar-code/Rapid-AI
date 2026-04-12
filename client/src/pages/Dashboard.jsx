@@ -17,14 +17,15 @@ const SkeletonLoader = () => (
 )
 
 const Dashboard = () => {
+  const { getToken } = useAuth()
+  const { user } = useUser()
+  
   const [creations, setCreations] = useState(() => {
     const cached = localStorage.getItem('dashboard_creations');
     return cached ? JSON.parse(cached) : [];
   })
   const [plan, setPlan] = useState(user?.publicMetadata?.plan || 'free')
   const [loading, setLoading] = useState(!creations.length)
-  const { getToken } = useAuth()
-  const { user } = useUser()
 
   const getDashboardData = async () => {
     try {
