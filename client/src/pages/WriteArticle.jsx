@@ -42,7 +42,6 @@ const WriteArticle = () => {
       const { data } = await axios.post('/api/ai/generate-article', { prompt, length: selectedLength.length }, {
         headers: { Authorization: `Bearer ${await getToken()}` }
       })
-      // ... same success handling ...
       if (data.success) {
         setContent(data.content)
         toast.success('Article generated successfully!')

@@ -29,7 +29,11 @@ export const generateArticle = async (req, res) => {
             max_tokens: Math.max(4000, Number(length) * 1.5),
         });
 
-        const content = response.choices[0].message.content;
+        const content = response.choices?.[0]?.message?.content;
+
+        if (!content) {
+            return res.json({ success: false, message: "The AI model returned an empty response. Please try again or refine your prompt." })
+        }
 
         await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${prompt}, ${content}, 'article')`;
 
