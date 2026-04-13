@@ -18,7 +18,15 @@ const WriteArticle = () => {
     { length: 1600, text: 'Long(1200+ words)' }
   ]
 
+  const articleTones = [
+    { tone: 'casual', text: 'Casual' },
+    { tone: 'formal', text: 'Formal' },
+    { tone: 'informal', text: 'Informal' },
+    { tone: 'humorous', text: 'Humorous' }
+  ]
+
   const [selectedLength, setSelectedLength] = useState(articleLength[0])
+  const [selectedTone, setSelectedTone] = useState(articleTones[0])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [content, setContent] = useState('')
@@ -29,12 +37,12 @@ const WriteArticle = () => {
     e.preventDefault();
     try {
       setLoading(true)
-      const prompt = `Write a detailed article about ${input} in ${selectedLength.text}`
+      const prompt = `Write a detailed article about ${input} in ${selectedLength.text} with a ${selectedTone.tone} tone.`
 
       const { data } = await axios.post('/api/ai/generate-article', { prompt, length: selectedLength.length }, {
         headers: { Authorization: `Bearer ${await getToken()}` }
       })
-
+      // ... same success handling ...
       if (data.success) {
         setContent(data.content)
         toast.success('Article generated successfully!')
@@ -64,12 +72,22 @@ const WriteArticle = () => {
 
         <div className='mt-3 flex gap-3 flex-wrap sm:max-w-[90%]'>
           {articleLength.map((item, index) => (
-
             <span onClick={() => setSelectedLength(item)}
               className={`text-xs px-4 py-2 border rounded-full cursor-pointer transition-colors ${selectedLength.text === item.text ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-purple-700/50' : 'text-gray-500 dark:text-gray-400 border-gray-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`} key={index}>{item.text}
             </span>
           ))}
         </div>
+
+        <p className='mt-6 text-sm font-medium dark:text-slate-300'>Article Tone</p>
+
+        <div className='mt-3 flex gap-3 flex-wrap sm:max-w-[90%]'>
+          {articleTones.map((item, index) => (
+            <span onClick={() => setSelectedTone(item)}
+              className={`text-xs px-4 py-2 border rounded-full cursor-pointer transition-colors ${selectedTone.text === item.text ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-purple-700/50' : 'text-gray-500 dark:text-gray-400 border-gray-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`} key={index}>{item.text}
+            </span>
+          ))}
+        </div>
+
         <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#226BFF] to-[#65ADFF] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
           {
             loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'></span>
