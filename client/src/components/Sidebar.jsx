@@ -84,7 +84,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                     </AnimatePresence>
 
                     {/* Additional Tools Group */}
-                    <DropdownHeader label="Additional Tools" Icon={PlusCircle} isOpen={openAdd} setIsOpen={setOpenAdd} />
+                    <DropdownHeader label="Image Toolkit" Icon={PlusCircle} isOpen={openAdd} setIsOpen={setOpenAdd} />
                     <AnimatePresence>
                         {openAdd && (
                             <motion.div 
