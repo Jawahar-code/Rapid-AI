@@ -66,7 +66,11 @@ export const generateBlogTitle = async (req, res) => {
             max_tokens: 1000,
         });
 
-        const content = response.choices[0].message.content
+        const content = response.choices?.[0]?.message?.content;
+        
+        if (!content) {
+            return res.json({ success: false, message: "The AI model returned an empty response. Please try again or refine your prompt." })
+        }
 
         await sql`INSERT INTO creations (user_id,prompt,content,type) VALUES (${userId},${prompt},${content},'blog-title')`;
 
