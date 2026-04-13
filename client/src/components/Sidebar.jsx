@@ -1,52 +1,107 @@
 import { useClerk, useUser } from '@clerk/react'
 import Protect from './Protect'
-import { Eraser, FileText, Hash, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings } from 'lucide-react'
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-
-const navItems = [
-    { to: '/ai', label: 'Dashboard', Icon: House },
-    { to: '/ai/write-article', label: 'Write Article', Icon: SquarePen },
-    { to: '/ai/blog-titles', label: 'Blog Titles', Icon: Hash },
-    { to: '/ai/generate-images', label: 'Generate Images', Icon: Image },
-    { to: '/ai/remove-background', label: 'Remove Background', Icon: Eraser },
-    { to: '/ai/remove-object', label: 'Remove Object', Icon: Scissors },
-    { to: '/ai/review-resume', label: 'Review Resume', Icon: FileText },
-    { to: '/ai/community', label: 'Community', Icon: Users },
-    { to: '/ai/settings', label: 'Settings', Icon: Settings },
-]
+import { Eraser, FileText, Hash, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings, ChevronDown, Briefcase, PlusCircle } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
-
     const { user } = useUser()
     const { signOut, openUserProfile } = useClerk()
+    const location = useLocation()
+
+    // State for dropdowns
+    const [openPro, setOpenPro] = useState(false)
+    const [openAdd, setOpenAdd] = useState(false)
+
+    // Auto-open dropdown if active route is inside
+    useEffect(() => {
+        const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/review-resume']
+        const addRoutes = ['/ai/generate-images', '/ai/remove-background', '/ai/remove-object']
+        
+        if (proRoutes.includes(location.pathname)) setOpenPro(true)
+        if (addRoutes.includes(location.pathname)) setOpenAdd(true)
+    }, [location.pathname])
+
+    const NavItem = ({ to, label, Icon, onClick }) => (
+        <NavLink
+            to={to}
+            end={to === '/ai'}
+            onClick={() => {
+                if (onClick) onClick()
+                setSidebar(false)
+            }}
+            className={({ isActive }) => `px-3.5 py-2 flex items-center gap-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 ${isActive ? 'bg-linear-to-r from-primary to-purple-600 text-white dark:text-white shadow-md' : ''} `}>
+            {({ isActive }) => (
+                <>
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
+                    <span className="text-[13.5px] font-medium">{label}</span>
+                </>
+            )}
+        </NavLink>
+    )
+
+    const DropdownHeader = ({ label, Icon, isOpen, setIsOpen }) => (
+        <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className={`w-full px-3.5 py-2.5 mt-1 flex items-center justify-between rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-300 ${isOpen ? 'text-primary dark:text-primary font-semibold' : ''}`}
+        >
+            <div className="flex items-center gap-3">
+                <Icon className={`w-4 h-4 ${isOpen ? 'text-primary' : 'text-slate-500'}`} />
+                <span className="text-[13.5px]">{label}</span>
+            </div>
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary' : 'text-slate-400'}`} />
+        </button>
+    )
+
     return (
         <div className={`w-60 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-r border-gray-200 dark:border-slate-800 flex flex-col justify-between items-center max-sm:absolute top-[64px] bottom-0 z-1 
         ${sidebar ? 'translate-x-0' : `max-sm:-translate-x-full `} 
         transition-all duration-300 ease-in-out`}>
 
-            <div className='my-7 w-full'>
+            <div className='my-7 w-full overflow-y-auto custom-scrollbar px-5'>
                 <img src={user.imageUrl} alt="User Avatar" className='w-13 rounded-full mx-auto shadow-lg dark:shadow-slate-800' />
                 <h1 className='mt-1 text-center font-medium text-slate-800 dark:text-slate-200'>{user.fullName}</h1>
 
-                <div className='px-6 mt-5 text-sm text-gray-600 dark:text-gray-400 font-medium space-y-1'>
-                    {navItems.map(({ to, label, Icon }) => (
-                        <NavLink
-                            key={to}
-                            to={to}
-                            end={to === '/ai'}
-                            onClick={() => setSidebar(false)}
-                            className={({ isActive }) => `px-3.5 py-2.5 flex items-center gap-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 ${isActive ? 'bg-linear-to-r from-primary to-purple-600 text-white dark:text-white shadow-md' : ''} `}>
+                <div className='mt-6 flex flex-col gap-1'>
+                    <NavItem to='/ai' label='Dashboard' Icon={House} />
 
-                            {({ isActive }) => (
-                                <>
-                                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : ''}`} />
-                                    {label}
-                                </>
-                            )}
+                    {/* Professional Tools Group */}
+                    <DropdownHeader label="Professional Tools" Icon={Briefcase} isOpen={openPro} setIsOpen={setOpenPro} />
+                    <AnimatePresence>
+                        {openPro && (
+                            <motion.div 
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="overflow-hidden pl-4 flex flex-col gap-1"
+                            >
+                                <NavItem to='/ai/write-article' label='Write Article' Icon={SquarePen} />
+                                <NavItem to='/ai/blog-titles' label='Blog Titles' Icon={Hash} />
+                                <NavItem to='/ai/review-resume' label='Review Resume' Icon={FileText} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
-                        </NavLink>
-                    ))}
+                    {/* Additional Tools Group */}
+                    <DropdownHeader label="Additional Tools" Icon={PlusCircle} isOpen={openAdd} setIsOpen={setOpenAdd} />
+                    <AnimatePresence>
+                        {openAdd && (
+                            <motion.div 
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="overflow-hidden pl-4 flex flex-col gap-1"
+                            >
+                                <NavItem to='/ai/generate-images' label='Generate Images' Icon={Image} />
+                                <NavItem to='/ai/remove-background' label='Remove Background' Icon={Eraser} />
+                                <NavItem to='/ai/remove-object' label='Remove Object' Icon={Scissors} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    <NavItem to='/ai/community' label='Community' Icon={Users} />
+                    <NavItem to='/ai/settings' label='Settings' Icon={Settings} />
                 </div>
             </div>
 
