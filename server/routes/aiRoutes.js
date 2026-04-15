@@ -1,3 +1,4 @@
+import express from 'express';
 import { generateArticle, generateBlogTitle, generateImage, removeImageBackground, removeImageObject, summarizePdf } from '../controllers/aiController.js';
 import { auth } from '../middlewares/auth.js';
 import { upload } from '../configs/multer.js';
