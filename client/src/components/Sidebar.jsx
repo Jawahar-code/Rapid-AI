@@ -16,7 +16,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
 
     // Auto-open dropdown if active route is inside
     useEffect(() => {
-        const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/review-resume']
+        const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/pdf-summarizer']
         const addRoutes = ['/ai/generate-images', '/ai/remove-background', '/ai/remove-object']
         
         if (proRoutes.includes(location.pathname)) setOpenPro(true)
@@ -24,6 +24,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     }, [location.pathname])
 
     const NavItem = ({ to, label, Icon, onClick }) => (
+// ... same ...
         <NavLink
             to={to}
             end={to === '/ai'}
@@ -78,7 +79,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                             >
                                 <NavItem to='/ai/write-article' label='Write Article' Icon={SquarePen} />
                                 <NavItem to='/ai/blog-titles' label='Blog Titles' Icon={Hash} />
-                                <NavItem to='/ai/review-resume' label='Review Resume' Icon={FileText} />
+                                <NavItem to='/ai/pdf-summarizer' label='PDF Summarizer' Icon={FileText} />
                             </motion.div>
                         )}
                     </AnimatePresence>

@@ -178,6 +178,7 @@ export const removeImageObject = async (req, res) => {
     }
 }
 
+/* 
 export const resumeReview = async (req, res) => {
     try {
         const { userId } = req.auth();
@@ -222,5 +223,54 @@ export const resumeReview = async (req, res) => {
     } catch (error) {
         console.log(error.message)
         res.json({ success: false, message: error.message })
+    }
+}
+*/
+
+export const summarizePdf = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        const file = req.file;
+        const plan = req.plan;
+
+        if (plan !== 'premium') {
+            return res.json({ success: false, message: "This feature is only available for premium subscriptions" })
+        }
+
+        if (!file) {
+            return res.json({ success: false, message: "No PDF file uploaded" })
+        }
+
+        const pdf = require('pdf-parse');
+        const dataBuffer = fs.readFileSync(file.path);
+        const pdfData = await pdf(dataBuffer);
+
+        const prompt = `Please provide a clear, comprehensive, and well-structured summary of the following PDF content. Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
+
+        const response = await AI.chat.completions.create({
+            model: "gemini-3-flash-preview",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.7,
+            max_tokens: 4000,
+        });
+
+        const content = response.choices?.[0]?.message?.content;
+
+        // Clean up: delete the temporary file after processing
+        if (fs.existsSync(file.path)) {
+            fs.unlinkSync(file.path);
+        }
+
+        if (!content) {
+            return res.json({ success: false, message: "The AI model failed to generate a summary. Please try again." })
+        }
+
+        await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, 'PDF Summary', ${content}, 'pdf-summary')`;
+
+        res.json({ success: true, content });
+
+    } catch (error) {
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
     }
 }
