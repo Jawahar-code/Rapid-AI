@@ -58,16 +58,14 @@ const GenerateImages = () => {
       fallback={
         <div className='flex-1 h-full flex items-center justify-center p-6'>
           <div className='max-w-md w-full bg-white dark:bg-slate-800 p-8 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-xl text-center transition-all'>
-            <div className='w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#00AD25]'>
-              <div className='relative'>
-                <Crown className='w-10 h-10 fill-current' />
-              </div>
+            <div className='w-20 h-20 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#20C363]'>
+              <Crown className='w-10 h-10 fill-current' />
             </div>
             <h2 className='text-2xl font-bold text-slate-800 dark:text-white mb-3'>Premium Tool</h2>
-            <p className='text-slate-500 dark:text-slate-400 mb-8'>Image Generation is a high-performance feature reserved for Premium users. Upgrade now to generate stunning visuals with no daily limits.</p>
+            <p className='text-slate-600 dark:text-slate-400 mb-8'>Image Generation is reserved for Premium users. Upgrade now to get unlimited image generations and high-quality exports.</p>
             <button 
               onClick={() => navigate('/ai/settings')}
-              className='w-full py-3 bg-linear-to-r from-[#00AD25] to-emerald-600 text-white rounded-xl font-semibold shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all cursor-pointer'
+              className='w-full py-3 bg-linear-to-r from-[#20C363] to-[#11B97E] text-white rounded-xl font-semibold shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all cursor-pointer'
             >
               Upgrade Now
             </button>
@@ -79,12 +77,12 @@ const GenerateImages = () => {
         {/* left col */}
         <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
           <div className='flex items-center gap-3 mb-6'>
-            <Sparkles className='w-6 text-[#00AD25]' />
+            <Sparkles className='w-6 text-[#20C363]' />
             <h1 className='text-xl font-semibold dark:text-white'>AI Image Generator</h1>
           </div>
           <p className='text-sm font-medium dark:text-slate-300'>Describe your Image</p>
 
-          <textarea onChange={(e) => setInput(e.target.value)} value={input} rows={4} className='w-full p-2.5 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-primary/20 transition-all dark:text-white' placeholder='Describe what you want to see in the image...' required />
+          <textarea onChange={(e) => setInput(e.target.value)} value={input} rows={4} className='w-full p-2.5 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-green-500/20 transition-all dark:text-white' placeholder='Describe what you want to see in the image...' required />
 
           <p className='mt-6 text-sm font-medium dark:text-slate-300'>Style</p>
 
@@ -106,7 +104,7 @@ const GenerateImages = () => {
             <p className='text-sm dark:text-slate-300 font-medium'>Make this image public <span className='text-xs text-slate-400 font-light block'>Share with the community</span></p>
           </div>
 
-          <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-primary to-purple-600 hover:shadow-lg hover:shadow-primary/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all'>
+          <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#20C363] to-[#11B97E] hover:shadow-lg hover:shadow-green-500/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all'>
             {
               loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-white border-r-transparent animate-spin'></span>
                 : <ImageIcon className='w-5' />
@@ -118,7 +116,7 @@ const GenerateImages = () => {
         {/* right col */}
         <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
           <div className='flex items-center gap-3'>
-            <ImageIcon className='w-5 h-5 text-[#00AD25]' />
+            <ImageIcon className='w-5 h-5 text-[#20C363]' />
             <h1 className='text-xl font-semibold dark:text-white'>Generated Image</h1>
           </div>
 

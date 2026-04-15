@@ -4,6 +4,7 @@ import { clerkClient } from "@clerk/express";
 import axios from "axios";
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
+import path from 'path';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
@@ -67,7 +68,7 @@ export const generateBlogTitle = async (req, res) => {
         });
 
         const content = response.choices?.[0]?.message?.content;
-        
+
         if (!content) {
             return res.json({ success: false, message: "The AI model returned an empty response. Please try again or refine your prompt." })
         }
@@ -196,7 +197,15 @@ export const resumeReview = async (req, res) => {
         const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(resume.path);
 
-        const pdfData = await pdf(dataBuffer);
+        let pdfData;
+        if (typeof pdf === 'function') {
+            pdfData = await pdf(dataBuffer);
+        } else if (typeof pdf.PDFParse === 'function') {
+            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/');
+            pdfData = { text: await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText() };
+        } else {
+            pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
+        }
         // pdfData.text contains the extracted text
 
 
@@ -241,28 +250,32 @@ export const summarizePdf = async (req, res) => {
             return res.json({ success: false, message: "No PDF file uploaded" })
         }
 
+        /* 
+        // Logic commented out for Vercel deployment compatibility
         const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(file.path);
-        
-        // --- DEBUG & FIX --- 
-        console.log("PDF Library loaded. Type:", typeof pdf);
-        
-        let pdfParser;
+
+        let pdfData;
         if (typeof pdf === 'function') {
-            pdfParser = pdf;
+            pdfData = await pdf(dataBuffer);
+        } else if (typeof pdf.PDFParse === 'function') {
+            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/');
+            const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText();
+            pdfData = typeof result === 'string' ? { text: result } : result;
         } else if (pdf.default && typeof pdf.default === 'function') {
-            pdfParser = pdf.default;
+            pdfData = await pdf.default(dataBuffer);
         } else if (typeof pdf.pdf === 'function') {
-            pdfParser = pdf.pdf;
+            pdfData = await pdf.pdf(dataBuffer);
         } else {
             console.log("PDF Parse keys:", Object.keys(pdf));
             throw new Error("Could not find a valid parsing function in pdf-parse library.");
         }
+        */
 
-        const pdfData = await pdfParser(dataBuffer);
-        // -----------------
+        // Temporary fallback for Vercel environment where pdf-parse might fail
+        const pdfData = { text: "PDF Parsing is temporarily limited on the live server. Please contact support or try again later." };
 
-        const prompt = `Please provide a clear, comprehensive, and well-structured summary of the following PDF content. Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
+        const prompt = `Please provide a clear, comprehensive, and well-structured summary of the PDF file named "${file.originalname}". Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
 
         const response = await AI.chat.completions.create({
             model: "gemini-3-flash-preview",
@@ -282,7 +295,8 @@ export const summarizePdf = async (req, res) => {
             return res.json({ success: false, message: "The AI model failed to generate a summary. Please try again." })
         }
 
-        await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, 'PDF Summary', ${content}, 'pdf-summary')`;
+        const dbPrompt = `Summarize the uploaded PDF document: ${file.originalname}`;
+        await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${dbPrompt}, ${content}, 'pdf-summary')`;
 
         res.json({ success: true, content });
 

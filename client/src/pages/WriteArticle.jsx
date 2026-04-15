@@ -60,19 +60,19 @@ const WriteArticle = () => {
       {/* left col */}
       <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
         <div className='flex items-center gap-3 mb-6'>
-          <Sparkles className='w-6 text-[#4A7AFF]' />
+          <Sparkles className='w-6 text-[#3588F2]' />
           <h1 className='text-xl font-semibold dark:text-white'>Article Configuration</h1>
         </div>
         <p className='text-sm font-medium dark:text-slate-300'>Article Topic</p>
 
-        <input onChange={(e) => setInput(e.target.value)} value={input} type="text" className='w-full p-2.5 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-primary/20 transition-all dark:text-white' placeholder='Write your article topic here...' required />
+        <input onChange={(e) => setInput(e.target.value)} value={input} type="text" className='w-full p-2.5 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-cyan-500/20 transition-all dark:text-white' placeholder='Write your article topic here...' required />
 
         <p className='mt-6 text-sm font-medium dark:text-slate-300'>Article Length</p>
 
         <div className='mt-3 flex gap-3 flex-wrap sm:max-w-[90%]'>
           {articleLength.map((item, index) => (
             <span onClick={() => setSelectedLength(item)}
-              className={`text-xs px-4 py-2 border rounded-full cursor-pointer transition-colors ${selectedLength.text === item.text ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-purple-700/50' : 'text-gray-500 dark:text-gray-400 border-gray-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`} key={index}>{item.text}
+              className={`text-xs px-4 py-2 border rounded-full cursor-pointer transition-colors ${selectedLength.text === item.text ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-700/50' : 'text-gray-500 dark:text-gray-400 border-gray-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`} key={index}>{item.text}
             </span>
           ))}
         </div>
@@ -82,12 +82,12 @@ const WriteArticle = () => {
         <div className='mt-3 flex gap-3 flex-wrap sm:max-w-[90%]'>
           {articleTones.map((item, index) => (
             <span onClick={() => setSelectedTone(item)}
-              className={`text-xs px-4 py-2 border rounded-full cursor-pointer transition-colors ${selectedTone.text === item.text ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-purple-700/50' : 'text-gray-500 dark:text-gray-400 border-gray-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`} key={index}>{item.text}
+              className={`text-xs px-4 py-2 border rounded-full cursor-pointer transition-colors ${selectedTone.text === item.text ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-700/50' : 'text-gray-500 dark:text-gray-400 border-gray-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'}`} key={index}>{item.text}
             </span>
           ))}
         </div>
 
-        <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#226BFF] to-[#65ADFF] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
+        <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#3588F2] to-[#0BB0D7] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
           {
             loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'></span>
               : <Edit className='w-5' />

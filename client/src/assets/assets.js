@@ -57,11 +57,11 @@ export const AiToolsData = [
         path: '/ai/remove-object'
     },
     {
-        title: 'Resume Reviewer',
-        description: 'Get your resume reviewed by AI to improve your chances of landing your dream job.',
+        title: 'PDF Summarizer',
+        description: 'Upload any document and get a clear, concise AI-generated summary with key takeaways.',
         Icon: FileText,
-        bg: { from: '#12B7AC', to: '#08B6CE' },
-        path: '/ai/review-resume'
+        bg: { from: '#F59E0B', to: '#D97706' },
+        path: '/ai/pdf-summarizer'
     }
 ]
 

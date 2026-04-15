@@ -45,7 +45,7 @@ const BlogTitles = () => {
     try {
       setLoading(true)
 
-      const prompt = `Generate a blog titles (around ) for the keyword "${input}" in the category "${selectedCategory}".`;
+      const prompt = `Generate a list of creative blog titles for the keyword "${input}" in the "${selectedCategory}" category.`;
 
       const { data } = await axios.post('/api/ai/generate-blog-title', { prompt }, {
         headers: { Authorization: `Bearer ${await getToken()}` }
@@ -69,7 +69,7 @@ const BlogTitles = () => {
       {/* left col */}
       <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
         <div className='flex items-center gap-3 mb-6'>
-          <Sparkles className='w-6 text-[#8E37EB]' />
+          <Sparkles className='w-6 text-[#B153EA]' />
           <h1 className='text-xl font-semibold dark:text-white'>AI Title Generator</h1>
         </div>
         <p className='text-sm font-medium dark:text-slate-300'>Keyword</p>
@@ -85,7 +85,7 @@ const BlogTitles = () => {
             </span>
           ))}
         </div>
-        <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-primary to-purple-600 hover:shadow-lg hover:shadow-primary/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all disabled:opacity-70'>
+        <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#B153EA] to-[#E549A3] hover:shadow-lg hover:shadow-purple-500/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all disabled:opacity-70'>
           {
             loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-white border-r-transparent animate-spin'></span> : <Hash className='w-5' />
           }
@@ -97,7 +97,7 @@ const BlogTitles = () => {
       <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-3'>
-            <Hash className='w-5 h-5 text-[#8E37EB]' />
+            <Hash className='w-5 h-5 text-[#B153EA]' />
             <h1 className='text-xl font-semibold dark:text-white'>Generated Titles</h1>
           </div>
           {content && (

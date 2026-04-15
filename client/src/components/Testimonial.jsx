@@ -21,7 +21,7 @@ const Testimonial = () => {
             name: 'Lisa Ray',
             handle: '@lisa_jobs',
             date: 'March 28, 2026',
-            content: "The Resume Analyzer gave me specific keywords I was missing. I got three interview calls the same week I updated my CV!"
+            content: "The PDF Summarizer saved me hours of reading. It captured the key points of a 50-page report in seconds!"
         }
     ];
 

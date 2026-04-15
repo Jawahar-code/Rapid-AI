@@ -10,7 +10,7 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **6 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, Resume Reviewer |
+| 🤖 **6 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, PDF Summarizer |
 | 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts |
 | 🔐 **Clerk Authentication** | Secure sign-in/sign-up, session management, user metadata, and Stripe-integrated billing |
 | 💳 **Subscription Model** | 10 free credits for new users, Premium plan for active subscribers |
@@ -47,7 +47,7 @@
 | **OpenAI SDK** | Interface to Google Gemini 3 Flash model |
 | **Cloudinary** | Cloud image storage & transformation |
 | **Multer** | Multipart file upload handling |
-| **pdf-parse** | Resume PDF text extraction |
+| **pdf-parse** | PDF document text extraction for summarization |
 
 ---
 
@@ -68,8 +68,8 @@ Upload any image and the AI isolates the subject by removing the background enti
 ### ✂️ Object Removal
 Upload an image and describe the object to remove. The AI intelligently fills in the gap, producing a clean result.
 
-### 📄 Resume Reviewer
-Upload a PDF resume and receive a detailed AI-powered analysis covering structure, content quality, keyword optimization, and improvement suggestions.
+### 📄 PDF Summarizer
+Upload any PDF document and receive a clear, comprehensive, and well-structured AI-generated summary with key takeaways and organized sections.
 
 ---
 
@@ -103,7 +103,7 @@ Minor Project/
 │   │   │   ├── GenerateImages.jsx   # AI image generation tool
 │   │   │   ├── RemoveBackground.jsx # Background removal tool
 │   │   │   ├── RemoveObject.jsx     # Object eraser tool
-│   │   │   ├── ReviewResume.jsx     # PDF resume analysis tool
+│   │   │   ├── PdfSummarizer.jsx     # AI-driven PDF document summarization tool
 │   │   │   ├── Community.jsx        # Public gallery with like system
 │   │   │   └── Settings.jsx         # Account, billing, appearance, security
 │   │   ├── App.jsx                  # Route definitions

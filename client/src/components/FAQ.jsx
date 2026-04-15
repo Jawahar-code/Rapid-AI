@@ -5,15 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 const faqs = [
     {
         question: "What's included in the Free Plan?",
-        answer: "The Free Plan provides 10 starter credits and includes access to our Article Generator and Blog Title generator tools. Advanced features like Image Generation, Background Removal, and Resume Review are exclusive to Premium users."
+        answer: "The Free Plan provides 10 starter credits and includes access to our Article Generator and Blog Title generator tools. Advanced features like Image Generation, Background Removal, and PDF Summarization are exclusive to Premium users."
     },
     {
         question: "What happens when I upgrade to Premium?",
-        answer: "Premium users unlock unlimited access to all AI tools, including Image Generation, Object Removal, and our AI Resume Reviewer. You also get priority processing and higher limits on content length."
+        answer: "Premium users unlock unlimited access to all AI tools, including Image Generation, Object Removal, and our AI PDF Summarizer. You also get priority processing and higher limits on content length."
     },
     {
-        question: "Is my data and resume upload secure?",
-        answer: "Absolutely. We prioritize your privacy. All file uploads and generated text are processed through secure encryption. Your personal creations and resumes are never used for model training without your permission."
+        question: "Is my data and document upload secure?",
+        answer: "Absolutely. We prioritize your privacy. All file uploads and generated text are processed through secure encryption. Your personal creations and documents are never used for model training without your permission."
     },
     {
         question: "Can I use the generated content commercially?",

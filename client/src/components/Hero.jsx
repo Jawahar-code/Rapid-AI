@@ -20,7 +20,7 @@ const Hero = () => {
                             words={[
                                 'Cool AI Articles',
                                 'Amazing AI Images',
-                                'Smart Resume Help',
+                                'Instant PDF Summaries',
                                 'Fast Photo Editing',
                                 'Great Blog Titles',
                             ]}

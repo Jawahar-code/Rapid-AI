@@ -17,7 +17,6 @@ const Layout = () => {
   const { user } = useUser()
   const { getToken } = useAuth()
   
-  // Initialize from cache to prevent flickering
   const [creationsCount, setCreationsCount] = useState(() => {
     const cached = localStorage.getItem('creations_count');
     return cached ? parseInt(cached) : (user?.publicMetadata?.free_usage || 0);
@@ -40,7 +39,6 @@ const Layout = () => {
         setCreationsCount(count)
         setPlan(currentPlan)
         
-        // Update cache
         localStorage.setItem('creations_count', count.toString());
         localStorage.setItem('user_plan', currentPlan);
       }
