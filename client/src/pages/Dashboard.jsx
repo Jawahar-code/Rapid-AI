@@ -81,7 +81,7 @@ const Dashboard = () => {
   return (
     <div className='h-full overflow-y-scroll p-6 tracking-wide'>
       <div className='flex justify-start gap-4 flex-wrap'>
-        {/* Total Creations Card */}
+        {}
         <div className='flex justify-between items-center w-72 p-4 px-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm'>
           <div className='text-slate-600 dark:text-slate-400'>
             <p className='text-sm'>Total Creations</p>
@@ -92,7 +92,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Active Plan Card */}
+        {}
         <div className='flex justify-between items-center w-72 p-4 px-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm'>
           <div className='text-slate-600 dark:text-slate-400'>
             <p className='text-sm'>Active Plan</p>
@@ -118,7 +118,7 @@ const Dashboard = () => {
           (
             <div className='mt-8'>
 
-              {/* Analytics Chart - Premium only */}
+              {}
               {isPremium && (
                 <div className='max-w-5xl bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 shadow-sm mb-8'>
                   <div className='flex items-center gap-2 mb-6'>

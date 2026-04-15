@@ -10,11 +10,11 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     const { signOut, openUserProfile } = useClerk()
     const location = useLocation()
 
-    // State for dropdowns
+    
     const [openPro, setOpenPro] = useState(false)
     const [openAdd, setOpenAdd] = useState(false)
 
-    // Auto-open dropdown if active route is inside
+    
     useEffect(() => {
         const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/pdf-summarizer', '/ai/review-resume']
         const addRoutes = ['/ai/generate-images', '/ai/remove-background', '/ai/remove-object']
@@ -24,7 +24,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     }, [location.pathname])
 
     const NavItem = ({ to, label, Icon, onClick }) => (
-// ... same ...
+
         <NavLink
             to={to}
             end={to === '/ai'}
@@ -67,7 +67,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                 <div className='mt-6 flex flex-col gap-1'>
                     <NavItem to='/ai' label='Dashboard' Icon={House} />
 
-                    {/* Professional Tools Group */}
+                    {}
                     <DropdownHeader label="Professional Tools" Icon={Briefcase} isOpen={openPro} setIsOpen={setOpenPro} />
                     <AnimatePresence>
                         {openPro && (
@@ -85,7 +85,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                         )}
                     </AnimatePresence>
 
-                    {/* Additional Tools Group */}
+                    {}
                     <DropdownHeader label="Image Toolkit" Icon={PlusCircle} isOpen={openAdd} setIsOpen={setOpenAdd} />
                     <AnimatePresence>
                         {openAdd && (

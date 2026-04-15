@@ -50,24 +50,24 @@ const Hero = () => {
                 <img src={assets.user_group} alt="" className='h-8' /> Trusted by 5k+ people
             </div>
 
-            {/* Bottom gradient fade — blends hero bg into the page background */}
+            {}
             <div className='absolute bottom-0 left-0 w-full h-40 bg-linear-to-b from-transparent to-white dark:to-slate-900 pointer-events-none'></div>
 
-            {/* Video Demo Modal */}
+            {}
             {showDemo && (
                 <div
                     className='fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in'
                     onClick={() => setShowDemo(false)}
                 >
-                    {/* Backdrop */}
+                    {}
                     <div className='absolute inset-0 bg-black/70 backdrop-blur-sm' />
 
-                    {/* Modal Content */}
+                    {}
                     <div
                         className='relative w-full max-w-4xl bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 animate-scale-in'
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Header */}
+                        {}
                         <div className='flex items-center justify-between px-5 py-3 border-b border-white/10'>
                             <div className='flex items-center gap-2'>
                                 <div className='w-3 h-3 rounded-full bg-red-500' />
@@ -83,7 +83,7 @@ const Hero = () => {
                             </button>
                         </div>
 
-                        {/* Video */}
+                        {}
                         <div className='aspect-video'>
                             <iframe
                                 src="https://drive.google.com/file/d/1dq1qPROVShjQJg7EvUGJvBcHmNbS1DpQ/preview"
@@ -97,7 +97,7 @@ const Hero = () => {
                 </div>
             )}
 
-            {/* Modal animations */}
+            {}
             <style>{`
                 @keyframes fadeIn {
                     from { opacity: 0; }

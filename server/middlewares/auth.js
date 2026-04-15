@@ -1,7 +1,7 @@
 import { clerkClient } from "@clerk/express";
 import sql from "../configs/db.js";
 
-// Middleware to check userID and hasPremiumplan..
+
 export const auth = async (req, res, next) => {
     try {
         const { userId, has} =await  req.auth();

@@ -51,7 +51,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (user) {
-      // Don't overwrite state with potentially stale metadata if we already have it
+      
       fetchUsageAndPlan()
     }
   }, [user])
@@ -123,7 +123,7 @@ const Layout = () => {
 
           <UserButton />
 
-          {/* Mobile Menu Toggle */}
+          {}
           {
             sidebar ?
               <X onClick={() => setSidebar(false)} className='w-6 h-6 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white transition cursor-pointer sm:hidden' />

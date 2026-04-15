@@ -3,7 +3,7 @@ import { PricingTable } from '@clerk/react'
 
 const Plan = () => {
     return (
-        /* Changed 'my-30' to 'pt-10 pb-20' to match Testimonial spacing */
+        
         <div className='max-w-2xl mx-auto z-20 pt-10 pb-20'>
             <div className='text-center'>
                 <h2 className='text-slate-700 dark:text-white text-[42px] font-semibold mb-3 leading-tight text-center'> Choose our plan</h2>

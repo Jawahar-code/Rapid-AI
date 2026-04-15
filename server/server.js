@@ -8,18 +8,18 @@ import userRouter from './routes/userRoutes.js';
 
 const app = express()
 
-// Initialize Cloudinary (non-blocking)
+
 connectCloudinary();
 
 app.use(cors())
 app.use(express.json())
 
-// Ensure Clerk keys exist to avoid startup crash
+
 if (!process.env.CLERK_SECRET_KEY) {
     console.warn("WARNING: CLERK_SECRET_KEY is missing. Auth will fail.");
 }
 
-app.use(clerkMiddleware()) //help to get the user data
+app.use(clerkMiddleware()) 
 
 app.get('/', (req, res) => res.send('Server is Live!'))
 app.use(requireAuth())
@@ -27,7 +27,7 @@ app.use(requireAuth())
 app.use('/api/ai', aiRouter)
 app.use('/api/user', userRouter)
 
-// Only listen locally — Vercel handles this in production
+
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {

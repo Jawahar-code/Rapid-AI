@@ -13,7 +13,7 @@ const Settings = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
     
-    // Use unified state from Layout context
+    
     const { plan, creationsCount } = useOutletContext();
 
     const isPremium = plan === 'premium';
@@ -33,7 +33,7 @@ const Settings = () => {
 
     return (
         <div className='h-full overflow-y-auto custom-scrollbar p-6'>
-            {/* Header */}
+            {}
             <div className='flex items-center gap-3 mb-8'>
                 <div className='w-12 h-12 rounded-xl bg-linear-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg shadow-primary/20'>
                     <SettingsIcon className='w-6 h-6 text-white' />
@@ -44,7 +44,7 @@ const Settings = () => {
                 </div>
             </div>
 
-            {/* Profile Summary Card */}
+            {}
             <div className='p-5 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm mb-6 flex items-center gap-4'>
                 <img src={user?.imageUrl} alt='User Avatar' className='w-16 h-16 rounded-full shadow-md border-2 border-primary/20' />
                 <div className='flex-1'>
@@ -64,10 +64,10 @@ const Settings = () => {
                 </div>
             </div>
 
-            {/* Settings Sections Grid */}
+            {}
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 
-                {/* Account Section */}
+                {}
                 <div className='bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden'>
                     <div className='flex items-center gap-2 px-5 py-3.5 border-b border-gray-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50'>
                         <User className='w-4 h-4 text-blue-500' />
@@ -98,7 +98,7 @@ const Settings = () => {
                     </div>
                 </div>
 
-                {/* Plan & Billing Section */}
+                {}
                 <div className='bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden'>
                     <div className='flex items-center gap-2 px-5 py-3.5 border-b border-gray-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50'>
                         <CreditCard className='w-4 h-4 text-purple-500' />
@@ -126,7 +126,7 @@ const Settings = () => {
                     </div>
                 </div>
 
-                {/* Appearance Section */}
+                {}
                 <div className='bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden'>
                     <div className='flex items-center gap-2 px-5 py-3.5 border-b border-gray-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50'>
                         <Palette className='w-4 h-4 text-orange-500' />
@@ -143,7 +143,7 @@ const Settings = () => {
                     </div>
                 </div>
 
-                {/* Security Section */}
+                {}
                 <div className='bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden'>
                     <div className='flex items-center gap-2 px-5 py-3.5 border-b border-gray-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50'>
                         <Shield className='w-4 h-4 text-green-500' />
@@ -173,7 +173,7 @@ const Settings = () => {
 
             </div>
 
-            {/* Footer */}
+            {}
             <p className='text-center text-xs text-slate-400 dark:text-slate-600 mt-12 pb-6'>Rapid AI • v2.0 🚀</p>
         </div>
     );

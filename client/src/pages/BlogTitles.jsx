@@ -66,7 +66,7 @@ const BlogTitles = () => {
 
   return (
     <div className='h-full p-6 flex items-start flex-col lg:flex-row gap-6 text-slate-700 dark:text-slate-200 transition-colors overflow-hidden'>
-      {/* left col */}
+      {}
       <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
         <div className='flex items-center gap-3 mb-6'>
           <Sparkles className='w-6 text-[#B153EA]' />
@@ -93,7 +93,7 @@ const BlogTitles = () => {
         </button>
       </form>
 
-      {/* right col */}
+      {}
       <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-3'>

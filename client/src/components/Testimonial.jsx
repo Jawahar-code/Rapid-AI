@@ -79,7 +79,7 @@ const Testimonial = () => {
                     100% { transform: translateX(-50%); }
                 }
                 .marquee-inner {
-                    animation: marqueeScroll 40s linear infinite; /* Slowed down to 40s */
+                    animation: marqueeScroll 40s linear infinite; 
                 }
                 .marquee-reverse {
                     animation-direction: reverse;
@@ -93,9 +93,9 @@ const Testimonial = () => {
                 </p>
             </div>
 
-            {/* Centered container that limits view to 3-4 cards */}
+            {}
             <div className="max-w-6xl mx-auto">
-                {/* Row 1 */}
+                {}
                 <div className="flex overflow-hidden mb-8 relative">
                     <div className="absolute left-0 top-0 h-full w-20 md:w-32 z-10 pointer-events-none bg-linear-to-r from-white dark:from-slate-900 to-transparent"></div>
                     <div className="absolute right-0 top-0 h-full w-20 md:w-32 z-10 pointer-events-none bg-linear-to-l from-white dark:from-slate-900 to-transparent"></div>
@@ -107,7 +107,7 @@ const Testimonial = () => {
                     </div>
                 </div>
 
-                {/* Row 2 */}
+                {}
                 <div className="flex overflow-hidden relative">
                     <div className="absolute left-0 top-0 h-full w-20 md:w-32 z-10 pointer-events-none bg-linear-to-r from-white dark:from-slate-900 to-transparent"></div>
                     <div className="absolute right-0 top-0 h-full w-20 md:w-32 z-10 pointer-events-none bg-linear-to-l from-white dark:from-slate-900 to-transparent"></div>

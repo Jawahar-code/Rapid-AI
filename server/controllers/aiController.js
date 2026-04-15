@@ -85,7 +85,7 @@ export const generateBlogTitle = async (req, res) => {
     }
 }
 
-// Premium features are here below hence no const free_usage.... :)
+
 export const generateImage = async (req, res) => {
     try {
         const { userId } = req.auth();
@@ -164,7 +164,7 @@ export const removeImageObject = async (req, res) => {
                     effect: `gen_remove:prompt_${object}`
                 }
             ],
-            eager_async: false // Wait for eager transformation to finish
+            eager_async: false 
         })
 
         const imageUrl = result.eager?.[0]?.secure_url || result.secure_url;
@@ -197,24 +197,22 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: 'Resume file size exceeds allowed size (5MB).' })
         }
 
-        /*
-        const pdf = require('pdf-parse');
+        // const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(resume.path);
 
+        /*
         let pdfData;
         if (typeof pdf === 'function') {
             pdfData = await pdf(dataBuffer);
         } else if (typeof pdf.PDFParse === 'function') {
-            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/');
+            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
             const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText();
             pdfData = typeof result === 'string' ? { text: result } : result;
         } else {
             pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
         }
         */
-
-        // Temporary fallback for Vercel environment where pdf-parse might fail
-        const pdfData = { text: "PDF Parsing is temporarily limited on the live server. Please contact support or try again later." };
+        const pdfData = { text: "PDF parsing is temporarily disabled for Vercel compatibility." };
 
         const prompt = `Please perform a detailed review of the following resume. Provide constructive feedback on structure, content quality, keyword optimization for ATS, and specific areas for improvement. Resume content : \n\n ${pdfData.text}`
 
@@ -227,7 +225,7 @@ export const resumeReview = async (req, res) => {
 
         const content = response.choices[0].message.content
 
-        // Clean up
+        
         if (fs.existsSync(resume.path)) {
             fs.unlinkSync(resume.path);
         }
@@ -257,16 +255,15 @@ export const summarizePdf = async (req, res) => {
             return res.json({ success: false, message: "No PDF file uploaded" })
         }
 
-        /* 
-        // Logic commented out for Vercel deployment compatibility
-        const pdf = require('pdf-parse');
+        // const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(file.path);
 
+        /*
         let pdfData;
         if (typeof pdf === 'function') {
             pdfData = await pdf(dataBuffer);
         } else if (typeof pdf.PDFParse === 'function') {
-            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/');
+            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
             const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText();
             pdfData = typeof result === 'string' ? { text: result } : result;
         } else if (pdf.default && typeof pdf.default === 'function') {
@@ -278,9 +275,7 @@ export const summarizePdf = async (req, res) => {
             throw new Error("Could not find a valid parsing function in pdf-parse library.");
         }
         */
-
-        // Temporary fallback for Vercel environment where pdf-parse might fail
-        const pdfData = { text: "PDF Parsing is temporarily limited on the live server. Please contact support or try again later." };
+        const pdfData = { text: "PDF parsing is temporarily disabled for Vercel compatibility." };
 
         const prompt = `Please provide a clear, comprehensive, and well-structured summary of the PDF file named "${file.originalname}". Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
 
@@ -293,7 +288,7 @@ export const summarizePdf = async (req, res) => {
 
         const content = response.choices?.[0]?.message?.content;
 
-        // Clean up: delete the temporary file after processing
+        
         if (fs.existsSync(file.path)) {
             fs.unlinkSync(file.path);
         }

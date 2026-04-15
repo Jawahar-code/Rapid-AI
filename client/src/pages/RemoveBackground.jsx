@@ -65,7 +65,7 @@ const RemoveBackground = () => {
       }
     >
       <div className='h-full p-6 flex items-start flex-col lg:flex-row gap-6 text-slate-700 dark:text-slate-200 transition-colors overflow-hidden'>
-        {/* left col */}
+        {}
         <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
           <div className='flex items-center gap-3 mb-6'>
             <Sparkles className='w-6 text-[#F76C1C]' />
@@ -76,25 +76,7 @@ const RemoveBackground = () => {
           <input
             onChange={(e) => setInput(e.target.files[0])}
             type="file"
-            accept='image/*'
-            className='w-full p-2 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 bg-transparent file:font-medium file:border-0 file:bg-[#F76C1C] file:text-white file:px-3 file:py-1 file:rounded file:cursor-pointer hover:file:bg-orange-600 transition-all'
-            required
-          />
-
-          <p className='text-xs text-gray-500 dark:text-slate-400 font-light mt-2'>Supports JPG, PNG, and other image formats</p>
-
-          <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#F76C1C] to-[#F04A3C] hover:shadow-lg hover:shadow-orange-500/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all'>
-            {
-              loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-white border-r-transparent animate-spin'></span>
-                :
-                <Eraser className='w-5' />
-            }
-
-            Remove Background
-          </button>
-        </form>
-
-        {/* right col */}
+            accept='image}
         <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
           <div className='flex items-center gap-3'>
             <Eraser className='w-5 h-5 text-[#F76C1C]' />
