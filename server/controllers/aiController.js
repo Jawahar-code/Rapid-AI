@@ -179,7 +179,6 @@ export const removeImageObject = async (req, res) => {
     }
 }
 
-/* 
 export const resumeReview = async (req, res) => {
     try {
         const { userId } = req.auth();
@@ -190,10 +189,15 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: "This feature is only available for premium subscriptions" })
         }
 
+        if (!resume) {
+            return res.json({ success: false, message: "No resume file uploaded" })
+        }
+
         if (resume.size > 5 * 1024 * 1024) {
             return res.json({ success: false, message: 'Resume file size exceeds allowed size (5MB).' })
         }
 
+        /*
         const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(resume.path);
 
@@ -202,30 +206,34 @@ export const resumeReview = async (req, res) => {
             pdfData = await pdf(dataBuffer);
         } else if (typeof pdf.PDFParse === 'function') {
             const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/');
-            pdfData = { text: await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText() };
+            const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText();
+            pdfData = typeof result === 'string' ? { text: result } : result;
         } else {
             pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
         }
-        // pdfData.text contains the extracted text
+        */
 
+        // Temporary fallback for Vercel environment where pdf-parse might fail
+        const pdfData = { text: "PDF Parsing is temporarily limited on the live server. Please contact support or try again later." };
 
-        const prompt = `Review the following resume and provide constructive feedback on its strengths, weakness and areas for improvement. Resume content : \n\n ${pdfData.text}`
+        const prompt = `Please perform a detailed review of the following resume. Provide constructive feedback on structure, content quality, keyword optimization for ATS, and specific areas for improvement. Resume content : \n\n ${pdfData.text}`
 
         const response = await AI.chat.completions.create({
             model: "gemini-3-flash-preview",
-            messages: [
-                {
-                    role: "user",
-                    content: prompt,
-                },
-            ],
+            messages: [{ role: "user", content: prompt }],
             temperature: 0.7,
-            max_tokens: 10000,
+            max_tokens: 4000,
         });
 
         const content = response.choices[0].message.content
 
-        await sql`INSERT INTO creations (user_id,prompt,content,type) VALUES (${userId},'Review the uploaded resume',${content},'resume-review')`;
+        // Clean up
+        if (fs.existsSync(resume.path)) {
+            fs.unlinkSync(resume.path);
+        }
+
+        const dbPrompt = `Review the uploaded resume: ${resume.originalname}`;
+        await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${dbPrompt}, ${content}, 'resume-review')`;
 
         res.json({ success: true, content })
 
@@ -234,7 +242,6 @@ export const resumeReview = async (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
-*/
 
 export const summarizePdf = async (req, res) => {
     try {

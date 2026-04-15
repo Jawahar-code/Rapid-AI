@@ -78,14 +78,14 @@ const ReviewResume = () => {
       fallback={
         <div className='flex-1 h-full flex items-center justify-center p-6'>
           <div className='max-w-md w-full bg-white dark:bg-slate-800 p-8 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-xl text-center'>
-            <div className='w-20 h-20 bg-teal-50 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#00DA83]'>
+            <div className='w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#E11D48]'>
               <Crown className='w-10 h-10 fill-current' />
             </div>
             <h2 className='text-2xl font-bold text-slate-800 dark:text-white mb-3'>Premium Tool</h2>
             <p className='text-slate-500 dark:text-slate-400 mb-8'>AI Resume Review is a premium feature. Upgrade your plan to get detailed feedback and score improvements for your career.</p>
             <button 
               onClick={() => navigate('/ai/settings')}
-              className='w-full py-3 bg-linear-to-r from-[#00DA83] to-emerald-600 text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all cursor-pointer'
+              className='w-full py-3 bg-linear-to-r from-[#E11D48] to-rose-600 text-white rounded-xl font-semibold shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all cursor-pointer'
             >
               Upgrade Now
             </button>
@@ -98,7 +98,7 @@ const ReviewResume = () => {
         {/* left col */}
         <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
           <div className='flex items-center gap-3 mb-6'>
-            <Sparkles className='w-6 text-[#F59E0B]' />
+            <Sparkles className='w-6 text-[#E11D48]' />
             <h1 className='text-xl font-semibold dark:text-white'>Resume Review</h1>
           </div>
           <p className='text-sm font-medium dark:text-slate-300'>Upload Resume</p>
@@ -107,13 +107,13 @@ const ReviewResume = () => {
             onChange={(e) => setInput(e.target.files[0])}
             type="file"
             accept='application/pdf'
-            className='w-full p-2 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 bg-transparent file:font-medium file:border-0 file:bg-[#F59E0B] file:text-white file:px-3 file:py-1 file:rounded file:cursor-pointer hover:file:bg-amber-600 transition-all'
+            className='w-full p-2 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 bg-transparent file:font-medium file:border-0 file:bg-[#E11D48] file:text-white file:px-3 file:py-1 file:rounded file:cursor-pointer hover:file:bg-rose-600 transition-all'
             required
           />
 
           <p className='text-xs text-gray-500 dark:text-slate-400 font-light mt-2'>Supports PDF resume only</p>
 
-          <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#F59E0B] to-amber-600 hover:shadow-lg hover:shadow-amber-500/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all disabled:opacity-70'>
+          <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#E11D48] to-rose-600 hover:shadow-lg hover:shadow-rose-500/30 text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer transition-all disabled:opacity-70'>
             {
               loading ?
                 <span className='w-4 h-4 my-1 rounded-full border-2 border-t-white border-r-transparent animate-spin'></span>
@@ -129,7 +129,7 @@ const ReviewResume = () => {
         <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <FileText className='w-5 h-5 text-[#F59E0B]' />
+              <FileText className='w-5 h-5 text-[#E11D48]' />
               <h1 className='text-xl font-semibold dark:text-white'>Analysis Results</h1>
             </div>
             {content && (

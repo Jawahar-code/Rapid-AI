@@ -36,6 +36,20 @@ export const AiToolsData = [
         path: '/ai/blog-titles'
     },
     {
+        title: 'PDF Summarizer',
+        description: 'Upload any document and get a clear, concise AI-generated summary with key takeaways.',
+        Icon: FileText,
+        bg: { from: '#F59E0B', to: '#D97706' },
+        path: '/ai/pdf-summarizer'
+    },
+    {
+        title: 'Resume Reviewer',
+        description: 'Get your resume reviewed by AI with ATS optimization tips and structural feedback.',
+        Icon: SquarePen,
+        bg: { from: '#E11D48', to: '#FB7185' },
+        path: '/ai/review-resume'
+    },
+    {
         title: 'AI Image Generation',
         description: 'Create stunning visuals with our AI image generation tool, Experience the power of AI ',
         Icon: Image,
@@ -55,13 +69,6 @@ export const AiToolsData = [
         Icon: Scissors,
         bg: { from: '#5C6AF1', to: '#427DF5' },
         path: '/ai/remove-object'
-    },
-    {
-        title: 'PDF Summarizer',
-        description: 'Upload any document and get a clear, concise AI-generated summary with key takeaways.',
-        Icon: FileText,
-        bg: { from: '#F59E0B', to: '#D97706' },
-        path: '/ai/pdf-summarizer'
     }
 ]
 

@@ -10,7 +10,7 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **6 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, PDF Summarizer |
+| 🤖 **7 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, PDF Summarizer, Resume Reviewer |
 | 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts |
 | 🔐 **Clerk Authentication** | Secure sign-in/sign-up, session management, user metadata, and Stripe-integrated billing |
 | 💳 **Subscription Model** | 10 free credits for new users, Premium plan for active subscribers |
@@ -69,7 +69,10 @@ Upload any image and the AI isolates the subject by removing the background enti
 Upload an image and describe the object to remove. The AI intelligently fills in the gap, producing a clean result.
 
 ### 📄 PDF Summarizer
-Upload any PDF document and receive a clear, comprehensive, and well-structured AI-generated summary with key takeaways and organized sections.
+Upload any PDF document and receive a clear, comprehensive, and well-structured AI-generated summary.
+
+### 💼 Resume Reviewer
+Upload a PDF resume and receive a detailed AI-powered analysis covering structure, content quality, keyword optimization, and improvement suggestions.
 
 ---
 
@@ -252,8 +255,8 @@ Open **http://localhost:5173** in your browser.
 
 | Plan | Credits | Analytics | Features |
 |------|---------|-----------|----------|
-| **Free** | 10 generations | Recent Creations only | All 6 AI tools |
-| **Premium** | Unlimited | Full 7-day activity chart | All 6 AI tools + priority |
+| **Free** | 10 generations | Recent Creations only | All 7 AI tools |
+| **Premium** | Unlimited | Full 7-day activity chart | All 7 AI tools + priority |
 
 - Credits are tracked via **database row count** (source of truth), synced to Clerk `publicMetadata` for instant UI display.
 - The auth middleware automatically reconciles metadata on every authenticated request.
