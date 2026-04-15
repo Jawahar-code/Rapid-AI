@@ -243,7 +243,10 @@ export const summarizePdf = async (req, res) => {
 
         const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(file.path);
-        const pdfData = await pdf(dataBuffer);
+        
+        // Ensure we are calling the correct function regardless of module format
+        const pdfParser = pdf.default || pdf;
+        const pdfData = await pdfParser(dataBuffer);
 
         const prompt = `Please provide a clear, comprehensive, and well-structured summary of the following PDF content. Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
 
