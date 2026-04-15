@@ -197,10 +197,9 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: 'Resume file size exceeds allowed size (5MB).' })
         }
 
-        // const pdf = require('pdf-parse');
+        const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(resume.path);
 
-        /*
         let pdfData;
         if (typeof pdf === 'function') {
             pdfData = await pdf(dataBuffer);
@@ -211,8 +210,6 @@ export const resumeReview = async (req, res) => {
         } else {
             pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
         }
-        */
-        const pdfData = { text: "PDF parsing is temporarily disabled for Vercel compatibility." };
 
         const prompt = `Please perform a detailed review of the following resume. Provide constructive feedback on structure, content quality, keyword optimization for ATS, and specific areas for improvement. Resume content : \n\n ${pdfData.text}`
 
@@ -255,10 +252,9 @@ export const summarizePdf = async (req, res) => {
             return res.json({ success: false, message: "No PDF file uploaded" })
         }
 
-        // const pdf = require('pdf-parse');
+        const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(file.path);
 
-        /*
         let pdfData;
         if (typeof pdf === 'function') {
             pdfData = await pdf(dataBuffer);
@@ -274,8 +270,6 @@ export const summarizePdf = async (req, res) => {
             console.log("PDF Parse keys:", Object.keys(pdf));
             throw new Error("Could not find a valid parsing function in pdf-parse library.");
         }
-        */
-        const pdfData = { text: "PDF parsing is temporarily disabled for Vercel compatibility." };
 
         const prompt = `Please provide a clear, comprehensive, and well-structured summary of the PDF file named "${file.originalname}". Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
 
