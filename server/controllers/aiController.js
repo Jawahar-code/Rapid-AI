@@ -244,9 +244,23 @@ export const summarizePdf = async (req, res) => {
         const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(file.path);
         
-        // Ensure we are calling the correct function regardless of module format
-        const pdfParser = pdf.default || pdf;
+        // --- DEBUG & FIX --- 
+        console.log("PDF Library loaded. Type:", typeof pdf);
+        
+        let pdfParser;
+        if (typeof pdf === 'function') {
+            pdfParser = pdf;
+        } else if (pdf.default && typeof pdf.default === 'function') {
+            pdfParser = pdf.default;
+        } else if (typeof pdf.pdf === 'function') {
+            pdfParser = pdf.pdf;
+        } else {
+            console.log("PDF Parse keys:", Object.keys(pdf));
+            throw new Error("Could not find a valid parsing function in pdf-parse library.");
+        }
+
         const pdfData = await pdfParser(dataBuffer);
+        // -----------------
 
         const prompt = `Please provide a clear, comprehensive, and well-structured summary of the following PDF content. Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
 
