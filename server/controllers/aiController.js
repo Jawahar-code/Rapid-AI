@@ -6,7 +6,13 @@ import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';
+import DOMMatrix from "dommatrix";
+
 const require = createRequire(import.meta.url);
+
+if (typeof global.DOMMatrix === 'undefined') {
+    global.DOMMatrix = DOMMatrix;
+}
 
 const AI = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
