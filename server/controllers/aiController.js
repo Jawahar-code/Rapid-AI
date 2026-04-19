@@ -197,22 +197,51 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: 'Resume file size exceeds allowed size (5MB).' })
         }
 
-        // const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(resume.path);
-
-        /*
         let pdfData;
-        if (typeof pdf === 'function') {
-            pdfData = await pdf(dataBuffer);
-        } else if (typeof pdf.PDFParse === 'function') {
-            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
-            const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText();
-            pdfData = typeof result === 'string' ? { text: result } : result;
-        } else {
-            pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
+
+        try {
+            const pdf = require('pdf-parse');
+            if (typeof pdf === 'function') {
+                try {
+                    pdfData = await pdf(dataBuffer);
+                } catch (err) {
+                    if (typeof pdf.PDFParse === 'function') {
+                        let fontPath;
+                        try {
+                            const pdfParseDir = path.dirname(require.resolve('pdf-parse/package.json'));
+                            fontPath = path.join(pdfParseDir, 'node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                        } catch (e) {
+                            fontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                        }
+                        const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: fontPath })).getText();
+                        pdfData = typeof result === 'string' ? { text: result } : result;
+                    } else {
+                        throw err;
+                    }
+                }
+            } else if (typeof pdf.PDFParse === 'function') {
+                let fontPath;
+                try {
+                    const pdfParseDir = path.dirname(require.resolve('pdf-parse/package.json'));
+                    fontPath = path.join(pdfParseDir, 'node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                } catch (e) {
+                    fontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                }
+                const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: fontPath })).getText();
+                pdfData = typeof result === 'string' ? { text: result } : result;
+            } else {
+                pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
+            }
+
+            if (!pdfData || !pdfData.text || pdfData.text.trim() === '') {
+                throw new Error("Extracted text is empty. Ensure the PDF contains readable text.");
+            }
+        } catch (parseError) {
+            console.error("PDF Parsing error:", parseError);
+            if (fs.existsSync(resume.path)) fs.unlinkSync(resume.path);
+            return res.json({ success: false, message: "PDF extraction failed: " + (parseError.message || "Unknown error") });
         }
-        */
-        const pdfData = { text: "PDF parsing is temporarily disabled for Vercel compatibility." };
 
         const prompt = `Please perform a detailed review of the following resume. Provide constructive feedback on structure, content quality, keyword optimization for ATS, and specific areas for improvement. Resume content : \n\n ${pdfData.text}`
 
@@ -255,27 +284,51 @@ export const summarizePdf = async (req, res) => {
             return res.json({ success: false, message: "No PDF file uploaded" })
         }
 
-        // const pdf = require('pdf-parse');
         const dataBuffer = fs.readFileSync(file.path);
-
-        /*
         let pdfData;
-        if (typeof pdf === 'function') {
-            pdfData = await pdf(dataBuffer);
-        } else if (typeof pdf.PDFParse === 'function') {
-            const standardFontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
-            const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: standardFontPath })).getText();
-            pdfData = typeof result === 'string' ? { text: result } : result;
-        } else if (pdf.default && typeof pdf.default === 'function') {
-            pdfData = await pdf.default(dataBuffer);
-        } else if (typeof pdf.pdf === 'function') {
-            pdfData = await pdf.pdf(dataBuffer);
-        } else {
-            console.log("PDF Parse keys:", Object.keys(pdf));
-            throw new Error("Could not find a valid parsing function in pdf-parse library.");
+
+        try {
+            const pdf = require('pdf-parse');
+            if (typeof pdf === 'function') {
+                try {
+                    pdfData = await pdf(dataBuffer);
+                } catch (err) {
+                    if (typeof pdf.PDFParse === 'function') {
+                        let fontPath;
+                        try {
+                            const pdfParseDir = path.dirname(require.resolve('pdf-parse/package.json'));
+                            fontPath = path.join(pdfParseDir, 'node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                        } catch (e) {
+                            fontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                        }
+                        const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: fontPath })).getText();
+                        pdfData = typeof result === 'string' ? { text: result } : result;
+                    } else {
+                        throw err;
+                    }
+                }
+            } else if (typeof pdf.PDFParse === 'function') {
+                let fontPath;
+                try {
+                    const pdfParseDir = path.dirname(require.resolve('pdf-parse/package.json'));
+                    fontPath = path.join(pdfParseDir, 'node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                } catch (e) {
+                    fontPath = path.join(process.cwd(), 'node_modules/pdf-parse/node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/') + '/';
+                }
+                const result = await (new pdf.PDFParse({ data: new Uint8Array(dataBuffer), standardFontDataUrl: fontPath })).getText();
+                pdfData = typeof result === 'string' ? { text: result } : result;
+            } else {
+                pdfData = await (pdf.default || pdf.pdf)(dataBuffer);
+            }
+
+            if (!pdfData || !pdfData.text || pdfData.text.trim() === '') {
+                throw new Error("Extracted text is empty. Ensure the PDF contains readable text.");
+            }
+        } catch (parseError) {
+            console.error("PDF Parsing error:", parseError);
+            if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+            return res.json({ success: false, message: "PDF extraction failed: " + (parseError.message || "Unknown error") });
         }
-        */
-        const pdfData = { text: "PDF parsing is temporarily disabled for Vercel compatibility." };
 
         const prompt = `Please provide a clear, comprehensive, and well-structured summary of the PDF file named "${file.originalname}". Use bullet points for key takeaways, organize sections logically, and maintain a professional tone. PDF Content: \n\n ${pdfData.text}`;
 
