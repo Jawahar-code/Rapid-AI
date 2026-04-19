@@ -24,7 +24,6 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     }, [location.pathname])
 
     const NavItem = ({ to, label, Icon, onClick }) => (
-
         <NavLink
             to={to}
             end={to === '/ai'}
@@ -32,10 +31,10 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                 if (onClick) onClick()
                 setSidebar(false)
             }}
-            className={({ isActive }) => `px-3.5 py-2 flex items-center gap-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 ${isActive ? 'bg-linear-to-r from-primary to-purple-600 text-white dark:text-white shadow-md' : ''} `}>
+            className={({ isActive }) => `px-3.5 py-2 flex items-center gap-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 ${isActive ? 'bg-linear-to-r from-primary to-purple-600 text-white dark:text-white shadow-md' : 'text-slate-600 dark:text-slate-300'} `}>
             {({ isActive }) => (
                 <>
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
+                    <Icon className={`w-4 h-4 transition-colors duration-300 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
                     <span className="text-[13.5px] font-medium">{label}</span>
                 </>
             )}
@@ -45,13 +44,13 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     const DropdownHeader = ({ label, Icon, isOpen, setIsOpen }) => (
         <button 
             onClick={() => setIsOpen(!isOpen)}
-            className={`w-full px-3.5 py-2.5 mt-1 flex items-center justify-between rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-300 ${isOpen ? 'text-primary dark:text-primary font-semibold' : ''}`}
+            className={`w-full px-3.5 py-2.5 mt-1 flex items-center justify-between rounded-lg transition-colors duration-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 ${isOpen ? 'text-primary dark:text-primary font-semibold' : 'text-slate-600 dark:text-slate-300 font-medium'}`}
         >
             <div className="flex items-center gap-3">
-                <Icon className={`w-4 h-4 ${isOpen ? 'text-primary' : 'text-slate-500'}`} />
+                <Icon className={`w-4 h-4 transition-colors duration-300 ${isOpen ? 'text-primary' : 'text-slate-500 dark:text-slate-400'}`} />
                 <span className="text-[13.5px]">{label}</span>
             </div>
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary' : 'text-slate-400'}`} />
+            <ChevronDown className={`w-3.5 h-3.5 transition-all duration-300 ${isOpen ? 'rotate-180 text-primary' : 'text-slate-400 dark:text-slate-500'}`} />
         </button>
     )
 
