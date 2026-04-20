@@ -39,3 +39,4 @@ server/.env
 *.sw?
 scratch.js
 dev-log.txt
+.obsidian/
