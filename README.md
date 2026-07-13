@@ -263,8 +263,13 @@ Open **http://localhost:5173** in your browser.
 
 ---
 
+
 ## ▶️ Demo Video
-[![Watch the Video](https://shields.io▶-blue?style=for-the-badge&logo=google-drive)]
+
+https://github.com/user-attachments/assets/6d902712-3e5a-4efb-83fe-7f974456a382
+
+---
+
 ## 📄 License
 
 This project is developed as a **Minor Project** for B.Tech CSE (6th Semester). 
