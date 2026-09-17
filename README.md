@@ -10,8 +10,9 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **7 AI Tools** | Article Writer, Blog Title Generator, Image Generation, Background Removal, Object Eraser, PDF Summarizer, Resume Reviewer |
-| 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts |
+| 🤖 **10 AI Tools** | Article Writer, Blog Titles, Image Generation, Background Removal, Object Eraser, PDF Summarizer, Resume Reviewer, **Resume–Job Matcher (2.0)**, **Document & Paper Analyzer (2.0)**, **Content & SEO Analyzer (2.0)** |
+| 🔬 **Deterministic NLP Engine** | Transparent TF-IDF vectorization, Cosine Similarity, 200+ skill taxonomy, Flesch/FK readability scoring, lexical diversity, keyword density |
+| 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts, animated SVG score rings |
 | 🔐 **Clerk Authentication** | Secure sign-in/sign-up, session management, user metadata, and Stripe-integrated billing |
 | 💳 **Subscription Model** | 10 free credits for new users, Premium plan for active subscribers |
 | 📊 **Analytics Dashboard** | Real-time creation tracking, 7-day activity chart (Premium), and localStorage caching for instant loads |
@@ -30,10 +31,10 @@
 | **Tailwind CSS v4** | Utility-first styling with dark mode support |
 | **React Router v7** | Client-side routing & nested layouts |
 | **Clerk React** | Authentication UI components & hooks |
-| **Framer Motion** | Accordion animations in Dashboard |
+| **Framer Motion** | Accordion animations in Dashboard & Sidebar dropdowns |
 | **Recharts** | Analytics area charts (Premium dashboard) |
 | **Lucide React** | Consistent icon system |
-| **React Markdown** | AI-generated article rendering |
+| **React Markdown** | AI-generated article & audit rendering |
 | **React Simple Typewriter** | Hero section typing animation |
 | **React Hot Toast** | Toast notifications |
 | **Axios** | HTTP client for API communication |
@@ -45,16 +46,17 @@
 | **Neon PostgreSQL** | Serverless database for creations & user data |
 | **Clerk Express** | JWT-based route protection & user metadata |
 | **OpenAI SDK** | Interface to Google Gemini 3 Flash model |
+| **Custom NLP Engine** | In-house deterministic text analysis (TF-IDF, cosine similarity, readability, SEO metrics) |
 | **Cloudinary** | Cloud image storage & transformation |
-| **Multer** | Multipart file upload handling |
-| **pdf-parse** | PDF document text extraction for summarization |
+| **Multer** | Multipart file upload handling with safe temp file cleanup |
+| **pdf-parse** | PDF document text extraction |
 
 ---
 
 ## 🧩 AI Tools Overview
 
 ### ✍️ Article Writer
-Generate long-form, high-quality articles on any topic. Choose between **Short**, **Medium**, and **Long** lengths. Output is rendered as rich Markdown with proper headings, paragraphs, and lists.
+Generate long-form, high-quality articles on any topic. Choose between **Short**, **Medium**, and **Long** lengths. Output is rendered as rich Markdown with one-click deep-link transfer to the Content & SEO Analyzer.
 
 ### #️⃣ Blog Title Generator
 Enter a topic and receive **8-10 creative, SEO-optimized blog title suggestions** — perfect for content strategists and bloggers.
@@ -73,6 +75,15 @@ Upload any PDF document and receive a clear, comprehensive, and well-structured 
 
 ### 💼 Resume Reviewer
 Upload a PDF resume and receive a detailed AI-powered analysis covering structure, content quality, keyword optimization, and improvement suggestions.
+
+### 🎯 Resume–Job Matcher (Rapid.ai 2.0)
+Upload your resume PDF and paste a job description. Combines a 200+ skill taxonomy match with TF-IDF cosine similarity using a transparent 70/30 formula, accompanied by Gemini career coaching.
+
+### 📑 Document & Research-Paper Analyzer (Rapid.ai 2.0)
+Upload any document or scientific paper. Features line-based heading classification, academic DOI/arXiv detection, statistical summary (words, reading time), Flesch readability scoring with reliability safeguards, and AI-structured breakdowns.
+
+### 🚀 Content & SEO Analyzer (Rapid.ai 2.0)
+Audit any written copy or generated article. Evaluates keyword density (optimal 1.0%–2.5%), heading hierarchy (H1/H2/H3), lexical diversity, and passive voice ratio, generating a full editorial and SEO audit report.
 
 ---
 
