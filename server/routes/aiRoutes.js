@@ -1,5 +1,6 @@
 import express from 'express';
 import { generateArticle, generateBlogTitle, generateImage, removeImageBackground, removeImageObject, resumeReview, summarizePdf } from '../controllers/aiController.js';
+import { resumeJobMatch } from '../controllers/analysisController.js';
 import { auth } from '../middlewares/auth.js';
 import { upload } from '../configs/multer.js';
 
@@ -13,5 +14,7 @@ aiRouter.post('/remove-object', upload.single('image'), auth, removeImageObject)
 aiRouter.post('/summarize-pdf', upload.single('file'), auth, summarizePdf)
 aiRouter.post('/resume-review', upload.single('resume'), auth, resumeReview)
 
+// Rapid.ai 2.0 Feature 1: Resume-Job Match & Skill-Gap Analysis
+aiRouter.post('/resume-job-match', upload.single('resume'), auth, resumeJobMatch)
 
-export default aiRouter 
+export default aiRouter; 

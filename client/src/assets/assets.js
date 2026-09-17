@@ -5,7 +5,7 @@ import star_icon from "./star_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
 import profile_img_1 from "./profile_img_1.png";
 import arrow_icon from "./arrow_icon.svg";
-import { SquarePen, Hash, Image, Eraser, Scissors, FileText } from 'lucide-react'
+import { SquarePen, Hash, Image, Eraser, Scissors, FileText, Briefcase } from 'lucide-react'
 import ai_gen_img_1 from "./ai_gen_img_1.png";
 import ai_gen_img_2 from "./ai_gen_img_2.png";
 import ai_gen_img_3 from "./ai_gen_img_3.png";
@@ -48,6 +48,13 @@ export const AiToolsData = [
         Icon: SquarePen,
         bg: { from: '#E11D48', to: '#FB7185' },
         path: '/ai/review-resume'
+    },
+    {
+        title: 'Resume-Job Matcher',
+        description: 'Match your resume to any job description with transparent skill-gap scoring and AI coaching.',
+        Icon: Briefcase,
+        bg: { from: '#6366F1', to: '#8B5CF6' },
+        path: '/ai/resume-job-match'
     },
     {
         title: 'AI Image Generation',

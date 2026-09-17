@@ -1,6 +1,6 @@
 import { useClerk, useUser } from '@clerk/react'
 import Protect from './Protect'
-import { Eraser, FileText, Hash, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings, ChevronDown, Briefcase, PlusCircle } from 'lucide-react'
+import { Eraser, FileText, Hash, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings, ChevronDown, Briefcase, PlusCircle, TrendingUp } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -16,7 +16,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
 
     
     useEffect(() => {
-        const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/pdf-summarizer', '/ai/review-resume']
+        const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/pdf-summarizer', '/ai/review-resume', '/ai/resume-job-match']
         const addRoutes = ['/ai/generate-images', '/ai/remove-background', '/ai/remove-object']
         
         if (proRoutes.includes(location.pathname)) setOpenPro(true)
@@ -80,6 +80,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                                 <NavItem to='/ai/blog-titles' label='Blog Titles' Icon={Hash} />
                                 <NavItem to='/ai/pdf-summarizer' label='PDF Summarizer' Icon={FileText} />
                                 <NavItem to='/ai/review-resume' label='Review Resume' Icon={Briefcase} />
+                                <NavItem to='/ai/resume-job-match' label='Resume Match (2.0)' Icon={TrendingUp} />
                             </motion.div>
                         )}
                     </AnimatePresence>
