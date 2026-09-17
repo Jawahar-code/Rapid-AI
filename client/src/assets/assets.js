@@ -5,7 +5,7 @@ import star_icon from "./star_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
 import profile_img_1 from "./profile_img_1.png";
 import arrow_icon from "./arrow_icon.svg";
-import { SquarePen, Hash, Image, Eraser, Scissors, FileText, Briefcase } from 'lucide-react'
+import { SquarePen, Hash, Image, Eraser, Scissors, FileText, Briefcase, FileSearch } from 'lucide-react'
 import ai_gen_img_1 from "./ai_gen_img_1.png";
 import ai_gen_img_2 from "./ai_gen_img_2.png";
 import ai_gen_img_3 from "./ai_gen_img_3.png";
@@ -55,6 +55,13 @@ export const AiToolsData = [
         Icon: Briefcase,
         bg: { from: '#6366F1', to: '#8B5CF6' },
         path: '/ai/resume-job-match'
+    },
+    {
+        title: 'Document Analyzer',
+        description: 'Upload any PDF — research paper or report — for deep NLP stats, auto classification, and AI-structured breakdown.',
+        Icon: FileSearch,
+        bg: { from: '#0891B2', to: '#0284C7' },
+        path: '/ai/document-analyzer'
     },
     {
         title: 'AI Image Generation',

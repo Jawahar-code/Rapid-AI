@@ -11,6 +11,7 @@ import RemoveObject from './pages/RemoveObject'
 import PdfSummarizer from './pages/PdfSummarizer'
 import ReviewResume from './pages/ReviewResume'
 import ResumeJobMatch from './pages/ResumeJobMatch'
+import DocumentAnalyzer from './pages/DocumentAnalyzer'
 import Community from './pages/Community'
 import Settings from './pages/Settings'
 import { useAuth } from '@clerk/react'
@@ -43,6 +44,7 @@ const App = () => {
           <Route path='pdf-summarizer' element={<PdfSummarizer />} />
           <Route path='review-resume' element={<ReviewResume />} />
           <Route path='resume-job-match' element={<ResumeJobMatch />} />
+          <Route path='document-analyzer' element={<DocumentAnalyzer />} />
           <Route path='community' element={<Community />} />
           <Route path='settings' element={<Settings />} />
         </Route>

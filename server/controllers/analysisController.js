@@ -2,7 +2,13 @@ import OpenAI from 'openai';
 import sql from '../configs/db.js';
 import fs from 'fs';
 import { extractPdfText } from '../utils/pdfHelper.js';
-import { matchSkills } from '../utils/nlpEngine.js';
+import {
+  matchSkills,
+  detectDocumentStructure,
+  calculateBasicStats,
+  calculateReadability,
+  extractKeywords
+} from '../utils/nlpEngine.js';
 
 const AI = new OpenAI({
   apiKey: process.env.GEMINI_API_KEY,
@@ -164,5 +170,196 @@ ${aiFeedback}
       fs.unlinkSync(filePath);
     }
     return res.json({ success: false, message: error.message || 'An error occurred during analysis.' });
+  }
+};
+
+/**
+ * Feature 2: Intelligent Document & Research-Paper Analyzer
+ * Deterministic NLP layer: stats, readability, keyword extraction, doc-type detection.
+ * AI layer: structured breakdown tailored to document type (research paper vs. general doc).
+ */
+export const analyzeDocument = async (req, res) => {
+  let filePath = req.file?.path || null;
+
+  const cleanupFile = () => {
+    if (filePath && fs.existsSync(filePath)) {
+      try { fs.unlinkSync(filePath); } catch (err) { console.error('File cleanup error:', err); }
+      filePath = null;
+    }
+  };
+
+  try {
+    const { userId } = req.auth();
+    const file = req.file;
+
+    if (!file) {
+      cleanupFile();
+      return res.json({ success: false, message: 'Please upload a PDF document to analyze.' });
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      cleanupFile();
+      return res.json({ success: false, message: 'Document file size exceeds the 10MB limit.' });
+    }
+
+    // 1. Extract raw text
+    const docText = await extractPdfText(filePath);
+
+    if (!docText || docText.trim().length < 100) {
+      cleanupFile();
+      return res.json({
+        success: false,
+        message: 'Could not extract readable text from this PDF. Please ensure it is a text-based (not scanned) PDF.'
+      });
+    }
+
+    // 2. Deterministic NLP Analysis
+    const structure  = detectDocumentStructure(docText);
+    const stats      = calculateBasicStats(docText);
+    const readability = calculateReadability(docText);
+    const topKeywords = extractKeywords(docText, 12);
+
+    // 3. Build AI prompt (branching on document type)
+    const isResearchPaper = structure.isResearchPaper;
+    const docType = structure.documentType;
+
+    const nlpSummary = `
+--- NLP COMPUTED METRICS ---
+Document Type (heuristic): ${docType} (Confidence: ${structure.confidence}%)
+Detected Structural Sections: ${structure.detectedSections.join(', ') || 'None detected'}
+Word Count: ${stats.wordCount} | Sentence Count: ${stats.sentenceCount} | Paragraph Count: ${stats.paragraphCount}
+Avg Sentence Length: ${stats.avgSentenceLength} words | Estimated Reading Time: ${stats.estimatedReadingTimeMinutes} min
+Flesch Reading Ease: ${readability.fleschReadingEase} | Reading Level: ${readability.readingLevel}
+Flesch-Kincaid Grade: ${readability.fleschKincaidGrade}
+Top Keywords: ${topKeywords.map(k => `"${k.keyword}" (${k.count}x)`).join(', ')}
+`;
+
+    let prompt;
+    if (isResearchPaper) {
+      prompt = `You are a Senior AI Research Scientist and academic paper reviewer.
+Analyze the research paper below using the computed NLP data provided.
+
+${nlpSummary}
+
+--- DOCUMENT TEXT (first 5000 characters) ---
+${docText.slice(0, 5000)}
+
+Produce a detailed, structured analysis in clean GitHub-Flavored Markdown:
+
+### 📋 Paper Overview
+- One-paragraph summary of the core research problem and contribution.
+
+### 🔬 Methodology & Approach
+- What methodology, algorithm, or system architecture was used?
+- What datasets, benchmarks, or experimental setups were involved?
+
+### 📊 Key Findings & Results
+- What were the main numerical results or performance metrics?
+- What conclusions did the authors draw?
+
+### ⚠️ Limitations & Assumptions
+- Identify the paper's acknowledged or implicit limitations.
+- Note any assumptions or threats to validity.
+
+### 🚀 Future Scope & Impact
+- What future research directions are suggested?
+- What is the practical or theoretical impact of this work?
+
+### 🏷️ Classification Tags
+- List 5–8 concise domain tags for this paper (e.g., Computer Vision, Transformer, Self-Supervised Learning).
+
+Be precise, technical, and objective.`;
+    } else {
+      prompt = `You are a Senior Business Analyst and expert document reviewer.
+Analyze the document below using the computed NLP data provided.
+
+${nlpSummary}
+
+--- DOCUMENT TEXT (first 5000 characters) ---
+${docText.slice(0, 5000)}
+
+Produce a clear, structured analysis in clean GitHub-Flavored Markdown:
+
+### 📋 Executive Summary
+- 2–3 sentence summary capturing the core purpose and main message of the document.
+
+### 🗝️ Key Topics & Themes
+- What are the main subjects, arguments, or areas covered?
+- List as a concise, bulleted breakdown.
+
+### 📑 Structural Breakdown
+- Describe the document's logical structure and how the sections or ideas connect.
+- Note any sections that seem incomplete, redundant, or unclear.
+
+### ✅ Action Items & Recommendations
+- Identify any explicit or implicit action items, decisions needed, or next steps.
+- If none, note what follow-up actions would strengthen the document.
+
+### 💡 Content Quality Observations
+- Comment on writing clarity, tone, and audience appropriateness based on the readability metrics.
+- Suggest one concrete improvement to the document's effectiveness.
+
+Be concise, constructive, and professional.`;
+    }
+
+    const aiResponse = await AI.chat.completions.create({
+      model: 'gemini-3-flash-preview',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.6,
+      max_tokens: 3500
+    });
+
+    const aiFeedback = aiResponse.choices?.[0]?.message?.content || 'Unable to generate AI analysis at this time.';
+
+    // 4. Assemble full report for storage
+    const formattedContent = `## 📄 Document Analysis Report
+
+**File:** ${file.originalname}  
+**Document Type:** **${docType}** (${structure.confidence}% confidence)  
+**Detected Sections:** ${structure.detectedSections.join(' • ') || 'N/A'}  
+
+---
+
+### 📊 Statistical Overview
+| Metric | Value |
+|--------|-------|
+| Word Count | ${stats.wordCount.toLocaleString()} |
+| Sentence Count | ${stats.sentenceCount.toLocaleString()} |
+| Paragraph Count | ${stats.paragraphCount.toLocaleString()} |
+| Avg Sentence Length | ${stats.avgSentenceLength} words |
+| Reading Time | ~${stats.estimatedReadingTimeMinutes} min |
+| Flesch Reading Ease | ${readability.fleschReadingEase} |
+| Reading Level | ${readability.readingLevel} |
+| FK Grade Level | ${readability.fleschKincaidGrade} |
+
+### 🏷️ Top Keywords
+${topKeywords.map(k => `\`${k.keyword}\` (${k.count}×, ${k.densityPercent}%)`).join(' • ')}
+
+---
+
+${aiFeedback}
+`;
+
+    // 5. Clean up temp file
+    cleanupFile();
+
+    // 6. Save to database
+    const dbPrompt = `Analyze document: ${file.originalname}`;
+    await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${dbPrompt}, ${formattedContent}, 'document-analysis')`;
+
+    return res.json({
+      success: true,
+      structure,
+      stats,
+      readability,
+      topKeywords,
+      aiFeedback,
+      content: formattedContent
+    });
+
+  } catch (error) {
+    console.error('Document Analyzer Error:', error);
+    cleanupFile();
+    return res.json({ success: false, message: error.message || 'An error occurred during document analysis.' });
   }
 };
