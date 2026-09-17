@@ -15,7 +15,8 @@ import {
   Hash,
   Info,
   Microscope,
-  ScrollText
+  ScrollText,
+  AlertTriangle
 } from 'lucide-react';
 import axios from 'axios';
 import { useAuth } from '@clerk/react';
@@ -361,6 +362,19 @@ const DocumentAnalyzer = () => {
                       />
                     </div>
                   </div>
+
+                  {/* Unreliable Readability Warning */}
+                  {readability.isReliable === false && (
+                    <div className='flex items-start gap-2.5 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-xs leading-relaxed'>
+                      <AlertTriangle className='w-4 h-4 shrink-0 mt-0.5 text-amber-600 dark:text-amber-400' />
+                      <div>
+                        <span className='font-semibold'>Readability Score May Be Inaccurate: </span>
+                        <span>
+                          {readability.reliabilityNote || 'These metrics are designed for continuous prose and may not accurately represent list-heavy, bulleted, or resume-style documents.'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Formula note */}
                   <p className='text-[11px] text-slate-400 dark:text-slate-500'>

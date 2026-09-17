@@ -222,7 +222,9 @@ export function calculateReadability(text) {
       fleschReadingEase: 0,
       fleschKincaidGrade: 0,
       readingLevel: 'N/A',
-      syllableCount: 0
+      syllableCount: 0,
+      isReliable: false,
+      reliabilityNote: 'No readable text or sentences provided.'
     };
   }
 
@@ -250,11 +252,30 @@ export function calculateReadability(text) {
   else if (fre >= 30) readingLevel = 'Difficult (College level)';
   else readingLevel = 'Very Difficult (Graduate level)';
 
+  // Reliability Assessment:
+  // Standard readability formulas assume continuous prose paragraphs.
+  // Resumes, list-heavy documents, bullet points, and very short texts distort sentence length and syllable metrics.
+  const isReliable = totalSentences >= 3 && asl <= 50;
+
+  let reliabilityNote = null;
+  if (!isReliable) {
+    if (totalSentences < 3) {
+      reliabilityNote = 'Sample too short (< 3 sentences) for statistically reliable readability scoring.';
+    } else if (asl > 50) {
+      reliabilityNote = 'High average sentence length (> 50 words/sentence) indicates list-heavy, unpunctuated, or resume-style structure; standard prose readability formulas may be inaccurate.';
+    } else {
+      reliabilityNote = 'Document structure may not be standard prose; readability metrics should be interpreted with caution.';
+    }
+    readingLevel = 'Unreliable (Non-Prose / List Structure)';
+  }
+
   return {
     fleschReadingEase: fre,
     fleschKincaidGrade: fkg,
     readingLevel,
-    syllableCount: totalSyllables
+    syllableCount: totalSyllables,
+    isReliable,
+    reliabilityNote
   };
 }
 
@@ -496,34 +517,127 @@ export function detectDocumentStructure(text) {
       isResearchPaper: false,
       confidence: 0,
       detectedSections: [],
-      paperSpecificMarkers: []
+      paperSpecificMarkers: [],
+      documentType: 'General Document'
     };
   }
 
-  const lower = text.toLowerCase();
-
-  // Research paper section markers
-  const researchPaperMarkers = [
-    { key: 'abstract', label: 'Abstract', regex: /\babstract\b/i, weight: 25 },
-    { key: 'introduction', label: 'Introduction', regex: /\b(1\.?\s*)?introduction\b/i, weight: 15 },
-    { key: 'related_work', label: 'Related Work / Literature Review', regex: /\b(related work|literature review|prior work)\b/i, weight: 15 },
-    { key: 'methodology', label: 'Methodology / Proposed Method', regex: /\b(methodology|proposed (method|system|framework|approach)|materials and methods)\b/i, weight: 20 },
-    { key: 'experiments', label: 'Experiments / Evaluation / Results', regex: /\b(experiments|experimental (setup|results)|results and discussion)\b/i, weight: 20 },
-    { key: 'conclusion', label: 'Conclusion / Future Work', regex: /\b(conclusion|concluding remarks|future (work|scope))\b/i, weight: 15 },
-    { key: 'references', label: 'References / Bibliography', regex: /\b(references|bibliography)\b/i, weight: 20 },
-    { key: 'academic_id', label: 'Academic ID (DOI / arXiv / ISSN)', regex: /\b(doi:|arxiv:|issn|ieee|acm|elsevier|springer)\b/i, weight: 25 }
+  // Research paper section markers that should appear as section headings
+  // Headings can be prefixed with optional numbering (e.g., "1. Introduction", "Section IV: Results")
+  const headingMarkers = [
+    {
+      key: 'abstract',
+      label: 'Abstract',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?abstract(?:\s*[:.-]*)?$/i,
+      weight: 25
+    },
+    {
+      key: 'introduction',
+      label: 'Introduction',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?introduction(?:\s*[:.-]*)?$/i,
+      weight: 15
+    },
+    {
+      key: 'related_work',
+      label: 'Related Work / Literature Review',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?(?:related\s+work|literature\s+review|prior\s+work|background(?:\s+and\s+related\s+work)?)(?:\s*[:.-]*)?$/i,
+      weight: 15
+    },
+    {
+      key: 'methodology',
+      label: 'Methodology / Proposed Method',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?(?:methodology|methods|materials\s+and\s+methods|proposed\s+(?:method|system|framework|approach|model|architecture)|system\s+(?:design|architecture|model))(?:\s*[:.-]*)?$/i,
+      weight: 20
+    },
+    {
+      key: 'experiments',
+      label: 'Experiments / Evaluation / Results',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?(?:experiments?(?:\s+and\s+results)?|experimental\s+(?:setup|results|evaluation)|results(?:\s+and\s+discussion)?|evaluation)(?:\s*[:.-]*)?$/i,
+      weight: 20
+    },
+    {
+      key: 'conclusion',
+      label: 'Conclusion / Future Work',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?(?:conclusions?|concluding\s+remarks|future\s+(?:work|scope)|conclusions?\s+and\s+future\s+work)(?:\s*[:.-]*)?$/i,
+      weight: 15
+    },
+    {
+      key: 'references',
+      label: 'References / Bibliography',
+      headingRegex: /^(?:(?:section\s+)?(?:\d+|[ivx]+)[.:\s-]*)?(?:references|bibliography|works\s+cited)(?:\s*[:.-]*)?$/i,
+      weight: 20
+    }
   ];
 
-  let totalScore = 0;
+  // Global document-level marker for Academic / Publication identifiers (DOIs, arXiv, publisher marks)
+  // These can appear anywhere (headers, footers, metadata)
+  const academicIdMarker = {
+    key: 'academic_id',
+    label: 'Academic ID (DOI / arXiv / ISSN)',
+    regex: /\b(?:doi:\s*10\.\d{4,9}\/[-._;()/:a-z0-9]+|10\.\d{4,9}\/[-._;()/:a-z0-9]+|arxiv:\s*\d{4}\.\d{4,5}(?:v\d+)?|issn\s*[:\d-]{8,}|ieee\s+transactions|acm\s+transactions|elsevier|springer\s+nature)\b/i,
+    weight: 25
+  };
+
   const detectedSections = [];
   const paperSpecificMarkers = [];
+  let totalScore = 0;
+  const matchedMarkerKeys = new Set();
 
-  for (const marker of researchPaperMarkers) {
-    if (marker.regex.test(lower)) {
-      totalScore += marker.weight;
-      detectedSections.push(marker.label);
-      paperSpecificMarkers.push(marker.key);
+  // 1. Line-by-line heading detection
+  // Split into lines to evaluate headings cleanly
+  const rawLines = text.split(/\r?\n/);
+
+  for (const rawLine of rawLines) {
+    const trimmed = rawLine.trim();
+    if (!trimmed) continue;
+
+    // First check if this line is a recognized research paper heading
+    // (e.g. "1. Introduction", "3. Methodology", "Section 2: Related Work")
+    let isHeadingMatch = false;
+    for (const marker of headingMarkers) {
+      if (!matchedMarkerKeys.has(marker.key) && marker.headingRegex.test(trimmed)) {
+        matchedMarkerKeys.add(marker.key);
+        detectedSections.push(marker.label);
+        paperSpecificMarkers.push(marker.key);
+        totalScore += marker.weight;
+        isHeadingMatch = true;
+        break;
+      }
     }
+    if (isHeadingMatch) continue;
+
+    // Exclude lines beginning with bullet symbols or numbered-list items:
+    // e.g., •, -, *, +, ➢, ✔, 1., 1), a., etc.
+    const isBulletOrListItem = /^(?:[•\u2022\u2023\u25E6\u2043\u2219\-*+➢✔]|(?:\(?\d+[.)\]]|\(?[a-zA-Z][.)\]]))\s+/.test(trimmed);
+    if (isBulletOrListItem) {
+      continue;
+    }
+
+    // Maximum heading length rule: maximum 12 words
+    const wordsInLine = trimmed.split(/\s+/).filter(Boolean);
+    if (wordsInLine.length > 12) {
+      continue;
+    }
+
+    // Check against each heading marker
+    for (const marker of headingMarkers) {
+      if (!matchedMarkerKeys.has(marker.key)) {
+        if (marker.headingRegex.test(trimmed)) {
+          matchedMarkerKeys.add(marker.key);
+          detectedSections.push(marker.label);
+          paperSpecificMarkers.push(marker.key);
+          totalScore += marker.weight;
+        }
+      }
+    }
+  }
+
+  // 2. Academic ID detection anywhere in the document
+  if (!matchedMarkerKeys.has(academicIdMarker.key) && academicIdMarker.regex.test(text)) {
+    matchedMarkerKeys.add(academicIdMarker.key);
+    detectedSections.push(academicIdMarker.label);
+    paperSpecificMarkers.push(academicIdMarker.key);
+    totalScore += academicIdMarker.weight;
   }
 
   // If score >= 60, it strongly qualifies as a research paper

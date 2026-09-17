@@ -231,6 +231,7 @@ Word Count: ${stats.wordCount} | Sentence Count: ${stats.sentenceCount} | Paragr
 Avg Sentence Length: ${stats.avgSentenceLength} words | Estimated Reading Time: ${stats.estimatedReadingTimeMinutes} min
 Flesch Reading Ease: ${readability.fleschReadingEase} | Reading Level: ${readability.readingLevel}
 Flesch-Kincaid Grade: ${readability.fleschKincaidGrade}
+Readability Reliable: ${readability.isReliable ? 'Yes' : 'No'}${readability.reliabilityNote ? ` (${readability.reliabilityNote})` : ''}
 Top Keywords: ${topKeywords.map(k => `"${k.keyword}" (${k.count}x)`).join(', ')}
 `;
 
@@ -331,6 +332,7 @@ Be concise, constructive, and professional.`;
 | Flesch Reading Ease | ${readability.fleschReadingEase} |
 | Reading Level | ${readability.readingLevel} |
 | FK Grade Level | ${readability.fleschKincaidGrade} |
+| Readability Reliability | ${readability.isReliable ? 'Reliable (Standard Prose)' : `Caution: Unreliable (${readability.reliabilityNote || 'Non-prose structure'})`} |
 
 ### 🏷️ Top Keywords
 ${topKeywords.map(k => `\`${k.keyword}\` (${k.count}×, ${k.densityPercent}%)`).join(' • ')}
