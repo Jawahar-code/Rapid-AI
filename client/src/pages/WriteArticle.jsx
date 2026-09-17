@@ -1,15 +1,15 @@
-import { Edit, Sparkles } from 'lucide-react'
+import { Edit, Sparkles, Gauge } from 'lucide-react'
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useAuth } from '@clerk/react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import { toast } from 'react-hot-toast';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const WriteArticle = () => {
-
+  const navigate = useNavigate();
   const { fetchUsageAndPlan } = useOutletContext();
 
   const articleLength = [
@@ -99,9 +99,21 @@ const WriteArticle = () => {
 
       {}
       <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
-        <div className='flex items-center gap-3 shrink-0'>
-          <Edit className='w-5 h-5 text-[#4A7AFF]' />
-          <h1 className='text-xl font-semibold dark:text-white'>Generated Article</h1>
+        <div className='flex items-center justify-between shrink-0'>
+          <div className='flex items-center gap-3'>
+            <Edit className='w-5 h-5 text-[#4A7AFF]' />
+            <h1 className='text-xl font-semibold dark:text-white'>Generated Article</h1>
+          </div>
+          {content && (
+            <button
+              onClick={() => navigate('/ai/content-seo-analyzer', { state: { content, title: input, focusKeyword: '' } })}
+              className='flex items-center gap-1.5 text-xs bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-lg font-medium transition cursor-pointer'
+              title='Send this article to Content & SEO Analyzer'
+            >
+              <Gauge className='w-3.5 h-3.5' />
+              Audit with SEO Analyzer (2.0)
+            </button>
+          )}
         </div>
 
         <hr className='mt-4 mb-2 border-gray-200 dark:border-slate-700 shrink-0' />

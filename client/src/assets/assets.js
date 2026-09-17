@@ -5,7 +5,7 @@ import star_icon from "./star_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
 import profile_img_1 from "./profile_img_1.png";
 import arrow_icon from "./arrow_icon.svg";
-import { SquarePen, Hash, Image, Eraser, Scissors, FileText, Briefcase, FileSearch } from 'lucide-react'
+import { SquarePen, Hash, Image, Eraser, Scissors, FileText, Briefcase, FileSearch, Gauge } from 'lucide-react';
 import ai_gen_img_1 from "./ai_gen_img_1.png";
 import ai_gen_img_2 from "./ai_gen_img_2.png";
 import ai_gen_img_3 from "./ai_gen_img_3.png";
@@ -62,6 +62,13 @@ export const AiToolsData = [
         Icon: FileSearch,
         bg: { from: '#0891B2', to: '#0284C7' },
         path: '/ai/document-analyzer'
+    },
+    {
+        title: 'Content & SEO Analyzer',
+        description: 'Analyze readability, keyword density, passive voice, heading hierarchy, and get AI-powered SEO audit recommendations.',
+        Icon: Gauge,
+        bg: { from: '#059669', to: '#10B981' },
+        path: '/ai/content-seo-analyzer'
     },
     {
         title: 'AI Image Generation',

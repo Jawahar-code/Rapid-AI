@@ -12,6 +12,7 @@ import PdfSummarizer from './pages/PdfSummarizer'
 import ReviewResume from './pages/ReviewResume'
 import ResumeJobMatch from './pages/ResumeJobMatch'
 import DocumentAnalyzer from './pages/DocumentAnalyzer'
+import ContentSeoAnalyzer from './pages/ContentSeoAnalyzer'
 import Community from './pages/Community'
 import Settings from './pages/Settings'
 import { useAuth } from '@clerk/react'
@@ -45,6 +46,7 @@ const App = () => {
           <Route path='review-resume' element={<ReviewResume />} />
           <Route path='resume-job-match' element={<ResumeJobMatch />} />
           <Route path='document-analyzer' element={<DocumentAnalyzer />} />
+          <Route path='content-seo-analyzer' element={<ContentSeoAnalyzer />} />
           <Route path='community' element={<Community />} />
           <Route path='settings' element={<Settings />} />
         </Route>

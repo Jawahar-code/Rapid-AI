@@ -1,6 +1,6 @@
 import express from 'express';
 import { generateArticle, generateBlogTitle, generateImage, removeImageBackground, removeImageObject, resumeReview, summarizePdf } from '../controllers/aiController.js';
-import { resumeJobMatch, analyzeDocument } from '../controllers/analysisController.js';
+import { resumeJobMatch, analyzeDocument, analyzeContentSeo } from '../controllers/analysisController.js';
 import { auth } from '../middlewares/auth.js';
 import { upload } from '../configs/multer.js';
 
@@ -19,5 +19,8 @@ aiRouter.post('/resume-job-match', upload.single('resume'), auth, resumeJobMatch
 
 // Rapid.ai 2.0 Feature 2: Intelligent Document & Research-Paper Analyzer
 aiRouter.post('/analyze-document', upload.single('document'), auth, analyzeDocument)
+
+// Rapid.ai 2.0 Feature 3: AI Content & SEO Analyzer
+aiRouter.post('/analyze-content-seo', auth, analyzeContentSeo)
 
 export default aiRouter; 

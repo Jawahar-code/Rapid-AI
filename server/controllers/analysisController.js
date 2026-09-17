@@ -7,7 +7,8 @@ import {
   detectDocumentStructure,
   calculateBasicStats,
   calculateReadability,
-  extractKeywords
+  extractKeywords,
+  calculateContentAndSeoMetrics
 } from '../utils/nlpEngine.js';
 
 const AI = new OpenAI({
@@ -365,3 +366,135 @@ ${aiFeedback}
     return res.json({ success: false, message: error.message || 'An error occurred during document analysis.' });
   }
 };
+
+/**
+ * Feature 3: AI Content & SEO Analyzer
+ * Combines deterministic NLP (readability, lexical diversity, passive voice ratio, heading hierarchy, keyword density)
+ * with generative AI for editorial suggestions, meta description generation, and search-intent alignment.
+ */
+export const analyzeContentSeo = async (req, res) => {
+  try {
+    const { userId } = req.auth();
+    const { content, focusKeyword = '', title = '' } = req.body;
+    const plan = req.plan;
+
+    if (!content || typeof content !== 'string' || content.trim().length < 30) {
+      return res.json({
+        success: false,
+        message: 'Please provide sufficient text content to analyze (at least 30 characters).'
+      });
+    }
+
+    // Free tier credit deduction if not premium
+    if (plan !== 'premium') {
+      const creations = await sql`SELECT count(*) FROM creations WHERE user_id = ${userId}`;
+      if (creations[0].count >= 10) {
+        return res.json({
+          success: false,
+          message: 'You have exhausted your free credits. Upgrade to Premium for unlimited AI content and SEO audits.'
+        });
+      }
+    }
+
+    // 1. Run deterministic NLP & SEO metrics
+    const metrics = calculateContentAndSeoMetrics(content, focusKeyword);
+
+    // 2. Build AI Enhancement Prompt
+    const prompt = `You are a World-Class SEO Strategist, Chief Content Officer, and Senior Copy Editor.
+Evaluate the content below using the calculated NLP metrics provided.
+
+--- COMPUTED NLP & SEO METRICS ---
+Word Count: ${metrics.stats.wordCount} | Sentence Count: ${metrics.stats.sentenceCount} | Avg Sentence Length: ${metrics.stats.avgSentenceLength} words
+Estimated Reading Time: ${metrics.stats.estimatedReadingTimeMinutes} minutes
+Flesch Reading Ease: ${metrics.readability.fleschReadingEase} (${metrics.readability.readingLevel})
+Flesch-Kincaid Grade: ${metrics.readability.fleschKincaidGrade}
+Readability Reliable: ${metrics.readability.isReliable ? 'Yes' : 'No'}${metrics.readability.reliabilityNote ? ` (${metrics.readability.reliabilityNote})` : ''}
+Lexical Diversity (Type-Token Ratio): ${metrics.lexicalDiversity}%
+Passive Voice Instances: ${metrics.passiveVoice.count} (${metrics.passiveVoice.sentenceRatioPercent}% of sentences)
+Headings Detected: H1: ${metrics.headings.h1Count}, H2: ${metrics.headings.h2Count}, H3: ${metrics.headings.h3Count} (Total: ${metrics.headings.total})
+Focus Keyword: ${metrics.focusKeywordAnalysis.keyword || 'None specified'}
+Focus Keyword Density: ${metrics.focusKeywordAnalysis.densityPercent}% (${metrics.focusKeywordAnalysis.status})
+Content Quality Score: ${metrics.scores.contentQualityScore} / 100
+SEO Health Score: ${metrics.scores.seoScore} / 100
+Top Keywords Found: ${metrics.topKeywords.map(k => `"${k.keyword}" (${k.count}x)`).join(', ')}
+
+--- ARTICLE CONTENT (first 5000 characters) ---
+${content.slice(0, 5000)}
+
+Deliver an actionable, high-impact editorial & SEO audit in clean GitHub-Flavored Markdown:
+
+### 🎯 Strategic Executive Summary
+- Brief 2-3 sentence overview of content strength, primary audience suitability, and search intent alignment.
+
+### 🔍 Search Intent & SEO Optimization
+- Evaluate keyword placement and discoverability.
+- Recommended **Meta Title** (under 60 characters) and **Meta Description** (140–160 characters).
+- Suggested related LSI / semantic keywords to incorporate naturally.
+
+### ✍️ Readability & Editorial Refinements
+- Concrete observations on sentence pacing, rhythm, and tone.
+- Specific advice on passive-to-active voice conversions and clarity improvements.
+- Structural heading hierarchy recommendations (H1, H2, H3 distribution).
+
+### 🚀 Top 3 High-Impact Action Items
+1. **[Quick Win]** Immediate tweak for instant readability/SEO boost.
+2. **[Structural Upgrade]** Section or heading optimization.
+3. **[Conversion/Engagement]** Hook or Call to Action (CTA) enhancement.
+
+Be specific, encouraging, and authoritative.`;
+
+    const aiResponse = await AI.chat.completions.create({
+      model: 'gemini-3-flash-preview',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.6,
+      max_tokens: 3500
+    });
+
+    const aiAudit = aiResponse.choices?.[0]?.message?.content || 'Unable to generate AI SEO audit at this time.';
+
+    // 3. Format complete report for DB storage
+    const formattedReport = `## 🚀 AI Content & SEO Audit Report
+
+**Title/Topic:** ${title || focusKeyword || 'General Content'}  
+**Focus Keyword:** ${focusKeyword || 'None specified'}  
+**Content Quality Score:** **${metrics.scores.contentQualityScore}/100**  
+**SEO Health Score:** **${metrics.scores.seoScore}/100**  
+
+---
+
+### 📊 Metric Breakdown
+| Metric | Value | Status |
+|---|---|---|
+| Word Count | ${metrics.stats.wordCount.toLocaleString()} | ${metrics.stats.wordCount >= 600 ? 'Good' : 'Short'} |
+| Readability | ${metrics.readability.fleschReadingEase} (${metrics.readability.readingLevel}) | ${metrics.readability.isReliable ? 'Reliable' : 'Unreliable / List'} |
+| FK Grade Level | Grade ${metrics.readability.fleschKincaidGrade} | School Level |
+| Lexical Diversity | ${metrics.lexicalDiversity}% | Vocabulary Richness |
+| Passive Voice Ratio | ${metrics.passiveVoice.sentenceRatioPercent}% (${metrics.passiveVoice.count} instances) | ${metrics.passiveVoice.sentenceRatioPercent > 20 ? 'High' : 'Optimal'} |
+| Heading Count | ${metrics.headings.total} (H1: ${metrics.headings.h1Count}, H2: ${metrics.headings.h2Count}, H3: ${metrics.headings.h3Count}) | Hierarchy |
+| Keyword Density | ${metrics.focusKeywordAnalysis.densityPercent}% | ${metrics.focusKeywordAnalysis.status} |
+
+---
+
+${aiAudit}
+`;
+
+    // 4. Save to database
+    const dbPrompt = `SEO Audit: ${title || focusKeyword || 'Content analysis'}`;
+    await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${dbPrompt}, ${formattedReport}, 'content-seo-analysis')`;
+
+    return res.json({
+      success: true,
+      metrics,
+      aiAudit,
+      content: formattedReport
+    });
+
+  } catch (error) {
+    console.error('Content SEO Analyzer Error:', error);
+    return res.json({
+      success: false,
+      message: error.message || 'An error occurred during content and SEO analysis.'
+    });
+  }
+};
+
