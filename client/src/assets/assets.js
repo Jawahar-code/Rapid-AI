@@ -26,70 +26,80 @@ export const AiToolsData = [
         description: 'Generate high-quality, engaging articles on any topic with our AI writing technology.',
         Icon: SquarePen,
         bg: { from: '#3588F2', to: '#0BB0D7' },
-        path: '/ai/write-article'
+        path: '/ai/content-tools/article',
+        access: 'Free'
     },
     {
         title: 'Blog Title Generator',
         description: 'Find the perfect, catchy title for your blog posts with our AI-powered generator.',
         Icon: Hash,
         bg: { from: '#B153EA', to: '#E549A3' },
-        path: '/ai/blog-titles'
+        path: '/ai/content-tools/titles',
+        access: 'Free'
     },
     {
         title: 'PDF Summarizer',
         description: 'Upload any document and get a clear, concise AI-generated summary with key takeaways.',
         Icon: FileText,
         bg: { from: '#F59E0B', to: '#D97706' },
-        path: '/ai/pdf-summarizer'
+        path: '/ai/pdf-summarizer',
+        access: 'Free'
     },
     {
         title: 'Resume Reviewer',
         description: 'Get your resume reviewed by AI with ATS optimization tips and structural feedback.',
         Icon: SquarePen,
         bg: { from: '#E11D48', to: '#FB7185' },
-        path: '/ai/review-resume'
+        path: '/ai/resume-tools/review',
+        access: 'Premium'
     },
     {
         title: 'Resume-Job Matcher',
         description: 'Match your resume to any job description with transparent skill-gap scoring and AI coaching.',
         Icon: Briefcase,
         bg: { from: '#6366F1', to: '#8B5CF6' },
-        path: '/ai/resume-job-match'
+        path: '/ai/resume-tools/match',
+        access: 'Premium'
     },
     {
         title: 'Document Analyzer',
         description: 'Upload any PDF — research paper or report — for deep NLP stats, auto classification, and AI-structured breakdown.',
         Icon: FileSearch,
         bg: { from: '#0891B2', to: '#0284C7' },
-        path: '/ai/document-analyzer'
+        path: '/ai/document-analyzer',
+        access: 'Premium'
     },
     {
         title: 'Content & SEO Analyzer',
         description: 'Analyze readability, keyword density, passive voice, heading hierarchy, and get AI-powered SEO audit recommendations.',
         Icon: Gauge,
         bg: { from: '#059669', to: '#10B981' },
-        path: '/ai/content-seo-analyzer'
+        path: '/ai/content-seo-analyzer',
+        access: 'Premium'
     },
     {
         title: 'AI Image Generation',
         description: 'Create stunning visuals with our AI image generation tool, Experience the power of AI ',
         Icon: Image,
         bg: { from: '#20C363', to: '#11B97E' },
-        path: '/ai/generate-images'
+        path: '/ai/generate-images',
+        access: 'Premium'
     },
     {
         title: 'Background Removal',
         description: 'Effortlessly remove backgrounds from your images with our AI-driven tool.',
         Icon: Eraser,
         bg: { from: '#F76C1C', to: '#F04A3C' },
-        path: '/ai/remove-background'
+        path: '/ai/remove-background',
+        access: 'Premium'
     },
     {
         title: 'Object Removal',
         description: 'Remove unwanted objects from your images seamlessly with our AI object removal tool.',
         Icon: Scissors,
         bg: { from: '#5C6AF1', to: '#427DF5' },
-        path: '/ai/remove-object'
+        path: '/ai/remove-object',
+        access: 'Premium'
     }
 ]
 

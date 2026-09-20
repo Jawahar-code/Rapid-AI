@@ -5,11 +5,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 const faqs = [
     {
         question: "What's included in the Free Plan?",
-        answer: "The Free Plan provides 10 starter credits and includes access to our Article Generator and Blog Title generator tools. Advanced features like Image Generation, Background Removal, and PDF Summarization are exclusive to Premium users."
+        answer: "The Free Plan provides 10 starter credits and includes Write Article, Blog Titles, and PDF Summarizer. Resume analysis, document analysis, SEO analysis, image tools, and other advanced tools require Premium."
     },
     {
         question: "What happens when I upgrade to Premium?",
-        answer: "Premium users unlock unlimited access to all AI tools, including Image Generation, Object Removal, and our AI PDF Summarizer. You also get priority processing and higher limits on content length."
+        answer: "Premium users unlock the remaining AI tools, including resume analysis, document analysis, SEO analysis, image generation, background removal, and object removal, with unlimited access where supported."
+    },
+    {
+        question: "Which tools require Premium?",
+        answer: "Resume Review, Resume-Job Matching, Document Analyzer, Content & SEO Analyzer, image generation, background removal, object removal, and other tools outside Write Article, Blog Titles, and PDF Summarizer require Premium."
+    },
+    {
+        question: "What happens when my free credits run out?",
+        answer: "Free AI generations stop when your 10 credits are exhausted. You can upgrade to Premium for access to premium tools and unlimited access where supported."
     },
     {
         question: "Is my data and document upload secure?",
@@ -41,11 +49,11 @@ const FAQ = () => {
 
             <div className="space-y-4">
                 {faqs.map((faq, index) => (
-                    <div 
-                        key={index} 
+                    <div
+                        key={index}
                         className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden transition-colors"
                     >
-                        <button 
+                        <button
                             onClick={() => setOpenIndex(openIndex === index ? null : index)}
                             className="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none cursor-pointer"
                         >
