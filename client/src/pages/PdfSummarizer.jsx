@@ -83,7 +83,7 @@ const PdfSummarizer = () => {
         <p className='text-sm font-medium dark:text-slate-300'>Upload Document</p>
 
         <input
-            ref={inputRef}
+          ref={inputRef}
           onChange={(e) => setInput(e.target.files[0])}
           type="file"
           accept='application/pdf'
