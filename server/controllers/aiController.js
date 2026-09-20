@@ -170,7 +170,7 @@ export const removeImageObject = async (req, res) => {
                     effect: `gen_remove:prompt_${object}`
                 }
             ],
-            eager_async: false 
+            eager_async: false
         })
 
         const imageUrl = result.eager?.[0]?.secure_url || result.secure_url;
@@ -260,7 +260,7 @@ export const resumeReview = async (req, res) => {
 
         const content = response.choices[0].message.content
 
-        
+
         if (fs.existsSync(resume.path)) {
             fs.unlinkSync(resume.path);
         }
@@ -281,9 +281,10 @@ export const summarizePdf = async (req, res) => {
         const { userId } = req.auth();
         const file = req.file;
         const plan = req.plan;
+        const free_usage = req.free_usage;
 
-        if (plan !== 'premium') {
-            return res.json({ success: false, message: "This feature is only available for premium subscriptions" })
+        if (plan !== 'premium' && free_usage >= 10) {
+            return res.json({ success: false, message: "Limit reached. Upgrade to continue." })
         }
 
         if (!file) {
@@ -347,7 +348,7 @@ export const summarizePdf = async (req, res) => {
 
         const content = response.choices?.[0]?.message?.content;
 
-        
+
         if (fs.existsSync(file.path)) {
             fs.unlinkSync(file.path);
         }

@@ -193,6 +193,14 @@ export const analyzeDocument = async (req, res) => {
     const { userId } = req.auth();
     const file = req.file;
 
+    if (req.plan !== 'premium') {
+      cleanupFile();
+      return res.status(403).json({
+        success: false,
+        message: 'Document Analyzer is a premium feature. Upgrade your plan to continue.'
+      });
+    }
+
     if (!file) {
       cleanupFile();
       return res.json({ success: false, message: 'Please upload a PDF document to analyze.' });
@@ -215,8 +223,8 @@ export const analyzeDocument = async (req, res) => {
     }
 
     // 2. Deterministic NLP Analysis
-    const structure  = detectDocumentStructure(docText);
-    const stats      = calculateBasicStats(docText);
+    const structure = detectDocumentStructure(docText);
+    const stats = calculateBasicStats(docText);
     const readability = calculateReadability(docText);
     const topKeywords = extractKeywords(docText, 12);
 
@@ -377,6 +385,13 @@ export const analyzeContentSeo = async (req, res) => {
     const { userId } = req.auth();
     const { content, focusKeyword = '', title = '' } = req.body;
     const plan = req.plan;
+
+    if (plan !== 'premium') {
+      return res.status(403).json({
+        success: false,
+        message: 'AI Content & SEO Analyzer is a premium feature. Upgrade your plan to continue.'
+      });
+    }
 
     if (!content || typeof content !== 'string' || content.trim().length < 30) {
       return res.json({
