@@ -2,7 +2,7 @@
 
 > A full-stack SaaS platform built on top of the existing Rapid.ai foundation, enhanced with transparent NLP analysis, resume-to-job matching, document intelligence, and SEO optimization for content workflows.
 
-> 🔗 **Live Demo:** [https://rapid-ai-ten-rust.vercel.app/](https://rapid-ai-ten-rust.vercel.app/)
+> 🔗 **Live Demo:** [https://rapid-ai-v2.vercel.app/](https://rapid-ai-v2.vercel.app/)
 
 ---
 
