@@ -6,6 +6,7 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 import Protect from '../components/Protect';
 import toast from 'react-hot-toast';
 import Markdown from 'react-markdown';
+import FilePreview from '../components/FilePreview';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -45,7 +46,7 @@ const ReviewResume = () => {
         return toast.error('Please select a valid PDF file!')
       }
 
-      
+
       if (input.type !== 'application/pdf') {
         setLoading(false)
         return toast.error('Please upload a PDF file only!')
@@ -73,7 +74,7 @@ const ReviewResume = () => {
   }
 
   return (
-    <Protect 
+    <Protect
       condition={plan === 'premium'}
       fallback={
         <div className='flex-1 h-full flex items-center justify-center p-6'>
@@ -83,7 +84,7 @@ const ReviewResume = () => {
             </div>
             <h2 className='text-2xl font-bold text-slate-800 dark:text-white mb-3'>Premium Tool</h2>
             <p className='text-slate-500 dark:text-slate-400 mb-8'>AI Resume Review is a premium feature. Upgrade your plan to get detailed feedback and score improvements for your career.</p>
-            <button 
+            <button
               onClick={() => navigate('/ai/settings')}
               className='w-full py-3 bg-linear-to-r from-[#E11D48] to-rose-600 text-white rounded-xl font-semibold shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all cursor-pointer'
             >
@@ -95,7 +96,7 @@ const ReviewResume = () => {
     >
 
       <div className='h-full p-6 flex items-start flex-col lg:flex-row gap-6 text-slate-700 dark:text-slate-200 transition-colors overflow-hidden'>
-        {}
+        { }
         <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
           <div className='flex items-center gap-3 mb-6'>
             <Sparkles className='w-6 text-[#E11D48]' />
@@ -104,11 +105,18 @@ const ReviewResume = () => {
           <p className='text-sm font-medium dark:text-slate-300'>Upload Resume</p>
 
           <input
+            key={input?.name || 'resume-upload'}
             onChange={(e) => setInput(e.target.files[0])}
             type="file"
             accept='application/pdf'
             className='w-full p-2 mt-2 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 bg-transparent file:font-medium file:border-0 file:bg-[#E11D48] file:text-white file:px-3 file:py-1 file:rounded file:cursor-pointer hover:file:bg-rose-600 transition-all'
             required
+          />
+
+          <FilePreview
+            file={input}
+            onRemove={() => setInput(null)}
+            accentClass='text-[#E11D48]'
           />
 
           <p className='text-xs text-gray-500 dark:text-slate-400 font-light mt-2'>Supports PDF resume only</p>
@@ -125,7 +133,7 @@ const ReviewResume = () => {
           </button>
         </form>
 
-        {}
+        { }
         <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>

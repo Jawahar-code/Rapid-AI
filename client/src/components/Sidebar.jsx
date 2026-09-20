@@ -1,6 +1,6 @@
 import { useClerk, useUser } from '@clerk/react'
 import Protect from './Protect'
-import { Eraser, FileText, Hash, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings, ChevronDown, Briefcase, PlusCircle, TrendingUp, FileSearch, Gauge } from 'lucide-react'
+import { Eraser, FileText, House, Image, LogOut, LogOutIcon, Scissors, SquarePen, Users, Settings, ChevronDown, Briefcase, PlusCircle, FileSearch, Gauge } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -10,20 +10,20 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     const { signOut, openUserProfile } = useClerk()
     const location = useLocation()
 
-    
+
     const [openPro, setOpenPro] = useState(false)
     const [openAdd, setOpenAdd] = useState(false)
 
-    
+
     useEffect(() => {
-        const proRoutes = ['/ai/write-article', '/ai/blog-titles', '/ai/pdf-summarizer', '/ai/review-resume', '/ai/resume-job-match', '/ai/document-analyzer', '/ai/content-seo-analyzer']
+        const proRoutes = ['/ai/content-tools', '/ai/content-tools/article', '/ai/content-tools/titles', '/ai/pdf-summarizer', '/ai/resume-tools', '/ai/resume-tools/review', '/ai/resume-tools/match', '/ai/document-analyzer', '/ai/content-seo-analyzer']
         const addRoutes = ['/ai/generate-images', '/ai/remove-background', '/ai/remove-object']
-        
+
         if (proRoutes.includes(location.pathname)) setOpenPro(true)
         if (addRoutes.includes(location.pathname)) setOpenAdd(true)
     }, [location.pathname])
 
-    const NavItem = ({ to, label, Icon, onClick }) => (
+    const NavItem = ({ to, label, Icon, onClick, activeClass = 'bg-linear-to-r from-primary to-purple-600' }) => (
         <NavLink
             to={to}
             end={to === '/ai'}
@@ -31,7 +31,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                 if (onClick) onClick()
                 setSidebar(false)
             }}
-            className={({ isActive }) => `px-3.5 py-2 flex items-center gap-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 ${isActive ? 'bg-linear-to-r from-primary to-purple-600 text-white dark:text-white shadow-md' : 'text-slate-600 dark:text-slate-300'} `}>
+            className={({ isActive }) => `px-3.5 py-2 flex items-center gap-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-300 ${isActive ? `${activeClass} text-white dark:text-white shadow-md` : 'text-slate-600 dark:text-slate-300'} `}>
             {({ isActive }) => (
                 <>
                     <Icon className={`w-4 h-4 transition-colors duration-300 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
@@ -42,7 +42,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     )
 
     const DropdownHeader = ({ label, Icon, isOpen, setIsOpen }) => (
-        <button 
+        <button
             onClick={() => setIsOpen(!isOpen)}
             className={`w-full px-3.5 py-2.5 mt-1 flex items-center justify-between rounded-lg transition-colors duration-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 ${isOpen ? 'text-primary dark:text-primary font-semibold' : 'text-slate-600 dark:text-slate-300 font-medium'}`}
         >
@@ -55,7 +55,7 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
     )
 
     return (
-        <div className={`w-60 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-r border-gray-200 dark:border-slate-800 flex flex-col justify-between items-center max-sm:absolute top-[64px] bottom-0 z-1 
+        <div className={`w-60 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-r border-gray-200 dark:border-slate-800 flex flex-col justify-between items-center max-sm:absolute top-16 bottom-0 z-1
         ${sidebar ? 'translate-x-0' : `max-sm:-translate-x-full `} 
         transition-all duration-300 ease-in-out`}>
 
@@ -66,32 +66,30 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
                 <div className='mt-6 flex flex-col gap-1'>
                     <NavItem to='/ai' label='Dashboard' Icon={House} />
 
-                    {}
+                    { }
                     <DropdownHeader label="Professional Tools" Icon={Briefcase} isOpen={openPro} setIsOpen={setOpenPro} />
                     <AnimatePresence>
                         {openPro && (
-                            <motion.div 
+                            <motion.div
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                                 className="overflow-hidden pl-4 flex flex-col gap-1"
                             >
-                                <NavItem to='/ai/write-article' label='Write Article' Icon={SquarePen} />
-                                <NavItem to='/ai/blog-titles' label='Blog Titles' Icon={Hash} />
+                                <NavItem to='/ai/content-tools' label='Content Tools' Icon={SquarePen} />
                                 <NavItem to='/ai/pdf-summarizer' label='PDF Summarizer' Icon={FileText} />
-                                <NavItem to='/ai/review-resume' label='Review Resume' Icon={Briefcase} />
-                                <NavItem to='/ai/resume-job-match' label='Resume Match (2.0)' Icon={TrendingUp} />
-                                <NavItem to='/ai/document-analyzer' label='Doc Analyzer (2.0)' Icon={FileSearch} />
-                                <NavItem to='/ai/content-seo-analyzer' label='SEO Analyzer (2.0)' Icon={Gauge} />
+                                <NavItem to='/ai/resume-tools' label='Resume Tools' Icon={Briefcase} activeClass='bg-linear-to-r from-primary to-purple-600' />
+                                <NavItem to='/ai/document-analyzer' label='Doc Analyzer' Icon={FileSearch} />
+                                <NavItem to='/ai/content-seo-analyzer' label='SEO Analyzer' Icon={Gauge} />
                             </motion.div>
                         )}
                     </AnimatePresence>
 
-                    {}
+                    { }
                     <DropdownHeader label="Image Toolkit" Icon={PlusCircle} isOpen={openAdd} setIsOpen={setOpenAdd} />
                     <AnimatePresence>
                         {openAdd && (
-                            <motion.div 
+                            <motion.div
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
@@ -110,21 +108,21 @@ const Sidebar = ({ sidebar, setSidebar, plan, creationsCount }) => {
             </div>
 
             <div className='w-full border-t border-gray-200 dark:border-slate-800 p-4 px-7 flex items-center justify-between'>
-                    <div onClick={openUserProfile} className='flex gap-2 items-center cursor-pointer'>
-                        <img src={user.imageUrl} className="w-8 rounded-full shadow-sm" alt="" />
-                        <div>
-                            <h1 className='text-sm font-medium text-slate-800 dark:text-slate-200'>{user.fullName}</h1>
-                            <p className='text-xs text-gray-500 dark:text-gray-400'>
-                                <Protect 
-                                    condition={plan === 'premium'}
-                                    fallback={<span>Free Plan</span>}
-                                >
-                                    <span>Premium Plan</span>
-                                </Protect>
-                            </p>
-                        </div>
+                <div onClick={openUserProfile} className='flex gap-2 items-center cursor-pointer'>
+                    <img src={user.imageUrl} className="w-8 rounded-full shadow-sm" alt="" />
+                    <div>
+                        <h1 className='text-sm font-medium text-slate-800 dark:text-slate-200'>{user.fullName}</h1>
+                        <p className='text-xs text-gray-500 dark:text-gray-400'>
+                            <Protect
+                                condition={plan === 'premium'}
+                                fallback={<span>Free Plan</span>}
+                            >
+                                <span>Premium Plan</span>
+                            </Protect>
+                        </p>
                     </div>
-                    <LogOutIcon onClick={signOut} className='w-5 text-gray-500 hover:text-red-500 transition cursor-pointer'/>
+                </div>
+                <LogOutIcon onClick={signOut} className='w-5 text-gray-500 hover:text-red-500 transition cursor-pointer' />
             </div>
         </div>
     )

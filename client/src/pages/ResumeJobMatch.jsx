@@ -10,7 +10,6 @@ import {
   XCircle,
   PlusCircle,
   FileText,
-  Info,
   TrendingUp,
   Percent
 } from 'lucide-react';
@@ -20,6 +19,7 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 import Protect from '../components/Protect';
 import toast from 'react-hot-toast';
 import Markdown from 'react-markdown';
+import FilePreview from '../components/FilePreview';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -107,16 +107,16 @@ const ResumeJobMatch = () => {
       fallback={
         <div className='flex-1 h-full flex items-center justify-center p-6'>
           <div className='max-w-md w-full bg-white dark:bg-slate-800 p-8 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-xl text-center'>
-            <div className='w-20 h-20 bg-indigo-50 dark:bg-indigo-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary'>
+            <div className='w-20 h-20 bg-rose-50 dark:bg-rose-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-[#E11D48]'>
               <Crown className='w-10 h-10 fill-current' />
             </div>
-            <h2 className='text-2xl font-bold text-slate-800 dark:text-white mb-3'>Premium Intelligence Tool</h2>
+            <h2 className='text-2xl font-bold text-slate-800 dark:text-white mb-3'>Premium Tool</h2>
             <p className='text-slate-500 dark:text-slate-400 mb-8'>
-              Resume–Job Matching & Skill-Gap Analysis is a premium feature. Upgrade your plan to get transparent mathematical skill-matching, TF-IDF cosine alignment, and AI career guidance.
+              Resume matching is a Premium tool that helps you understand how well your experience fits a target role by comparing your resume with a job description.
             </p>
             <button
               onClick={() => navigate('/ai/settings')}
-              className='w-full py-3 bg-linear-to-r from-primary to-purple-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-all cursor-pointer'
+              className='w-full py-3 bg-linear-to-r from-[#E11D48] to-rose-600 text-white rounded-xl font-semibold shadow-lg shadow-rose-500/20 hover:shadow-rose-500/40 transition-all cursor-pointer'
             >
               Upgrade to Premium
             </button>
@@ -131,12 +131,12 @@ const ResumeJobMatch = () => {
           className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0 flex flex-col max-h-full overflow-y-auto custom-scrollbar'
         >
           <div className='flex items-center gap-3 mb-5'>
-            <div className='p-2 rounded-lg bg-linear-to-r from-indigo-500 to-purple-600 text-white'>
+            <div className='p-2 rounded-lg bg-linear-to-r from-[#E11D48] to-rose-600 text-white'>
               <Briefcase className='w-5 h-5' />
             </div>
             <div>
               <h1 className='text-xl font-semibold text-slate-800 dark:text-white'>Resume–Job Matching</h1>
-              <p className='text-xs text-slate-500 dark:text-slate-400'>Transparent Skill-Gap Analysis & AI Coaching</p>
+              <p className='text-xs text-slate-500 dark:text-slate-400'>Transparent Skill-Gap Analysis</p>
             </div>
           </div>
 
@@ -146,15 +146,21 @@ const ResumeJobMatch = () => {
               Upload Resume (PDF)
             </label>
             <input
+              key={resumeFile?.name || 'resume-upload'}
               type='file'
               accept='application/pdf'
               onChange={(e) => setResumeFile(e.target.files[0])}
-              className='w-full p-2 outline-none text-xs rounded-md border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 bg-transparent file:font-medium file:border-0 file:bg-primary file:text-white file:px-3 file:py-1 file:rounded file:cursor-pointer hover:file:bg-indigo-600 transition-all'
+              className='w-full p-2 outline-none text-xs rounded-md border border-gray-300 dark:border-slate-600 text-gray-600 dark:text-slate-300 bg-transparent file:font-medium file:border-0 file:bg-[#E11D48] file:text-white file:px-3 file:py-1 file:rounded file:cursor-pointer hover:file:bg-rose-600 transition-all'
               required
             />
             <p className='text-[11px] text-gray-400 dark:text-slate-500 mt-1'>
-              Max 5MB • Text-searchable PDF format
+              Max 5MB
             </p>
+            <FilePreview
+              file={resumeFile}
+              onRemove={() => setResumeFile(null)}
+              accentClass='text-[#E11D48]'
+            />
           </div>
 
           {/* Job Title Input */}
@@ -167,7 +173,7 @@ const ResumeJobMatch = () => {
               value={jobTitle}
               onChange={(e) => setJobTitle(e.target.value)}
               placeholder='e.g., Senior Full Stack Developer'
-              className='w-full p-2.5 px-3 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-primary/20 transition-all dark:text-white'
+              className='w-full p-2.5 px-3 outline-none text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-rose-500/20 transition-all dark:text-white'
             />
           </div>
 
@@ -187,7 +193,7 @@ const ResumeJobMatch = () => {
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder='Paste the target job description or job posting text here (responsibilities, required tech stack, qualifications)...'
               required
-              className='w-full p-3 outline-none text-xs sm:text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-primary/20 transition-all dark:text-white resize-none'
+              className='w-full p-3 outline-none text-xs sm:text-sm rounded-md border border-gray-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-rose-500/20 transition-all dark:text-white resize-none'
             />
           </div>
 
@@ -195,7 +201,7 @@ const ResumeJobMatch = () => {
           <button
             type='submit'
             disabled={loading}
-            className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-primary to-purple-600 hover:shadow-lg hover:shadow-indigo-500/30 text-white px-4 py-2.5 text-sm font-medium rounded-lg cursor-pointer transition-all disabled:opacity-70 mt-auto'
+            className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#E11D48] to-rose-600 hover:shadow-lg hover:shadow-rose-500/30 text-white px-4 py-2.5 text-sm font-medium rounded-lg cursor-pointer transition-all disabled:opacity-70 mt-auto'
           >
             {loading ? (
               <>
@@ -216,7 +222,7 @@ const ResumeJobMatch = () => {
           {/* Header Bar */}
           <div className='flex items-center justify-between shrink-0 pb-3 border-b border-gray-100 dark:border-slate-700'>
             <div className='flex items-center gap-2'>
-              <TrendingUp className='w-5 h-5 text-primary' />
+              <TrendingUp className='w-5 h-5 text-[#E11D48]' />
               <h2 className='text-lg font-semibold dark:text-white'>Match & Gap Report</h2>
             </div>
 
@@ -226,21 +232,19 @@ const ResumeJobMatch = () => {
                 <div className='flex bg-slate-100 dark:bg-slate-700/60 p-0.5 rounded-lg text-xs mr-2'>
                   <button
                     onClick={() => setActiveTab('skills')}
-                    className={`px-3 py-1 rounded-md font-medium transition cursor-pointer ${
-                      activeTab === 'skills'
-                        ? 'bg-white dark:bg-slate-800 text-primary dark:text-white shadow-xs'
-                        : 'text-slate-600 dark:text-slate-400'
-                    }`}
+                    className={`px-3 py-1 rounded-md font-medium transition cursor-pointer ${activeTab === 'skills'
+                      ? 'bg-white dark:bg-slate-800 text-[#E11D48] dark:text-rose-300 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400'
+                      }`}
                   >
                     Skills Breakdown
                   </button>
                   <button
                     onClick={() => setActiveTab('report')}
-                    className={`px-3 py-1 rounded-md font-medium transition cursor-pointer ${
-                      activeTab === 'report'
-                        ? 'bg-white dark:bg-slate-800 text-primary dark:text-white shadow-xs'
-                        : 'text-slate-600 dark:text-slate-400'
-                    }`}
+                    className={`px-3 py-1 rounded-md font-medium transition cursor-pointer ${activeTab === 'report'
+                      ? 'bg-white dark:bg-slate-800 text-[#E11D48] dark:text-rose-300 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400'
+                      }`}
                   >
                     AI Action Plan
                   </button>
@@ -285,7 +289,7 @@ const ResumeJobMatch = () => {
                 {/* Overall Score */}
                 <div className={`p-4 rounded-xl border flex flex-col items-center justify-center text-center ${getScoreColor(result.analysis.overallScore)}`}>
                   <span className='text-xs font-semibold uppercase tracking-wider opacity-80'>Overall Match</span>
-                  <div className='text-3xl font-bold mt-1 flex items-center gap-0.5'>
+                  <div className='text-2xl font-bold mt-1 flex items-center gap-0.5'>
                     <span>{result.analysis.overallScore}</span>
                     <Percent className='w-5 h-5' />
                   </div>
@@ -297,7 +301,7 @@ const ResumeJobMatch = () => {
                   <span className='text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400'>
                     Technical Skill Match
                   </span>
-                  <div className='text-3xl font-bold mt-1 text-slate-800 dark:text-white flex items-center gap-0.5'>
+                  <div className='text-2xl font-bold mt-1 text-slate-800 dark:text-white flex items-center gap-0.5'>
                     <span>{result.analysis.directSkillMatchPercent}</span>
                     <Percent className='w-5 h-5 text-slate-400' />
                   </div>
@@ -311,7 +315,7 @@ const ResumeJobMatch = () => {
                   <span className='text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400'>
                     Contextual TF-IDF
                   </span>
-                  <div className='text-3xl font-bold mt-1 text-slate-800 dark:text-white flex items-center gap-0.5'>
+                  <div className='text-2xl font-bold mt-1 text-slate-800 dark:text-white flex items-center gap-0.5'>
                     <span>{result.analysis.cosineSimilarity}</span>
                     <Percent className='w-5 h-5 text-slate-400' />
                   </div>
@@ -319,14 +323,6 @@ const ResumeJobMatch = () => {
                     Vocabulary Cosine Angle
                   </span>
                 </div>
-              </div>
-
-              {/* Explanatory Formula Banner */}
-              <div className='flex items-center gap-2 p-2.5 px-3.5 bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 rounded-lg text-xs text-indigo-800 dark:text-indigo-300'>
-                <Info className='w-4 h-4 shrink-0 text-primary' />
-                <span>
-                  <strong>Scoring Model:</strong> {result.analysis.scoringFormula}
-                </span>
               </div>
 
               {/* Tab 1: Skills Breakdown */}

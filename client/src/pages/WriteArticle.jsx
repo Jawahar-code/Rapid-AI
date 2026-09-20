@@ -57,7 +57,7 @@ const WriteArticle = () => {
 
   return (
     <div className='h-full p-6 flex items-start flex-col lg:flex-row gap-6 text-slate-700 dark:text-slate-200 transition-colors overflow-hidden'>
-      {}
+      { }
       <form onSubmit={onSubmitHandler} action="" className='w-full lg:w-[45%] p-6 bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm shrink-0'>
         <div className='flex items-center gap-3 mb-6'>
           <Sparkles className='w-6 text-[#3588F2]' />
@@ -97,7 +97,7 @@ const WriteArticle = () => {
       </form>
 
 
-      {}
+      { }
       <div className='flex-1 w-full p-6 bg-white dark:bg-slate-800 rounded-xl flex flex-col border border-gray-200 dark:border-slate-700 shadow-sm h-full overflow-hidden'>
         <div className='flex items-center justify-between shrink-0'>
           <div className='flex items-center gap-3'>
@@ -111,7 +111,7 @@ const WriteArticle = () => {
               title='Send this article to Content & SEO Analyzer'
             >
               <Gauge className='w-3.5 h-3.5' />
-              Audit with SEO Analyzer (2.0)
+              Audit with SEO Analyzer
             </button>
           )}
         </div>
