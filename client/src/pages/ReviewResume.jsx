@@ -1,5 +1,5 @@
 import { FileText, Sparkles, Copy, Download, Check, Crown } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { useAuth } from '@clerk/react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ const ReviewResume = () => {
   const [loading, setLoading] = useState(false)
   const [content, setContent] = useState('')
   const [copied, setCopied] = useState(false)
+  const inputRef = useRef(null)
 
   const { getToken } = useAuth()
   const navigate = useNavigate()
@@ -105,7 +106,7 @@ const ReviewResume = () => {
           <p className='text-sm font-medium dark:text-slate-300'>Upload Resume</p>
 
           <input
-            key={input?.name || 'resume-upload'}
+            ref={inputRef}
             onChange={(e) => setInput(e.target.files[0])}
             type="file"
             accept='application/pdf'
@@ -115,7 +116,10 @@ const ReviewResume = () => {
 
           <FilePreview
             file={input}
-            onRemove={() => setInput(null)}
+            onRemove={() => {
+              setInput(null)
+              if (inputRef.current) inputRef.current.value = ''
+            }}
             accentClass='text-[#E11D48]'
           />
 

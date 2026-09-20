@@ -1,5 +1,5 @@
 import { FileText, Sparkles, Copy, Download, Check } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { useAuth } from '@clerk/react';
 import { useOutletContext } from 'react-router-dom';
@@ -15,6 +15,7 @@ const PdfSummarizer = () => {
   const [loading, setLoading] = useState(false)
   const [content, setContent] = useState('')
   const [copied, setCopied] = useState(false)
+  const inputRef = useRef(null)
 
   const { getToken } = useAuth()
 
@@ -82,7 +83,7 @@ const PdfSummarizer = () => {
         <p className='text-sm font-medium dark:text-slate-300'>Upload Document</p>
 
         <input
-          key={input?.name || 'pdf-upload'}
+            ref={inputRef}
           onChange={(e) => setInput(e.target.files[0])}
           type="file"
           accept='application/pdf'
@@ -92,7 +93,10 @@ const PdfSummarizer = () => {
 
         <FilePreview
           file={input}
-          onRemove={() => setInput(null)}
+          onRemove={() => {
+            setInput(null)
+            if (inputRef.current) inputRef.current.value = ''
+          }}
           accentClass='text-[#F59E0B]'
         />
 

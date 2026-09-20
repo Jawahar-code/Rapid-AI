@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Briefcase,
   Sparkles,
@@ -32,6 +32,7 @@ const ResumeJobMatch = () => {
   const [result, setResult] = useState(null);
   const [activeTab, setActiveTab] = useState('skills'); // 'skills' | 'report'
   const [copied, setCopied] = useState(false);
+  const inputRef = useRef(null);
 
   const { getToken } = useAuth();
   const navigate = useNavigate();
@@ -146,7 +147,7 @@ const ResumeJobMatch = () => {
               Upload Resume (PDF)
             </label>
             <input
-              key={resumeFile?.name || 'resume-upload'}
+              ref={inputRef}
               type='file'
               accept='application/pdf'
               onChange={(e) => setResumeFile(e.target.files[0])}
@@ -158,7 +159,10 @@ const ResumeJobMatch = () => {
             </p>
             <FilePreview
               file={resumeFile}
-              onRemove={() => setResumeFile(null)}
+              onRemove={() => {
+                setResumeFile(null);
+                if (inputRef.current) inputRef.current.value = '';
+              }}
               accentClass='text-[#E11D48]'
             />
           </div>
