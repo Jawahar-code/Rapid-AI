@@ -1,6 +1,6 @@
-# 🚀 Rapid-AI Powered Content Creation Platform
+# 🚀 Rapid.ai 2.0 — AI Content, Resume, and Document Intelligence Platform
 
-> A full-stack SaaS platform that combines **6 powerful AI tools** into a single, beautifully designed workspace — from article generation to image editing, all powered by Google Gemini & Cloudinary.
+> A full-stack SaaS platform built on top of the existing Rapid.ai foundation, enhanced with transparent NLP analysis, resume-to-job matching, document intelligence, and SEO optimization for content workflows.
 
 > 🔗 **Live Demo:** [https://rapid-ai-ten-rust.vercel.app/](https://rapid-ai-ten-rust.vercel.app/)
 
@@ -10,15 +10,15 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **10 AI Tools** | Article Writer, Blog Titles, Image Generation, Background Removal, Object Eraser, PDF Summarizer, Resume Reviewer, **Resume–Job Matcher (2.0)**, **Document & Paper Analyzer (2.0)**, **Content & SEO Analyzer (2.0)** |
-| 🔬 **Deterministic NLP Engine** | Transparent TF-IDF vectorization, Cosine Similarity, 200+ skill taxonomy, Flesch/FK readability scoring, lexical diversity, keyword density |
-| 🎨 **Premium UI/UX** | Glassmorphic design, dark mode, smooth 300ms theme transitions, responsive layouts, animated SVG score rings |
-| 🔐 **Clerk Authentication** | Secure sign-in/sign-up, session management, user metadata, and Stripe-integrated billing |
-| 💳 **Subscription Model** | 10 free credits for new users, Premium plan for active subscribers |
-| 📊 **Analytics Dashboard** | Real-time creation tracking, 7-day activity chart (Premium), and localStorage caching for instant loads |
-| 🌐 **Community Gallery** | Share AI-generated images publicly, like/unlike system with real-time updates |
-| 🎬 **Watch Demo** | Embedded video modal with glassmorphic overlay directly on the landing page |
-| ⚡ **Studio Layout** | Fixed sidebar & header with independently scrollable content — feels like a native desktop app |
+| 🤖 **10 AI Tools** | Article Writer, Blog Titles, Image Generation, Background Removal, Object Eraser, PDF Summarizer, Resume Reviewer, **Resume–Job Matcher (2.0)**, **Document & Research Analyzer (2.0)**, **Content & SEO Analyzer (2.0)** |
+| 🔬 **Deterministic NLP Engine** | Transparent TF-IDF scoring, cosine similarity, 200+ skill taxonomy, readability analysis, keyword density, document profiling, and SEO heuristics |
+| 🎨 **Premium UI/UX** | Glassmorphism, dark mode, responsive dashboard, smooth transitions, animated score rings, and an app-like studio layout |
+| 🔐 **Clerk Authentication** | Secure sign-in/sign-up, user metadata, plan checks, and premium access controls |
+| 💳 **Subscription Model** | 10 free credits for free users; premium users unlock unlimited access and priority tool access |
+| 📊 **Analytics Dashboard** | Recent creations, activity tracking, premium analytics insights, and UI state management |
+| 🌐 **Community Gallery** | Share generated images publicly, with likes and community visibility |
+| 🎬 **Demo Experience** | Embedded landing-page video modal and polished promotional flow |
+| ⚡ **Studio Layout** | Fixed sidebar + header + scrollable work area designed like a native desktop workspace |
 
 ---
 
@@ -27,121 +27,136 @@
 ### Frontend
 | Technology | Purpose |
 |-----------|---------|
-| **React 19** + **Vite** | Lightning-fast SPA framework |
+| **React 19** + **Vite** | Fast SPA development and frontend build tooling |
 | **Tailwind CSS v4** | Utility-first styling with dark mode support |
-| **React Router v7** | Client-side routing & nested layouts |
-| **Clerk React** | Authentication UI components & hooks |
-| **Framer Motion** | Accordion animations in Dashboard & Sidebar dropdowns |
-| **Recharts** | Analytics area charts (Premium dashboard) |
-| **Lucide React** | Consistent icon system |
-| **React Markdown** | AI-generated article & audit rendering |
-| **React Simple Typewriter** | Hero section typing animation |
-| **React Hot Toast** | Toast notifications |
-| **Axios** | HTTP client for API communication |
+| **React Router v7** | Routing, nested layouts, and page transitions |
+| **Clerk React** | Authentication UI and session hooks |
+| **Framer Motion** | Smooth accordion and interactive motion effects |
+| **Recharts** | Dashboard analytics visualizations |
+| **Lucide React** | Clean icon system across the app |
+| **React Markdown** | Rendering AI-generated article and audit output |
+| **React Hot Toast** | User notifications and action feedback |
+| **Axios** | API communication between client and server |
 
 ### Backend
 | Technology | Purpose |
 |-----------|---------|
-| **Node.js** + **Express** | REST API server |
-| **Neon PostgreSQL** | Serverless database for creations & user data |
-| **Clerk Express** | JWT-based route protection & user metadata |
-| **OpenAI SDK** | Interface to Google Gemini 3 Flash model |
-| **Custom NLP Engine** | In-house deterministic text analysis (TF-IDF, cosine similarity, readability, SEO metrics) |
-| **Cloudinary** | Cloud image storage & transformation |
-| **Multer** | Multipart file upload handling with safe temp file cleanup |
-| **pdf-parse** | PDF document text extraction |
+| **Node.js** + **Express** | REST API server and application layer |
+| **Neon PostgreSQL** | Serverless relational database for user records and creation history |
+| **Clerk Express** | JWT authentication and plan validation |
+| **OpenAI SDK** | Interface to Google Gemini for AI generation and enhancement |
+| **Custom NLP Engine** | Deterministic text analysis for scoring, similarity, readability, keyword density, and document classification |
+| **Cloudinary** | Image storage, transformation, and media management |
+| **Multer** | Upload handling for PDFs and image processing tools |
+| **pdf-parse** | PDF text extraction and document analysis |
 
 ---
 
 ## 🧩 AI Tools Overview
 
 ### ✍️ Article Writer
-Generate long-form, high-quality articles on any topic. Choose between **Short**, **Medium**, and **Long** lengths. Output is rendered as rich Markdown with one-click deep-link transfer to the Content & SEO Analyzer.
+Generate long-form article content on any topic with multiple length options. Output is rendered in markdown and can be passed directly into the SEO analyzer for optimization.
 
 ### #️⃣ Blog Title Generator
-Enter a topic and receive **8-10 creative, SEO-optimized blog title suggestions** — perfect for content strategists and bloggers.
+Create SEO-oriented title suggestions and topic angles for marketing, blog, and content strategy workflows.
 
 ### 🖼️ Image Generation
-Describe your vision in a detailed prompt, select a style preset (Realistic, Anime, Ghibli, etc.), and generate AI-powered images. Toggle **Public** to share with the Community.
+Generate custom AI visuals using descriptive prompts and style presets.
 
 ### 🧹 Background Removal
-Upload any image and the AI isolates the subject by removing the background entirely — ideal for product photos and profile pictures.
+Remove image backgrounds automatically for product, profile, and marketing assets.
 
 ### ✂️ Object Removal
-Upload an image and describe the object to remove. The AI intelligently fills in the gap, producing a clean result.
+Remove unwanted objects from images while preserving the surrounding scene naturally.
 
 ### 📄 PDF Summarizer
-Upload any PDF document and receive a clear, comprehensive, and well-structured AI-generated summary.
+Upload a PDF and receive a structured summary of the main points and themes.
 
 ### 💼 Resume Reviewer
-Upload a PDF resume and receive a detailed AI-powered analysis covering structure, content quality, keyword optimization, and improvement suggestions.
+Analyze a resume for formatting, keyword alignment, structure quality, and content improvements.
 
 ### 🎯 Resume–Job Matcher (Rapid.ai 2.0)
-Upload your resume PDF and paste a job description. Combines a 200+ skill taxonomy match with TF-IDF cosine similarity using a transparent 70/30 formula, accompanied by Gemini career coaching.
+Upload a resume PDF and paste a job description to get a transparent skill match score, missing skills, extra skills, and AI-powered gap advice using a 70/30 weighted formula.
 
 ### 📑 Document & Research-Paper Analyzer (Rapid.ai 2.0)
-Upload any document or scientific paper. Features line-based heading classification, academic DOI/arXiv detection, statistical summary (words, reading time), Flesch readability scoring with reliability safeguards, and AI-structured breakdowns.
+Analyze PDFs for readability, structure, keyword themes, research-paper heuristics, and AI-generated breakdowns for executive summaries, methodology, findings, and limitations.
 
 ### 🚀 Content & SEO Analyzer (Rapid.ai 2.0)
-Audit any written copy or generated article. Evaluates keyword density (optimal 1.0%–2.5%), heading hierarchy (H1/H2/H3), lexical diversity, and passive voice ratio, generating a full editorial and SEO audit report.
+Audit written content for keyword density, heading hierarchy, readability, lexical diversity, passive voice, and actionable SEO recommendations.
 
 ---
 
 ## 🏗️ Project Structure
 
-```
-Minor Project/
-├── client/                          # React Frontend
-│   ├── public/                      # Static assets (gradient bg, favicon)
+```text
+Rapid.ai 2.0/
+├── client/                                  # React frontend
+│   ├── public/                              # Static assets and branding content
 │   ├── src/
-│   │   ├── assets/                  # Images, icons, tool data definitions
-│   │   ├── components/              # Reusable UI components
-│   │   │   ├── Navbar.jsx           # Landing page glassmorphic navbar
-│   │   │   ├── Hero.jsx             # Hero section with typewriter + video modal
-│   │   │   ├── Sidebar.jsx          # Dashboard sidebar navigation
-│   │   │   ├── Ai_Tools.jsx         # AI tools grid for landing page
-│   │   │   ├── CreationItem.jsx     # Expandable creation card (accordion)
-│   │   │   ├── Testimonial.jsx      # Infinite marquee testimonials
-│   │   │   ├── Plan.jsx             # Clerk PricingTable integration
-│   │   │   ├── FAQ.jsx              # Expandable FAQ section
-│   │   │   ├── Footer.jsx           # Multi-column footer
-│   │   │   └── ThemeToggle.jsx      # Light/Dark mode toggle
+│   │   ├── assets/                          # Images, icons, metadata, and static tool data
+│   │   ├── components/                      # Shared UI components
+│   │   │   ├── Navbar.jsx                   # Landing page navigation
+│   │   │   ├── Hero.jsx                     # Hero section and call-to-action
+│   │   │   ├── Sidebar.jsx                  # Dashboard navigation
+│   │   │   ├── Ai_Tools.jsx                 # Landing page tool cards
+│   │   │   ├── CreationItem.jsx             # Creation history card
+│   │   │   ├── Testimonial.jsx              # Social proof section
+│   │   │   ├── Plan.jsx                     # Billing / plan display
+│   │   │   ├── FAQ.jsx                      # FAQ section
+│   │   │   ├── Footer.jsx                   # Site footer
+│   │   │   └── ThemeToggle.jsx              # Light/Dark mode toggle
 │   │   ├── context/
-│   │   │   └── ThemeContext.jsx      # Theme provider (localStorage persisted)
+│   │   │   └── ThemeContext.jsx             # Theme state provider
 │   │   ├── pages/
-│   │   │   ├── Home.jsx             # Landing page (all sections composed)
-│   │   │   ├── Layout.jsx           # Authenticated app shell (header + sidebar + outlet)
-│   │   │   ├── Dashboard.jsx        # Analytics, stats, recent creations
-│   │   │   ├── WriteArticle.jsx     # Article generation tool
-│   │   │   ├── BlogTitles.jsx       # Blog title generation tool
-│   │   │   ├── GenerateImages.jsx   # AI image generation tool
-│   │   │   ├── RemoveBackground.jsx # Background removal tool
-│   │   │   ├── RemoveObject.jsx     # Object eraser tool
-│   │   │   ├── PdfSummarizer.jsx     # AI-driven PDF document summarization tool
-│   │   │   ├── Community.jsx        # Public gallery with like system
-│   │   │   └── Settings.jsx         # Account, billing, appearance, security
-│   │   ├── App.jsx                  # Route definitions
-│   │   └── main.jsx                 # Root render with Clerk & Theme providers
+│   │   │   ├── Home.jsx                     # Landing page composition
+│   │   │   ├── Layout.jsx                   # Studio-style authenticated layout
+│   │   │   ├── Dashboard.jsx                # Main analytics dashboard
+│   │   │   ├── WriteArticle.jsx             # Article generation tool
+│   │   │   ├── BlogTitles.jsx               # Blog titles generator
+│   │   │   ├── GenerateImages.jsx           # AI image generation tool
+│   │   │   ├── RemoveBackground.jsx         # Background removal tool
+│   │   │   ├── RemoveObject.jsx             # Object eraser tool
+│   │   │   ├── PdfSummarizer.jsx            # PDF summarization tool
+│   │   │   ├── ReviewResume.jsx             # Resume review page
+│   │   │   ├── ResumeJobMatch.jsx           # Rapid.ai 2.0 resume-job matcher
+│   │   │   ├── DocumentAnalyzer.jsx         # Rapid.ai 2.0 document analyzer
+│   │   │   ├── ContentSeoAnalyzer.jsx       # Rapid.ai 2.0 SEO analyzer
+│   │   │   ├── ResumeWorkspace.jsx          # Resume tool workspace container
+│   │   │   ├── ContentWorkspace.jsx         # Content workspace container
+│   │   │   ├── Community.jsx                # Public gallery
+│   │   │   └── Settings.jsx                 # Account and settings
+│   │   ├── App.jsx                          # Route definitions
+│   │   └── main.jsx                         # Root render and app bootstrap
 │   ├── package.json
 │   └── vite.config.js
 │
-├── server/                          # Express Backend
+├── server/                                  # Express backend
 │   ├── configs/
-│   │   ├── db.js                    # Neon PostgreSQL connection
-│   │   └── cloudinary.js            # Cloudinary SDK configuration
+│   │   ├── db.js                            # Neon PostgreSQL connection setup
+│   │   ├── cloudinary.js                    # Cloudinary configuration
+│   │   └── multer.js                        # Upload handling for multipart files
 │   ├── controllers/
-│   │   ├── aiController.js          # AI generation logic (all 6 tools)
-│   │   └── userController.js        # User creations & community endpoints
+│   │   ├── aiController.js                  # Core AI generation endpoints
+│   │   ├── analysisController.js            # Rapid.ai 2.0 analytic endpoints
+│   │   └── userController.js                # User and creation logic
 │   ├── middlewares/
-│   │   └── auth.js                  # JWT validation, plan checking, credit sync
+│   │   ├── auth.js                          # Clerk auth and plan enforcement
+│   │   └── toolAccess.js                    # Tool gating for premium features
 │   ├── routes/
-│   │   ├── aiRoutes.js              # POST routes for AI tools
-│   │   └── userRoutes.js            # GET/POST routes for user data
-│   ├── server.js                    # Express app entry point
-│   └── package.json
+│   │   ├── aiRoutes.js                      # Backend route definitions
+│   │   └── userRoutes.js                    # User API routes
+│   ├── utils/
+│   │   ├── nlpEngine.js                     # Reusable NLP analysis engine
+│   │   └── pdfHelper.js                     # PDF helper/analysis utilities
+│   ├── server.js                           # Express app entry point
+│   ├── package.json
+│   └── vercel.json
 │
-├── dev-log.txt                      # Detailed development journal (33 entries)
-└── README.md
+├── implementation_plan.md                  # Architecture audit and rollout plan
+├── README.md                               # Project documentation
+├── .gitignore
+├── .env.example                            # Environment template (if used)
+└── package.json                            # Optional workspace-level config
 ```
 
 ---
@@ -153,21 +168,19 @@ Minor Project/
 - **Node.js** v18.x or later
 - **npm** (comes with Node.js)
 - A [Neon](https://neon.tech/) PostgreSQL database
-- A [Clerk](https://clerk.com/) application (with Pricing Table configured)
+- A [Clerk](https://clerk.com/) application
 - A [Cloudinary](https://cloudinary.com/) account
-- A [Google AI Studio](https://aistudio.google.com/) API key (Gemini)
+- A [Google AI Studio](https://aistudio.google.com/) API key for Gemini
 
 ### 1. Clone & Install
 
 ```bash
 git clone <repository_url>
-cd "Minor Project"
+cd "Rapid.ai 2.0"
 
-# Install frontend dependencies
 cd client
 npm install
 
-# Install backend dependencies
 cd ../server
 npm install
 ```
@@ -179,23 +192,16 @@ Create `.env` files in both directories:
 **`server/.env`**
 ```env
 PORT=3000
-
-# Neon PostgreSQL
 DATABASE_URL=postgres://<user>:<password>@<host>/<database>?sslmode=require
 
-# Clerk
 CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_SECRET_KEY=sk_test_...
+CLERK_SECRET_KEY=sk_test_
 
-# Cloudinary
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-# Google Gemini (via OpenAI SDK)
 GEMINI_API_KEY=your_gemini_api_key
-
-# ClipDrop (Image Processing)
 CLIPDROP_API_KEY=your_clipdrop_api_key
 ```
 
@@ -243,22 +249,22 @@ Open **http://localhost:5173** in your browser.
 
 | Directory | Command | Description |
 |-----------|---------|-------------|
-| `client/` | `npm run dev` | Start Vite dev server (HMR enabled) |
+| `client/` | `npm run dev` | Start Vite dev server |
 | `client/` | `npm run build` | Build production bundle |
-| `client/` | `npm run lint` | Lint with ESLint |
-| `server/` | `npm run server` | Start with Nodemon (auto-restart) |
-| `server/` | `npm start` | Start with plain Node.js |
+| `client/` | `npm run lint` | Linting with ESLint |
+| `server/` | `npm run server` | Start backend with nodemon |
+| `server/` | `npm start` | Start backend with Node.js |
 
 ---
 
 ## 🎨 Design System
 
-- **Color Palette**: Slate (backgrounds), Primary purple (#5044E1), accent gradients per tool
-- **Typography**: System font stack with semibold headings
-- **Dark Mode**: Full support with `dark:` Tailwind utilities, 300ms synchronized transitions
-- **Glassmorphism**: Applied to Navbar, Sidebar, and modal overlays (`backdrop-blur-lg`, `bg-white/20`)
-- **Layout Pattern**: Fixed header + fixed sidebar + scrollable content area ("Studio Mode")
-- **Animations**: Framer Motion accordions, CSS keyframe modals, Typewriter hero text
+- **Color Palette**: Slate neutrals with primary purple accent (#5044E1) and tool-specific gradients
+- **Typography**: Clean sans-serif system stack with bold product headings
+- **Dark Mode**: Full light/dark support with synchronized transitions
+- **Glassmorphism**: Used on navigation, cards, and overlays
+- **Studio Layout**: Fixed sidebar and header with dedicated workspaces for content and resume tools
+- **Animations**: Framer Motion transitions, hover interactions, and content reveal effects
 
 ---
 
@@ -266,14 +272,13 @@ Open **http://localhost:5173** in your browser.
 
 | Plan | Credits | Analytics | Features |
 |------|---------|-----------|----------|
-| **Free** | 10 generations | Recent Creations only | All 7 AI tools |
-| **Premium** | Unlimited | Full 7-day activity chart | All 7 AI tools + priority |
+| **Free** | 10 generations | Recent creations access | Core AI tools |
+| **Premium** | Unlimited | Full dashboard analytics | Premium and gated AI tools |
 
-- Credits are tracked via **database row count** (source of truth), synced to Clerk `publicMetadata` for instant UI display.
-- The auth middleware automatically reconciles metadata on every authenticated request.
+- Credits are tracked through the app database and synced into Clerk metadata.
+- Protected routes and premium-only tools enforce the subscription state centrally.
 
 ---
-
 
 ## ▶️ Demo Video
 
@@ -283,10 +288,10 @@ https://github.com/user-attachments/assets/6d902712-3e5a-4efb-83fe-7f974456a382
 
 ## 📄 License
 
-This project is developed as a **Minor Project** for B.Tech CSE (6th Semester). 
+This project is developed as a **Rapid.ai 2.0 product initiative** and is intended for portfolio, learning, and SaaS prototype use.
 
 ---
 
 <p align="center">
-  Built with ❤️ using React, Express, Gemini AI & Neon PostgreSQL
+  Built with ❤️ using React, Express, Gemini AI, Neon PostgreSQL, and the Rapid.ai 2.0 intelligence stack
 </p>
